@@ -43,7 +43,7 @@ function LeftDrawer() {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Your Subreddits</DrawerHeader>
+          <DrawerHeader>Log in to see your subreddits</DrawerHeader>
 
           <DrawerBody>
             <Input placeholder="Search for subreddits..." mb="5" />

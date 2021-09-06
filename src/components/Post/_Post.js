@@ -1,7 +1,16 @@
 import React from "react";
-import { Text, Box, Stack, StackDivider } from "@chakra-ui/react";
+import {
+  Text,
+  Box,
+  Stack,
+  VStack,
+  StackDivider,
+  Button,
+} from "@chakra-ui/react";
 import styles from "../../../styles/Home.module.css";
 import moment from "moment";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import Comments from "./Comments";
 
 function Post({ postData }) {
   const {
@@ -43,17 +52,23 @@ function Post({ postData }) {
         align={["start", "start", "center"]}
         direction={["column", "column", "row"]}
       >
-        <Box w={["100%", "100%", "10%"]}>
-          <Text fontSize="1.5rem">
+        <VStack w={["100%", "100%", "5%"]}>
+          <Button size="xs">
+            <FaArrowUp />
+          </Button>
+          <Text fontSize="1rem">
             <b>{score}</b>
           </Text>
-        </Box>
+          <Button size="xs">
+            <FaArrowDown />
+          </Button>
+        </VStack>
         {thumbnail !== "self" && thumbnail !== "default" && thumbnail && (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={thumbnail} alt={title} />
         )}
 
-        <Box w={["100%", "100%", "90%"]}>
+        <Box w={["100%", "100%", "95%"]}>
           <Box w="100%" mb="2">
             <a href={url}>
               <b>{title}</b>
@@ -66,11 +81,7 @@ function Post({ postData }) {
               <Text as="span">{author}</Text>
             </Box>
           </Box>
-          <Box>
-            <a href={`https://www.reddit.com${permalink}`}>
-              <Text>{commentNumber(num_comments)} comments</Text>
-            </a>
-          </Box>
+          <Comments num_comments={num_comments} permalink={permalink} />
         </Box>
       </Stack>
     </Box>

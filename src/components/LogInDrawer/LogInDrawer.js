@@ -11,7 +11,6 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useRef } from "react";
-import { FiLogIn } from "react-icons/fi";
 
 function LogInDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -21,7 +20,6 @@ function LogInDrawer() {
     <>
       <Button
         ref={btnRef}
-        leftIcon={<FiLogIn size="1.5rem" />}
         // variant="blue"
         bg="gray.500"
         color="white"

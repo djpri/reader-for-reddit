@@ -23,12 +23,12 @@ function NavBar() {
           justify="space-between"
           wrap="wrap"
           w="100%"
-          pt={4}
-          pb={4}
+          pt={2}
+          pb={2}
         >
           <Flex align="center">
             <LeftDrawer />
-            <SiReddit size="2rem" />
+            <SiReddit size="1.5rem" />
             <Text fontSize="2xl" ml="3" fontWeight="bold">
               Reddit Lite
             </Text>

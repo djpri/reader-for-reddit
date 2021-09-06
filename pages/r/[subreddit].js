@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import Post from "../../src/components/Post/Post";
+import Post from "../../src/components/Post/_Post";
 import { HiChevronDown } from "react-icons/hi";
 import {
   Container,
@@ -14,18 +14,25 @@ import {
   MenuItem,
   MenuDivider,
 } from "@chakra-ui/react";
+import SearchError from "../../src/components/Errors/SearchError";
 
 function Subreddit({ subreddit, apiData }) {
   const [isLoading, setisLoading] = useState(false);
-  const [data, setData] = useState(apiData || null);
+  const [isError, setIsError] = useState(false);
+  const [posts, setPosts] = useState(apiData || null);
   const [search, setSearch] = useState("");
   const [sortType, setSortType] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
+    console.log(posts);
+  }, []);
+
+  useEffect(() => {
     const handleRouteChange = () => {
       setisLoading(false);
       setSortType(null);
+      setIsError(false);
     };
 
     router.events.on("routeChangeComplete", handleRouteChange);
@@ -36,22 +43,32 @@ function Subreddit({ subreddit, apiData }) {
   }, [router.events]);
 
   useEffect(() => {
-    setData(apiData);
+    setPosts(apiData);
   }, [apiData]);
 
   const sortPostsBy = (type, sortType, ascending = true) => {
     setSortType(sortType);
-    setData((data) => {
+    setPosts((data) => {
       const sortedData = data.sort((a, b) => {
         if (ascending) {
-          return b.data[type] - a.data[type];
+          return b[type] - a[type];
         } else {
-          return a.data[type] - b.data[type];
+          return a[type] - b[type];
         }
       });
       // spread operator required because sort does not make a copy of original array
       return [...sortedData];
     });
+  };
+
+  const handleSearch = () => {
+    if (!search) {
+      setIsError(true);
+      return;
+    }
+    setisLoading(true);
+    setIsError(false);
+    router.push(`/r/${search}`);
   };
 
   return (
@@ -62,22 +79,18 @@ function Subreddit({ subreddit, apiData }) {
         mt="30px"
         onKeyUp={(e) => {
           if (e.key === "Enter") {
-            setisLoading(true);
-            router.push(`/r/${search}`);
+            handleSearch();
           }
         }}
         onChange={(e) => setSearch(e.target.value)}
         value={search}
       />
-
+      {isError && <SearchError />}
       <Button
         isLoading={isLoading}
         colorScheme="blue"
         size="md"
-        onClick={() => {
-          setisLoading(true);
-          router.push(`/r/${search}`);
-        }}
+        onClick={handleSearch}
       >
         Get Posts
       </Button>
@@ -106,10 +119,10 @@ function Subreddit({ subreddit, apiData }) {
         {sortType} Posts from {`/r/${subreddit}`}
       </Heading>
 
-      {data &&
-        data.map((item, index) => <Post key={index} postData={item.data} />)}
+      {posts &&
+        posts.map((post, index) => <Post key={index} postData={post} />)}
 
-      {!data && (
+      {!posts && (
         <Text>
           No posts found. This subreddit does not exist or no longer exists.
         </Text>
@@ -123,15 +136,15 @@ export default Subreddit;
 export async function getServerSideProps({ params }) {
   const sub = params.subreddit;
   // Fetch data from reddit API
-  const response = await fetch(`https://www.reddit.com/r/${sub}/.json`);
-  let data = [];
+  const response = await fetch(`http://localhost:3000/api/r/${sub}`);
+  let data = { data: "" };
   if (response.ok) {
     data = await response.json();
   }
   // Pass data to the page via props
   return {
     props: {
-      apiData: data.data?.children || null,
+      apiData: data?.data || null,
       subreddit: sub,
     },
   };
