@@ -12,3 +12,17 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.comment p {
+  margin: 10px 0;
+}
+
+.comment a {
+  font-weight: bold;
+  color: #3182ce;
+}
+
+.comment a:hover {
+  color: #63b3ed;
+  text-decoration: underline;
+}

@@ -12,16 +12,13 @@ function CommentsTree({ comments }) {
         index={index}
         depth={1}
         showChildren={showChildren}
+        key={index}
       />
     );
   };
 
   return (
-    <VStack
-      align="left"
-      spacing={5}
-      divider={<StackDivider borderColor="gray.200" />}
-    >
+    <VStack align="left" spacing={5}>
       {comments.map(renderParentComment)}
     </VStack>
   );

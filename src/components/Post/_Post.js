@@ -11,6 +11,7 @@ import styles from "../../../styles/Home.module.css";
 import moment from "moment";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import Comments from "./Comments";
+import Link from "next/link";
 
 function Post({ postData }) {
   const {
@@ -19,6 +20,7 @@ function Post({ postData }) {
     created,
     author,
     url,
+    id,
     title,
     permalink,
     num_comments,
@@ -43,6 +45,13 @@ function Post({ postData }) {
       return <b>{num}</b>;
     }
   };
+
+  if (!postData)
+    return (
+      <Box className={styles.post} w="100%" mb="5">
+        no posts
+      </Box>
+    );
 
   return (
     <Box className={styles.post} w="100%" mb="5">
@@ -70,9 +79,11 @@ function Post({ postData }) {
 
         <Box w={["100%", "100%", "95%"]}>
           <Box w="100%" mb="2">
-            <a href={url}>
-              <b>{title}</b>
-            </a>
+            <Link passHref={true} href={`/r/comments/${id}`}>
+              <a>
+                <b>{title}</b>
+              </a>
+            </Link>
             <hr />
             <Box>
               <Text color="gray" as="span">

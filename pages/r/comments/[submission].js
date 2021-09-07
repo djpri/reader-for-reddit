@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { HiChevronDown } from "react-icons/hi";
+import Post from "../../../src/components/Post/_Post";
 import {
   Container,
   Text,
@@ -17,8 +18,9 @@ import {
   MenuDivider,
 } from "@chakra-ui/react";
 import CommentsTree from "../../../src/components/CommentsTree/CommentsTree";
+import ReactMarkdown from "react-markdown";
 
-function Submission({ comments, title }) {
+function Submission({ comments, title, selftext }) {
   const [isLoading, setisLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [posts, setPosts] = useState(comments || null);
@@ -53,6 +55,19 @@ function Submission({ comments, title }) {
       <Heading as="h4" size="md" mb="5">
         {title}
       </Heading>
+      {selftext && (
+        <Box
+          className="comment"
+          border="2px solid gray"
+          borderRadius="5px"
+          pl="5"
+          pr="5"
+        >
+          <ReactMarkdown>{selftext}</ReactMarkdown>
+        </Box>
+      )}
+
+      {/* <Post /> */}
       <CommentsTree comments={comments} />
     </Container>
   );
@@ -63,7 +78,9 @@ export default Submission;
 export async function getServerSideProps({ params }) {
   const submission = params.submission;
   // Fetch data from reddit API
-  const response = await fetch(`http://localhost:3000/api/r/comments/baba`);
+  const response = await fetch(
+    `http://localhost:3000/api/r/comments/${submission}`
+  );
   let data;
   if (response.ok) {
     data = await response.json();
@@ -73,6 +90,7 @@ export async function getServerSideProps({ params }) {
     props: {
       comments: data.comments || null,
       title: data.title || null,
+      selftext: data.selftext || null,
     },
   };
 }
