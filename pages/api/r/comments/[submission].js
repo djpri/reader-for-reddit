@@ -10,6 +10,7 @@ const appOnlyAuth = Snoowrap.fromApplicationOnlyAuth({
 export default async function handler(req, res) {
   const { submission } = req.query;
   const r = await appOnlyAuth;
-  const data = await r.getSubmission("piwroz").comments;
-  res.status(200).json({ comments: data });
+  const title = await r.getSubmission("piwroz").title;
+  const comments = await r.getSubmission("piwroz").comments;
+  res.status(200).json({ title, comments });
 }
