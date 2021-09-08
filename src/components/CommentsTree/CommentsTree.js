@@ -12,7 +12,7 @@ function CommentsTree({ comments }) {
         index={index}
         depth={1}
         showChildren={showChildren}
-        key={index}
+        key={item.id}
       />
     );
   };

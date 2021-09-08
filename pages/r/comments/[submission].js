@@ -2,35 +2,18 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import { HiChevronDown } from "react-icons/hi";
 import Post from "../../../src/components/Post/_Post";
-import {
-  Container,
-  Text,
-  Heading,
-  Input,
-  Box,
-  StackDivider,
-  Button,
-  VStack,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-} from "@chakra-ui/react";
+import { Container, Text, Heading, Box, Link } from "@chakra-ui/react";
 import CommentsTree from "../../../src/components/CommentsTree/CommentsTree";
 import ReactMarkdown from "react-markdown";
+import NextLink from "next/link";
 
-function Submission({ comments, title, selftext }) {
+function Submission({ comments, title, selftext, subreddit }) {
   const [isLoading, setisLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [posts, setPosts] = useState(comments || null);
   const [search, setSearch] = useState("");
   const [sortType, setSortType] = useState(null);
   const router = useRouter();
-
-  useEffect(() => {
-    console.log(comments);
-  }, []);
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -52,6 +35,13 @@ function Submission({ comments, title, selftext }) {
 
   return (
     <Container maxW="container.xl" mt="10">
+      {subreddit ? (
+        <NextLink href={`/r/${subreddit}`} passHref>
+          <Link>{subreddit}</Link>
+        </NextLink>
+      ) : (
+        <Link>no subreddit</Link>
+      )}
       <Heading as="h4" size="md" mb="5">
         {title}
       </Heading>
@@ -85,12 +75,14 @@ export async function getServerSideProps({ params }) {
   if (response.ok) {
     data = await response.json();
   }
+  // console.log(data.subreddit);
   // Pass data to the page via props
   return {
     props: {
-      comments: data.comments || null,
-      title: data.title || null,
-      selftext: data.selftext || null,
+      comments: data?.comments || null,
+      title: data?.title || null,
+      selftext: data?.selftext || null,
+      subreddit: data?.subreddit || null,
     },
   };
 }

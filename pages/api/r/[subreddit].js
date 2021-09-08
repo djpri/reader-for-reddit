@@ -9,7 +9,7 @@ const appOnlyAuth = Snoowrap.fromApplicationOnlyAuth({
 
 export default async function handler(req, res) {
   const { subreddit } = req.query;
-  console.log(req.query);
+  // console.log(req.query);
   const r = await appOnlyAuth;
   const data = await r.getHot(subreddit);
   res.status(200).json({ data });

@@ -25,10 +25,6 @@ function Subreddit({ subreddit, apiData }) {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(posts);
-  }, []);
-
-  useEffect(() => {
     const handleRouteChange = () => {
       setisLoading(false);
       setSortType(null);

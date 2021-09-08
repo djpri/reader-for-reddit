@@ -9,7 +9,7 @@ const appOnlyAuth = snoowrap.fromApplicationOnlyAuth({
 
 export default async function handler(req, res) {
   const r = await appOnlyAuth;
-  console.log(r.accessToken);
+  // console.log(r.accessToken);
   const posts = await r.getHot("liverpoolfc");
   res.status(200).json({ posts });
 }

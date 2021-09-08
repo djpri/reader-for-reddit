@@ -92,7 +92,7 @@ function Post({ postData }) {
               <Text as="span">{author}</Text>
             </Box>
           </Box>
-          <Comments num_comments={num_comments} permalink={permalink} />
+          <Comments num_comments={num_comments} permalink={id} />
         </Box>
       </Stack>
     </Box>

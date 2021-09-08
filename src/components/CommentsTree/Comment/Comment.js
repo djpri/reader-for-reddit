@@ -14,14 +14,10 @@ function Comment({ item, index, depth, showChildren }) {
   const [showReplies, setShowReplies] = useState(showChildren);
   const repliesRef = useRef();
 
-  // Here's the signature
   const boxColor = useColorModeValue(
     depth % 2 === 0 ? "gray.50" : "gray.100",
     depth % 2 === 0 ? "gray.800" : "gray.900"
   );
-
-  // Here's the signature
-  // const boxColor = useColorModeValue("gray.800", "red.900");
 
   const renderChildComment = (item, index) => {
     return <Comment item={item} index={index} depth={depth + 1} />;
@@ -59,7 +55,6 @@ function Comment({ item, index, depth, showChildren }) {
             <ReactMarkdown>{item.body}</ReactMarkdown>
           </Box>
         ) : (
-          // <ReactMarkdown>*React-Markdown* is **Awesome**</ReactMarkdown>
           <Text color="red.500">
             too many downdogs to even show this comment
           </Text>
