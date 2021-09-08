@@ -11,6 +11,6 @@ export default async function handler(req, res) {
   const { subreddit } = req.query;
   // console.log(req.query);
   const r = await appOnlyAuth;
-  const data = await r.getHot(subreddit);
+  const data = await r.getSubreddit(subreddit).getHot({ limit: 5 });
   res.status(200).json({ data });
 }

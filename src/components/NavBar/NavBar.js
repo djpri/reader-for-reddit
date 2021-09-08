@@ -15,7 +15,7 @@ import LogInDrawer from "../LogInDrawer/LogInDrawer";
 function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Box as="header" w="100%" bgColor="blue.600" color="#f7f7f7">
+    <Box as="header" w="100%" bgColor="blue.800" color="#f7f7f7">
       <Container maxW="container.xl">
         <Flex
           as="nav"

@@ -10,7 +10,7 @@ import { VscCollapseAll } from "react-icons/vsc";
 import { useState, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 
-function Comment({ item, index, depth, showChildren }) {
+function Comment({ item, index, depth, showChildren, children }) {
   const [showReplies, setShowReplies] = useState(showChildren);
   const repliesRef = useRef();
 
@@ -23,11 +23,16 @@ function Comment({ item, index, depth, showChildren }) {
     return <Comment item={item} index={index} depth={depth + 1} />;
   };
 
+  const getTotalChildComments = (replies) => {
+    const jsonString = JSON.stringify(replies);
+    const matches = jsonString.match(/"id"/g).length;
+    return matches;
+  };
+
   const toggleReplies = () => setShowReplies((prevState) => !prevState);
 
   return (
     <Stack
-      key={index}
       ml={(depth - 1) * 4}
       direction="row"
       pt="3"
@@ -68,7 +73,9 @@ function Comment({ item, index, depth, showChildren }) {
           </Link>
           {item.replies.length > 0 && (
             <Link onClick={toggleReplies} color="gray.500" fontSize="sm">
-              {showReplies ? `show ${item.replies.length} ` : "hide "}
+              {showReplies
+                ? `show ${getTotalChildComments(item.replies)} `
+                : "hide "}
               {item.replies.length === 1 ? "child comment" : "child comments"}
             </Link>
           )}
