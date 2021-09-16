@@ -15,7 +15,13 @@ import LogInDrawer from "../LogInDrawer/LogInDrawer";
 function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Box as="header" w="100%" bgColor="blue.800" color="#f7f7f7">
+    <Box
+      as="header"
+      w="100%"
+      bgColor="blue.800"
+      bgGradient="linear(to-r, blue.900, blue.700, blue.800)"
+      color="#f7f7f7"
+    >
       <Container maxW="container.xl">
         <Flex
           as="nav"
@@ -29,8 +35,8 @@ function NavBar() {
           <Flex align="center">
             <LeftDrawer />
             <SiReddit size="1.5rem" />
-            <Text fontSize="2xl" ml="3" fontWeight="bold">
-              Reddit Lite
+            <Text fontSize="xl" ml="3" fontWeight="bold">
+              /r/eader for reddit
             </Text>
           </Flex>
           <HStack>

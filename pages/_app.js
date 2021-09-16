@@ -4,8 +4,7 @@ import NavBar from "../src/components/NavBar/NavBar";
 import Router from "next/router";
 import NProgress from "nprogress";
 import "../styles/nprogress.css";
-
-// NProgress.configure({ showSpinner: publicRuntimeConfig.NProgressShowSpinner });
+import theme from "../theme/theme";
 
 Router.onRouteChangeStart = () => {
   // console.log('onRouteChangeStart triggered');
@@ -24,7 +23,7 @@ Router.onRouteChangeError = () => {
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <NavBar />
       <Component {...pageProps} />
     </ChakraProvider>

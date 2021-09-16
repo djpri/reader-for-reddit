@@ -1,15 +1,12 @@
-const snoowrap = require("snoowrap");
+import appOnlyAuth from "../../src/snoowrap/snoowrap";
 
-const appOnlyAuth = snoowrap.fromApplicationOnlyAuth({
-  userAgent: "Reddit Lite",
-  clientId: "ZK38KJJbGQTKABQtAhTFRA",
-  deviceId: "DO_NOT_TRACK_THIS_DEVICE",
-  grantType: snoowrap.grantType.INSTALLED_CLIENT,
-});
+// options.limit sets an upper bound for the branching factor of the resulting replies tree,
+// i.e.the number of comments that are fetched in reply to any given item
 
 export default async function handler(req, res) {
   const r = await appOnlyAuth;
-  // console.log(r.accessToken);
-  const posts = await r.getHot("liverpoolfc");
-  res.status(200).json({ posts });
+  const replies = await r
+    .getSubmission("pk1ju3")
+    .expandReplies({ limit: 0, depth: 0 });
+  res.status(200).json(replies.comments);
 }

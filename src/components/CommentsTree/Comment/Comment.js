@@ -10,12 +10,12 @@ import { VscCollapseAll } from "react-icons/vsc";
 import { useState, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 
-function Comment({ item, index, depth, showChildren, children }) {
+function Comment({ item, depth, showChildren }) {
   const [showReplies, setShowReplies] = useState(showChildren);
   const repliesRef = useRef();
 
   const boxColor = useColorModeValue(
-    depth % 2 === 0 ? "gray.50" : "gray.100",
+    depth % 2 === 0 ? "#e6ecf092" : "white",
     depth % 2 === 0 ? "gray.800" : "gray.900"
   );
 
@@ -38,11 +38,14 @@ function Comment({ item, index, depth, showChildren, children }) {
       pt="3"
       bg={boxColor}
       pb="3"
-      border="1px solid gray"
-      borderRadius="5"
+      // border="1px solid gray"
+      // borderRadius="4"
+      boxShadow="base"
+      rounded="md"
       mb="3"
       mr="3"
       mt="3"
+      pr="5"
       h="auto"
     >
       {/* <Text>{`Depth ${depth}`}</Text> */}
@@ -71,19 +74,22 @@ function Comment({ item, index, depth, showChildren, children }) {
           <Link color="gray.500" fontSize="sm">
             reply
           </Link>
-          {item.replies.length > 0 && (
+          {item.replies.length > 0 && depth < 4 && (
             <Link onClick={toggleReplies} color="gray.500" fontSize="sm">
+              {/* {`showReplies: ${showReplies}`} */}
               {showReplies
                 ? `show ${getTotalChildComments(item.replies)} `
                 : "hide "}
               {item.replies.length === 1 ? "child comment" : "child comments"}
             </Link>
           )}
+          {depth >= 4 && (
+            <Link color="teal.500" fontSize="sm" fontWeight="bold">
+              continue this thread -&gt;
+            </Link>
+          )}
         </HStack>
-        {!showReplies &&
-          item.replies !== [] &&
-          depth < 4 &&
-          item.replies.map(renderChildComment)}
+        {!showReplies && depth < 4 && item.replies.map(renderChildComment)}
       </Box>
     </Stack>
   );
