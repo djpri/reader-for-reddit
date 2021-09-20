@@ -6,6 +6,7 @@ import {
   Text,
   Button,
   useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { SiReddit } from "react-icons/si";
 import { FaSun, FaMoon } from "react-icons/fa";
@@ -14,14 +15,11 @@ import LogInDrawer from "../LogInDrawer/LogInDrawer";
 
 function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const color = useColorModeValue("black", "white");
+  const bgColor = useColorModeValue("blue.50", "gray.900");
+
   return (
-    <Box
-      as="header"
-      w="100%"
-      bgColor="blue.800"
-      bgGradient="linear(to-r, blue.900, blue.700, blue.800)"
-      color="#f7f7f7"
-    >
+    <Box as="header" w="100%" bgColor={bgColor} color={color}>
       <Container maxW="container.xl">
         <Flex
           as="nav"
@@ -43,7 +41,7 @@ function NavBar() {
             <Button
               onClick={toggleColorMode}
               colorScheme="whiteAlpha"
-              color="black"
+              color={color}
               size="sm"
             >
               {colorMode === "dark" ? (

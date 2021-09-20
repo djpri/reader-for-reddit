@@ -11,6 +11,7 @@ import {
   Text,
   VStack,
   StackDivider,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -18,6 +19,7 @@ import SubredditLink from "./SubredditLink";
 
 function LeftDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const color = useColorModeValue("black", "white");
   const btnRef = useRef();
 
   return (
@@ -29,7 +31,7 @@ function LeftDrawer() {
         // size="sm"
         variant="ghost"
         colorScheme="whiteAlpha"
-        color="white"
+        color={color}
       >
         <GiHamburgerMenu size="1.5rem" />
       </Button>
@@ -55,8 +57,8 @@ function LeftDrawer() {
               <SubredditLink sub="boxing" onClose={onClose} />
               <SubredditLink sub="liverpoolfc" onClose={onClose} />
               <SubredditLink sub="soccer" onClose={onClose} />
-              <SubredditLink sub="sexyasmrgirls" onClose={onClose} />
-              <SubredditLink sub="gonemild" onClose={onClose} />
+              <SubredditLink sub="learnprogramming" onClose={onClose} />
+              <SubredditLink sub="webdev" onClose={onClose} />
             </VStack>
           </DrawerBody>
         </DrawerContent>

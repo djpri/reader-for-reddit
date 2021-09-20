@@ -15,6 +15,7 @@ import {
   MenuDivider,
 } from "@chakra-ui/react";
 import SearchError from "../../src/components/Errors/SearchError";
+import appOnlyAuth from "../../src/snoowrap/snoowrap";
 
 function Subreddit({ subreddit, apiData }) {
   const [isLoading, setisLoading] = useState(false);
@@ -42,6 +43,7 @@ function Subreddit({ subreddit, apiData }) {
     setPosts(apiData);
   }, [apiData]);
 
+  // for sorting posts by new, old, top, most commented
   const sortPostsBy = (type, sortType, ascending = true) => {
     setSortType(sortType);
     setPosts((data) => {
@@ -131,17 +133,32 @@ export default Subreddit;
 
 export async function getServerSideProps({ params }) {
   const sub = params.subreddit;
-  // Fetch data from reddit API
-  const response = await fetch(`http://localhost:3000/api/r/${sub}`);
-  let data = { data: "" };
-  if (response.ok) {
-    data = await response.json();
-  }
-  // Pass data to the page via props
+  const r = await appOnlyAuth;
+  const data = await r.getSubreddit(sub).getHot({ limit: 25 });
+
   return {
     props: {
-      apiData: data?.data || null,
+      apiData: JSON.parse(JSON.stringify(data)) || null,
       subreddit: sub,
     },
   };
 }
+
+// export async function getServerSideProps({ params }) {
+//   import appOnlyAuth from "../../src/snoowrap/snoowrap";
+
+//   const sub = params.subreddit;
+//   // Fetch data from reddit API
+//   const response = await fetch(`http://localhost:3000/api/r/${sub}`);
+//   let data = { data: "" };
+//   if (response.ok) {
+//     data = await response.json();
+//   }
+//   // Pass data to the page via props
+//   return {
+//     props: {
+//       apiData: data?.data || null,
+//       subreddit: sub,
+//     },
+//   };
+// }

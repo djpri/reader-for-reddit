@@ -13,8 +13,23 @@ a {
   box-sizing: border-box;
 }
 
+/* React Markdown styling for submissions and comments */
+
+.comment {
+  width: 100%;
+  max-width: 100%;
+}
+
 .comment p {
   margin: 10px 0;
+  font-weight: 400;
+}
+
+.comment h1,
+.comment h2,
+.comment h3 {
+  margin: 10px 0px;
+  font-weight: bold;
 }
 
 .comment a {
@@ -25,4 +40,21 @@ a {
 .comment a:hover {
   color: #63b3ed;
   text-decoration: underline;
+}
+
+.comment ul,
+.comment ol {
+  padding-left: 40px;
+}
+
+.comment pre {
+  overflow-x: auto;
+  max-width: 95%;
+  border: 1px solid gray;
+  padding: 0 10px;
+  border-radius: 2px;
+}
+
+.css-0 {
+  max-width: 100%;
 }
