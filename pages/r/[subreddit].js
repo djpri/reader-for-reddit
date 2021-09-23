@@ -87,14 +87,15 @@ function Subreddit({ subreddit, apiData }) {
       <Button
         isLoading={isLoading}
         colorScheme="blue"
-        size="md"
+        color="white"
+        size="sm"
         onClick={handleSearch}
       >
         Get Posts
       </Button>
 
       <Menu>
-        <MenuButton as={Button} ml="3" rightIcon={<HiChevronDown />}>
+        <MenuButton as={Button} ml="3" size="sm" rightIcon={<HiChevronDown />}>
           Sorted by
         </MenuButton>
         <MenuList>
@@ -113,7 +114,7 @@ function Subreddit({ subreddit, apiData }) {
         </MenuList>
       </Menu>
 
-      <Heading as="h1" mb="30px" mt="10px">
+      <Heading as="h1" mb="30px" mt="10px" fontSize="3xl">
         {sortType} Posts from {`/r/${subreddit}`}
       </Heading>
 

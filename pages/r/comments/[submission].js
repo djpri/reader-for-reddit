@@ -8,13 +8,15 @@ import ReactMarkdown from "react-markdown";
 import NextLink from "next/link";
 import appOnlyAuth from "../../../src/snoowrap/snoowrap";
 
-function Submission({ comments, title, selftext, subreddit }) {
+function Submission({ comments, title, selftext, subreddit, url }) {
   const [isLoading, setisLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [posts, setPosts] = useState(comments || null);
   const [search, setSearch] = useState("");
   const [sortType, setSortType] = useState(null);
   const router = useRouter();
+
+  console.log(`URL is ${url}`);
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -35,7 +37,7 @@ function Submission({ comments, title, selftext, subreddit }) {
   }, [comments]);
 
   return (
-    <Container maxW="container.xl" mt="10">
+    <Container maxW="container.xl" mt="10" mb="20">
       {subreddit ? (
         <NextLink href={`/r/${subreddit}`} passHref>
           <Link>{subreddit}</Link>
@@ -44,12 +46,20 @@ function Submission({ comments, title, selftext, subreddit }) {
         <Link>no subreddit</Link>
       )}
       <Heading as="h4" size="md" mb="5">
-        {title}
+        <NextLink href={url} passHref>
+          <Link>{title}</Link>
+        </NextLink>
       </Heading>
+      {/* show image for suitable file extensions */}
+      {url.match(/^.*\.(jpg|JPG|png|PNG)$/) && (
+        <Box w="300px">
+          <img src={url} />
+        </Box>
+      )}
       {selftext && (
         <Box
           className="comment"
-          border="2px solid gray"
+          border="1px solid gray"
           borderRadius="5px"
           pl="5"
           pr="5"
@@ -71,12 +81,14 @@ export async function getServerSideProps({ params }) {
   const { submission } = params;
   const r = await appOnlyAuth;
   const title = await r.getSubmission(submission).title;
+  const url = await r.getSubmission(submission).url;
   const subreddit = await r.getSubmission(submission).subreddit.display_name;
   const selftext = await r.getSubmission(submission).selftext;
   const comments = await r.getSubmission(submission).comments;
   return {
     props: {
       comments: JSON.parse(JSON.stringify(comments)) || null,
+      url: JSON.parse(JSON.stringify(url)) || null,
       title: JSON.parse(JSON.stringify(title)) || null,
       selftext: JSON.parse(JSON.stringify(selftext)) || null,
       subreddit: JSON.parse(JSON.stringify(subreddit)) || null,
