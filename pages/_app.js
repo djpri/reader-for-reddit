@@ -5,6 +5,7 @@ import Router from "next/router";
 import NProgress from "nprogress";
 import "../styles/nprogress.css";
 import theme from "../theme/theme";
+import { Box } from "@chakra-ui/react";
 
 Router.onRouteChangeStart = () => {
   // console.log('onRouteChangeStart triggered');
@@ -25,7 +26,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <NavBar />
-      <Component {...pageProps} />
+      <Box as="main">
+        <Component {...pageProps} />
+      </Box>
     </ChakraProvider>
   );
 }

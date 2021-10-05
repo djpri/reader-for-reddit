@@ -19,7 +19,15 @@ function NavBar() {
   const bgColor = useColorModeValue("blue.50", "gray.900");
 
   return (
-    <Box as="header" w="100%" bgColor={bgColor} color={color}>
+    <Box
+      as="header"
+      w="100%"
+      bgColor={bgColor}
+      color={color}
+      position="sticky"
+      zIndex="100"
+      top="0"
+    >
       <Container maxW="container.xl">
         <Flex
           as="nav"
