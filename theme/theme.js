@@ -18,6 +18,7 @@ const theme = extendTheme({
       },
       body: {
         fontFamily: "body",
+        fontSize: { base: "0.875rem", md: "1rem" },
         color: mode("gray.800", "whiteAlpha.900")(props),
         bg: mode("gray.50", "gray.800")(props),
         lineHeight: "base",
@@ -35,7 +36,7 @@ const theme = extendTheme({
       fontWeight: "bold",
       letterSpacing: "-0.015em",
       lineHeight: "1.24",
-      fontSize: { base: "2rem", md: "3.5rem" },
+      fontSize: { base: "1.75rem", md: "3.5rem" },
     },
     "heading-2": {
       fontFamily: "heading",

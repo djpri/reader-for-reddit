@@ -16,8 +16,6 @@ function Submission({ comments, title, selftext, subreddit, url }) {
   const [sortType, setSortType] = useState(null);
   const router = useRouter();
 
-  console.log(`URL is ${url}`);
-
   useEffect(() => {
     const handleRouteChange = () => {
       setisLoading(false);
@@ -65,7 +63,13 @@ function Submission({ comments, title, selftext, subreddit, url }) {
           pr="5"
           maxW="container.xl"
         >
-          <ReactMarkdown>{selftext}</ReactMarkdown>
+          <ReactMarkdown
+            transformLinkUri={(href) => (
+              <a style={{ color: "yellow" }}>baba link {href}</a>
+            )}
+          >
+            {selftext}
+          </ReactMarkdown>
         </Box>
       )}
 

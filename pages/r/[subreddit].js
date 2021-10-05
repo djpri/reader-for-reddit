@@ -144,22 +144,3 @@ export async function getServerSideProps({ params }) {
     },
   };
 }
-
-// export async function getServerSideProps({ params }) {
-//   import appOnlyAuth from "../../src/snoowrap/snoowrap";
-
-//   const sub = params.subreddit;
-//   // Fetch data from reddit API
-//   const response = await fetch(`http://localhost:3000/api/r/${sub}`);
-//   let data = { data: "" };
-//   if (response.ok) {
-//     data = await response.json();
-//   }
-//   // Pass data to the page via props
-//   return {
-//     props: {
-//       apiData: data?.data || null,
-//       subreddit: sub,
-//     },
-//   };
-// }
