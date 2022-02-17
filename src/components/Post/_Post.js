@@ -36,10 +36,15 @@ function Post({ postData }) {
     );
 
   return (
-    <Box className={styles.post} w="100%" mb="5">
+    <Box
+      className={styles.post}
+      w="100%"
+      mb="5"
+      border="1px"
+      borderColor="whiteAlpha.400"
+    >
       <Stack
-        spacing="10px"
-        divider={<StackDivider borderColor="gray.200" />}
+        spacing="15px"
         align={["start", "start", "center"]}
         direction={["column", "column", "row"]}
       >

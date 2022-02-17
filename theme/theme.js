@@ -46,6 +46,9 @@ const theme = extendTheme({
       lineHeight: "1.24",
       fontSize: { base: "1.75rem", md: "2.75rem" },
     },
+    body: {
+      fontSize: { base: "1rem" },
+    },
     caps: {
       textTransform: "uppercase",
       fontSize: "sm",

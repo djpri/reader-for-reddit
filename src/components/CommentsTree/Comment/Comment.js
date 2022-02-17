@@ -38,6 +38,8 @@ function Comment({ item, depth, showChildren }) {
       <Stack
         ml={(depth - 1) * 1}
         direction="row"
+        border="1px"
+        borderColor="whiteAlpha.400"
         pt="3"
         bg={boxColor}
         pb="3"

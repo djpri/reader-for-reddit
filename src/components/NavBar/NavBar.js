@@ -27,6 +27,8 @@ function NavBar() {
       position="sticky"
       zIndex="100"
       top="0"
+      border="1px solid"
+      borderColor="whiteAlpha.300"
     >
       <Container maxW="container.xl">
         <Flex
