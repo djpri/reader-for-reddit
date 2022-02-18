@@ -1,10 +1,4 @@
-import {
-  Alert,
-  Stack,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-} from "@chakra-ui/react";
+import { Alert, Stack, AlertIcon } from "@chakra-ui/react";
 
 function SearchError() {
   return (

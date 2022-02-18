@@ -1,9 +1,9 @@
-import { Box, Text, VStack, StackDivider } from "@chakra-ui/layout";
+import { VStack } from "@chakra-ui/layout";
 import Comment from "./Comment/Comment";
 import { useState } from "react";
 
 function CommentsTree({ comments }) {
-  const [showChildren, setShowChildren] = useState(true);
+  const [showChildren] = useState(true);
 
   const renderParentComment = (item, index) => {
     return (

@@ -8,7 +8,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
-  Text,
   VStack,
   StackDivider,
   useColorModeValue,

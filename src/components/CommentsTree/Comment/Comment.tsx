@@ -22,7 +22,7 @@ function Comment({ item, depth, showChildren }) {
   );
 
   const renderChildComment = (item, index) => {
-    return <Comment item={item} index={index} depth={depth + 1} />;
+    return <Comment item={item} key={index} depth={depth + 1} showChildren />;
   };
 
   const getTotalChildComments = (replies) => {

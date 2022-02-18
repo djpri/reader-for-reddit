@@ -1,12 +1,12 @@
 import router from "next/router";
 import { useEffect, useState } from "react";
+import { SubredditPost } from "../redditApi";
+
+type sortType = "score" | "created" | "num_comments";
 
 function useSubredditSort(postsData: any[]) {
   const [sortType, setSortType] = useState(null);
-  const [sortedPosts, setSortedPosts] = useState(postsData);
-  const [isLoading, setisLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [search, setSearch] = useState("");
+  const [sortedPosts, setSortedPosts] = useState(null);
 
   useEffect(() => {
     if (postsData) {
@@ -16,9 +16,7 @@ function useSubredditSort(postsData: any[]) {
 
   useEffect(() => {
     const handleRouteChange = () => {
-      setisLoading(false);
       setSortType(null);
-      setIsError(false);
     };
 
     router.events.on("routeChangeComplete", handleRouteChange);
@@ -29,14 +27,16 @@ function useSubredditSort(postsData: any[]) {
   }, []);
 
   // for sorting posts by new, old, top, most commented
-  const sortPostsBy = (type, sortType, ascending = true) => {
+  const sortPostsBy = (type: sortType, sortType: string, ascending = true) => {
     setSortType(sortType);
-    setSortedPosts((data) => {
-      const sortedData = data.sort((a, b) => {
+    setSortedPosts((data: SubredditPost[]) => {
+      const sortedData = data.sort((a: SubredditPost, b: SubredditPost) => {
+        console.log(a);
+        console.log(b);
         if (ascending) {
-          return b[type] - a[type];
+          return b.data[type] - a.data[type];
         } else {
-          return a[type] - b[type];
+          return a.data[type] - b.data[type];
         }
       });
       // spread operator required because sort does not make a copy of original array
@@ -44,25 +44,10 @@ function useSubredditSort(postsData: any[]) {
     });
   };
 
-  const handleSearch = () => {
-    if (!search) {
-      setIsError(true);
-      return;
-    }
-    setisLoading(true);
-    setIsError(false);
-    router.push(`/r/${search}`);
-  };
-
   return {
     sortPostsBy,
-    handleSearch,
-    setSearch,
     sortedPosts,
     sortType,
-    search,
-    isError,
-    isLoading,
   };
 }
 

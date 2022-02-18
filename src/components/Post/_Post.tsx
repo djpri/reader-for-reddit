@@ -1,21 +1,18 @@
 import React from "react";
-import {
-  Text,
-  Box,
-  Stack,
-  VStack,
-  StackDivider,
-  Button,
-  Flex,
-} from "@chakra-ui/react";
+import { Text, Box, Stack, VStack, Button, Flex } from "@chakra-ui/react";
 import styles from "../../../styles/Home.module.css";
 import moment from "moment";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { ImFileText2 } from "react-icons/im";
 import Comments from "./Comments";
 import Link from "next/link";
+import { PostData } from "../../types/post";
 
-function Post({ postData }) {
+interface IProps {
+  postData: PostData;
+}
+
+function Post({ postData }: IProps) {
   const {
     score,
     thumbnail,
