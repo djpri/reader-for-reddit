@@ -79,22 +79,3 @@ function Submission({ comments, title, selftext, subreddit, url }) {
 }
 
 export default Submission;
-
-export async function getServerSideProps({ params }) {
-  // const { submission } = params;
-  // const r = await appOnlyAuth;
-  // const title = await r.getSubmission(submission).title;
-  // const url = await r.getSubmission(submission).url;
-  // const subreddit = await r.getSubmission(submission).subreddit.display_name;
-  // const selftext = await r.getSubmission(submission).selftext;
-  // const comments = await r.getSubmission(submission).comments;
-  // return {
-  //   props: {
-  //     comments: JSON.parse(JSON.stringify(comments)) || null,
-  //     url: JSON.parse(JSON.stringify(url)) || null,
-  //     title: JSON.parse(JSON.stringify(title)) || null,
-  //     selftext: JSON.parse(JSON.stringify(selftext)) || null,
-  //     subreddit: JSON.parse(JSON.stringify(subreddit)) || null,
-  //   },
-  // };
-}
