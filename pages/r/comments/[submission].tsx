@@ -6,7 +6,6 @@ import { Container, Text, Heading, Box, Link } from "@chakra-ui/react";
 import CommentsTree from "../../../src/components/CommentsTree/CommentsTree";
 import ReactMarkdown from "react-markdown";
 import NextLink from "next/link";
-import appOnlyAuth from "../../../src/snoowrap/snoowrap";
 
 function Submission({ comments, title, selftext, subreddit, url }) {
   const [isLoading, setisLoading] = useState(false);
@@ -82,42 +81,20 @@ function Submission({ comments, title, selftext, subreddit, url }) {
 export default Submission;
 
 export async function getServerSideProps({ params }) {
-  const { submission } = params;
-  const r = await appOnlyAuth;
-  const title = await r.getSubmission(submission).title;
-  const url = await r.getSubmission(submission).url;
-  const subreddit = await r.getSubmission(submission).subreddit.display_name;
-  const selftext = await r.getSubmission(submission).selftext;
-  const comments = await r.getSubmission(submission).comments;
-  return {
-    props: {
-      comments: JSON.parse(JSON.stringify(comments)) || null,
-      url: JSON.parse(JSON.stringify(url)) || null,
-      title: JSON.parse(JSON.stringify(title)) || null,
-      selftext: JSON.parse(JSON.stringify(selftext)) || null,
-      subreddit: JSON.parse(JSON.stringify(subreddit)) || null,
-    },
-  };
+  // const { submission } = params;
+  // const r = await appOnlyAuth;
+  // const title = await r.getSubmission(submission).title;
+  // const url = await r.getSubmission(submission).url;
+  // const subreddit = await r.getSubmission(submission).subreddit.display_name;
+  // const selftext = await r.getSubmission(submission).selftext;
+  // const comments = await r.getSubmission(submission).comments;
+  // return {
+  //   props: {
+  //     comments: JSON.parse(JSON.stringify(comments)) || null,
+  //     url: JSON.parse(JSON.stringify(url)) || null,
+  //     title: JSON.parse(JSON.stringify(title)) || null,
+  //     selftext: JSON.parse(JSON.stringify(selftext)) || null,
+  //     subreddit: JSON.parse(JSON.stringify(subreddit)) || null,
+  //   },
+  // };
 }
-
-// export async function getServerSideProps({ params }) {
-//   const submission = params.submission;
-//   // Fetch data from reddit API
-//   const response = await fetch(
-//     `http://localhost:3000/api/r/comments/${submission}`
-//   );
-//   let data;
-//   if (response.ok) {
-//     data = await response.json();
-//   }
-//   // console.log(data.subreddit);
-//   // Pass data to the page via props
-//   return {
-//     props: {
-//       comments: data?.comments || null,
-//       title: data?.title || null,
-//       selftext: data?.selftext || null,
-//       subreddit: data?.subreddit || null,
-//     },
-//   };
-// }

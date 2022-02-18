@@ -14,7 +14,6 @@ import {
   MenuItem,
 } from "@chakra-ui/react";
 import SearchError from "../../src/components/Errors/SearchError";
-import appOnlyAuth from "../../src/snoowrap/snoowrap";
 
 function Subreddit({ subreddit, apiData }) {
   const [isLoading, setisLoading] = useState(false);
@@ -132,14 +131,13 @@ function Subreddit({ subreddit, apiData }) {
 export default Subreddit;
 
 export async function getServerSideProps({ params }) {
-  const sub = params.subreddit;
-  const r = await appOnlyAuth;
-  const data = await r.getSubreddit(sub).getHot({ limit: 25 });
-
-  return {
-    props: {
-      apiData: JSON.parse(JSON.stringify(data)) || null,
-      subreddit: sub,
-    },
-  };
+  // const sub = params.subreddit;
+  // const r = await appOnlyAuth;
+  // const data = await r.getSubreddit(sub).getHot({ limit: 25 });
+  // return {
+  //   props: {
+  //     apiData: JSON.parse(JSON.stringify(data)) || null,
+  //     subreddit: sub,
+  //   },
+  // };
 }
