@@ -12,7 +12,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuDivider,
 } from "@chakra-ui/react";
 import SearchError from "../../src/components/Errors/SearchError";
 import appOnlyAuth from "../../src/snoowrap/snoowrap";

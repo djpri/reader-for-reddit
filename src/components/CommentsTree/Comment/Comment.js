@@ -45,7 +45,7 @@ function Comment({ item, depth, showChildren }) {
         pb="3"
         boxShadow="base"
         rounded="md"
-        mb="3"
+        mb="1"
         mr="3"
         mt="3"
         pr="5"
