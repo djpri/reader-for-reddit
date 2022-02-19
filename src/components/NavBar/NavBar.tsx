@@ -16,7 +16,7 @@ import LogInDrawer from "../LogInDrawer/LogInDrawer";
 function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const color = useColorModeValue("black", "white");
-  const bgColor = useColorModeValue("blue.50", "gray.900");
+  const bgColor = useColorModeValue("gray.100", "gray.900");
 
   return (
     <Box
@@ -24,11 +24,13 @@ function NavBar() {
       w="100%"
       bgColor={bgColor}
       color={color}
-      position="sticky"
+      position="fixed"
       zIndex="100"
       top="0"
       border="1px solid"
       borderColor="whiteAlpha.300"
+      mb="50px"
+      opacity={1}
     >
       <Container maxW="container.xl">
         <Flex
@@ -42,8 +44,8 @@ function NavBar() {
         >
           <Flex align="center">
             <LeftDrawer />
-            <SiReddit size="1.5rem" />
-            <Text fontSize="xl" ml="3" fontWeight="bold">
+            <SiReddit size="1.3rem" />
+            <Text fontSize="lg" ml="3" fontWeight="bold">
               /r/eader for reddit
             </Text>
           </Flex>
@@ -60,7 +62,6 @@ function NavBar() {
                 <FaMoon size="1rem" />
               )}
             </Button>
-            <LogInDrawer />
           </HStack>
         </Flex>
       </Container>

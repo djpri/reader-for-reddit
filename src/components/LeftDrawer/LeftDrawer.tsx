@@ -27,12 +27,12 @@ function LeftDrawer() {
         ref={btnRef}
         onClick={onOpen}
         mr="3"
-        // size="sm"
+        size="sm"
         variant="ghost"
         colorScheme="whiteAlpha"
         color={color}
       >
-        <GiHamburgerMenu size="1.5rem" />
+        <GiHamburgerMenu size="1.3rem" />
       </Button>
       <Drawer
         isOpen={isOpen}

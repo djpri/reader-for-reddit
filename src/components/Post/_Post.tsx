@@ -39,6 +39,7 @@ function Post({ postData }: IProps) {
       mb="5"
       border="1px"
       borderColor="whiteAlpha.400"
+      borderRadius="sm"
     >
       <Stack
         spacing="15px"

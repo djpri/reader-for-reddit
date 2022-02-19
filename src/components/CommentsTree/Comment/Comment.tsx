@@ -8,13 +8,20 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { VscCollapseAll } from "react-icons/vsc";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { CommentData } from "../../../types/comment";
 
-function Comment({ item, depth, showChildren }) {
+interface IProps {
+  item: CommentData;
+  depth: number;
+  showChildren: boolean;
+}
+
+function Comment({ item, depth, showChildren }: IProps) {
   const [showReplies, setShowReplies] = useState(showChildren);
   const [displayBody, setDisplayBody] = useState("block");
-  const repliesRef = useRef();
+  // const repliesRef = useRef();
 
   const boxColor = useColorModeValue(
     depth % 2 === 0 ? "#e6ecf092" : "white",
@@ -44,7 +51,7 @@ function Comment({ item, depth, showChildren }) {
         bg={boxColor}
         pb="3"
         boxShadow="base"
-        rounded="md"
+        // rounded="md"
         mb="1"
         mr="3"
         mt="3"

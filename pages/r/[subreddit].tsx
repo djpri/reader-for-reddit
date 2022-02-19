@@ -1,30 +1,31 @@
-import { useEffect, useState } from "react";
+import { useCallback } from "react";
 import Post from "../../src/components/Post/_Post";
 import { Container, Text, Heading } from "@chakra-ui/react";
 import useSubredditSort from "../../src/hooks/useSubredditSort";
-import { loadSubreddit } from "../../src/redditApi";
+import { loadSubreddit } from "../../src/redditApi/loadSubreddit";
 import { useRouter } from "next/router";
 import SubredditSort from "../../src/components/Subreddit/SubredditSort/SubredditSort";
+import useRedditApi from "../../src/hooks/useRedditApi";
 
 function Subreddit() {
-  const [posts, setPosts] = useState(null);
   const router = useRouter();
-
   const { subreddit } = router.query;
+  const apiCallHandler = useCallback(
+    () => loadSubreddit(subreddit),
+    [subreddit]
+  );
+  const { isLoading, error, data: posts } = useRedditApi(apiCallHandler);
 
-  const subSort = useSubredditSort(posts);
+  const subSort = useSubredditSort(posts?.children);
 
-  useEffect(() => {
-    const getSubData = async () => {
-      try {
-        const { children } = await loadSubreddit(subreddit);
-        setPosts(children);
-      } catch (error) {
-        setPosts(null);
-      }
-    };
-    getSubData();
-  }, [subreddit]);
+  if (error) return <p>never mind</p>;
+
+  if (isLoading)
+    return (
+      <Container maxW="container.xl">
+        <p>WAIT</p>
+      </Container>
+    );
 
   return (
     <Container maxW="container.xl">

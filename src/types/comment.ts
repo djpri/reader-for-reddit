@@ -1,4 +1,4 @@
-export interface Comment {
+export interface CommentData {
   subreddit_id: string;
   approved_at_utc: any;
   author_is_blocked: boolean;

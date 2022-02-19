@@ -1,19 +1,27 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import { HiChevronDown } from "react-icons/hi";
-import Post from "../../../src/components/Post/_Post";
-import { Container, Text, Heading, Box, Link } from "@chakra-ui/react";
+import { Container, Heading, Box, Link } from "@chakra-ui/react";
 import CommentsTree from "../../../src/components/CommentsTree/CommentsTree";
 import ReactMarkdown from "react-markdown";
 import NextLink from "next/link";
 
-function Submission({ comments, title, selftext, subreddit, url }) {
+function Submission() {
   const [isLoading, setisLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [posts, setPosts] = useState(comments || null);
+  const [posts, setPosts] = useState(null);
   const [search, setSearch] = useState("");
   const [sortType, setSortType] = useState(null);
   const router = useRouter();
+
+  const data = {
+    comments: [],
+    title: "",
+    selftext: "",
+    subreddit: "",
+    url: "",
+  };
+
+  const { comments, title, selftext, subreddit, url } = data;
 
   useEffect(() => {
     const handleRouteChange = () => {
