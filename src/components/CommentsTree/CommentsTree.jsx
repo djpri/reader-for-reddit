@@ -1,5 +1,5 @@
 import { VStack } from "@chakra-ui/layout";
-import Comment from "./Comment/Comment";
+import Comment from "./Comment";
 import { useState } from "react";
 
 function CommentsTree({ comments }) {

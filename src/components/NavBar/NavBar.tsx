@@ -11,7 +11,6 @@ import {
 import { SiReddit } from "react-icons/si";
 import { FaSun, FaMoon } from "react-icons/fa";
 import LeftDrawer from "../LeftDrawer/LeftDrawer";
-import LogInDrawer from "../LogInDrawer/LogInDrawer";
 
 function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();

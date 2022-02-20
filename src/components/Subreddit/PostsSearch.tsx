@@ -1,7 +1,7 @@
 import { Input, Button } from "@chakra-ui/react";
 import React from "react";
-import useSubredditSearch from "../../../hooks/useSubredditSearch";
-import SearchError from "../../Errors/SearchError";
+import useSubredditSearch from "../../hooks/useSubredditSearch";
+import SearchError from "../Errors/SearchError";
 
 function SubredditSearch() {
   const { handleSearch, setSearch, search, isError, isLoading } =

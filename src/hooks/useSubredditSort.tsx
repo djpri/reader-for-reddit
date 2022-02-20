@@ -1,6 +1,6 @@
 import router from "next/router";
 import { useEffect, useState } from "react";
-import { SubredditPost } from "../redditApi";
+import { SubredditPost } from "../redditApi/axiosInstance";
 
 type sortType = "score" | "created" | "num_comments";
 

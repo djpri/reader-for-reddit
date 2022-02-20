@@ -10,7 +10,7 @@ import {
 import { VscCollapseAll } from "react-icons/vsc";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { CommentData } from "../../../types/comment";
+import { CommentData } from "../../types/comment";
 
 interface IProps {
   item: CommentData;
