@@ -1,10 +1,12 @@
 import router from "next/router";
 import { useEffect, useState } from "react";
 
-type sortType = "score" | "created" | "num_comments";
+type sortType = "score" | "created" | "num_comments" | null;
 
-function useSubredditSort(postsData: any[]) {
-  const [sortType, setSortType] = useState(null);
+function usePostsFilter(postsData: any[]) {
+  const [filteredPosts, setFilteredPosts] = useState(null);
+  const [sortType, setSortType] = useState<sortType>(null);
+  const [filterType, setFilterType] = useState(null);
   const [sortedPosts, setSortedPosts] = useState(null);
 
   useEffect(() => {
@@ -12,6 +14,10 @@ function useSubredditSort(postsData: any[]) {
       setSortedPosts(postsData);
     }
   }, [postsData]);
+
+  useEffect(() => {}, []);
+
+  useEffect(() => {}, [sortType]);
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -26,14 +32,14 @@ function useSubredditSort(postsData: any[]) {
   }, []);
 
   // for sorting posts by new, old, top, most commented
-  const sortPostsBy = (type: sortType, sortType: string, ascending = true) => {
+  const sortPostsBy = (field: sortType, sortType: string, ascending = true) => {
     setSortType(sortType);
     setSortedPosts((post) => {
       const sortedData = post.sort((a, b) => {
         if (ascending) {
-          return b.data[type] - a.data[type];
+          return b.data[field] - a.data[field];
         } else {
-          return a.data[type] - b.data[type];
+          return a.data[field] - b.data[field];
         }
       });
       // spread operator required because sort does not make a copy of original array
@@ -45,7 +51,8 @@ function useSubredditSort(postsData: any[]) {
     sortPostsBy,
     sortedPosts,
     sortType,
+    setSortType,
   };
 }
 
-export default useSubredditSort;
+export default usePostsFilter;

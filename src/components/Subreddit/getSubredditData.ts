@@ -1,4 +1,4 @@
-import { RedditAPI } from "./axiosInstance";
+import { RedditAPI } from "../../redditApi";
 
 interface SubredditPostData {
   after: string | null;

@@ -1,4 +1,4 @@
-import { RedditAPI } from "./axiosInstance";
+import { RedditAPI } from "../../redditApi";
 
 export const loadPostDetailsAndComments = async (permalink: string) => {
   try {

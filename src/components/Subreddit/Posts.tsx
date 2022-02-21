@@ -1,11 +1,11 @@
 import { Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import React, { useCallback, useState } from "react";
 import useRedditApi from "../../hooks/useRedditApi";
-import useSubredditSort from "../../hooks/useSubredditSort";
-import { loadSubredditPosts } from "../../redditApi/subreddit";
+import { loadSubredditPosts } from "./getSubredditData";
 import Post from "./Post";
 import PostSkeleton from "./PostSkeleton";
 import SubredditSort from "./PostsSort";
+import usePostsFilter from "./usePostsFilter";
 
 function Posts({ subreddit }) {
   const [after, setAfter] = useState(null);
@@ -17,7 +17,7 @@ function Posts({ subreddit }) {
 
   const { isLoading, error, data: posts } = useRedditApi(apiCallHandler);
 
-  const subSort = useSubredditSort(posts?.children);
+  const subSort = usePostsFilter(posts?.children);
 
   if (error) return <p>{error}</p>;
 

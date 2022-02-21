@@ -1,14 +1,16 @@
-import "../styles/globals.css";
-import { ChakraProvider } from "@chakra-ui/react";
-import NavBar from "../src/components/NavBar/NavBar";
-import { useRouter } from "next/router";
-import NProgress from "nprogress";
-import "../styles/nprogress.css";
-import theme from "../theme/theme";
-import { Box } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import axios from "axios";
 import moment from "moment";
+import { useRouter } from "next/router";
+import NProgress from "nprogress";
+import { useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import NavBar from "../src/components/NavBar/NavBar";
+import "../styles/globals.css";
+import "../styles/nprogress.css";
+import theme from "../theme/theme";
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -81,12 +83,14 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   return (
-    <ChakraProvider theme={theme}>
-      <NavBar />
-      <Box as="main" mt="80px" mb="100px">
-        <Component {...pageProps} />
-      </Box>
-    </ChakraProvider>
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider theme={theme}>
+        <NavBar />
+        <Box as="main" mt="80px" mb="100px">
+          <Component {...pageProps} />
+        </Box>
+      </ChakraProvider>
+    </QueryClientProvider>
   );
 }
 
