@@ -1,16 +1,18 @@
 import { Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import useRedditApi from "../../hooks/useRedditApi";
 import useSubredditSort from "../../hooks/useSubredditSort";
 import { loadSubredditPosts } from "../../redditApi/subreddit";
-import Post from "../Post/Post";
+import Post from "./Post";
 import PostSkeleton from "./PostSkeleton";
 import SubredditSort from "./PostsSort";
 
 function Posts({ subreddit }) {
+  const [after, setAfter] = useState(null);
+
   const apiCallHandler = useCallback(
-    () => loadSubredditPosts(subreddit),
-    [subreddit]
+    () => loadSubredditPosts(subreddit, after),
+    [subreddit, after]
   );
 
   const { isLoading, error, data: posts } = useRedditApi(apiCallHandler);
@@ -46,7 +48,9 @@ function Posts({ subreddit }) {
           No posts found. This subreddit does not exist or no longer exists.
         </Text>
       )}
-      <Button w="100%">Get more posts</Button>
+      <Button w="100%" onClick={() => setAfter(posts.after)}>
+        Get more posts
+      </Button>
     </Container>
   );
 }

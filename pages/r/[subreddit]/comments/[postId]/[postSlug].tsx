@@ -4,6 +4,7 @@ import { Container } from "@chakra-ui/react";
 import CommentsTree from "src/components/CommentsTree/CommentsTree";
 import { useRedditApi } from "src/hooks";
 import { loadCommentsFromPost } from "src/redditApi";
+import PostHeader from "src/components/Post/PostHeader";
 
 function Submission() {
   const router: NextRouter = useRouter();
@@ -20,8 +21,8 @@ function Submission() {
 
   useEffect(() => {
     if (data) {
-      setPostInfo(data[0].data);
-      setComments(data[1].data.children);
+      setPostInfo(data.postDetails);
+      setComments(data.parentComments);
     } else {
       setPostInfo(null);
       setComments(null);
@@ -36,6 +37,7 @@ function Submission() {
 
   return (
     <Container maxW="container.xl" mt="10" mb="20">
+      <PostHeader postDetails={postInfo} />
       <CommentsTree comments={comments} />
     </Container>
   );

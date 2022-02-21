@@ -1,9 +1,12 @@
 import { RedditAPI } from "./axiosInstance";
 
-export const loadCommentsFromPost = async (permalink: string) => {
+export const loadPostDetailsAndComments = async (permalink: string) => {
   try {
-    const data = await RedditAPI.get(permalink);
-    return data;
+    const response = await RedditAPI.get(permalink);
+    const postDetails = response[0].data.children[0].data;
+    const parentComments = response[1].data.children;
+
+    return { postDetails, parentComments };
   } catch (error) {
     console.log(error);
     return null;

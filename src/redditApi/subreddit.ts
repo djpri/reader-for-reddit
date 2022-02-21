@@ -16,10 +16,14 @@ export const loadSubredditInfo = async (subreddit: string) => {
 };
 
 export const loadSubredditPosts = async (
-  subreddit: string | string[]
+  subreddit: string | string[],
+  after: string | null = null,
+  count: number = 25
 ): Promise<SubredditPostData> => {
   try {
-    const { data } = await RedditAPI.get(`r/${subreddit}`);
+    const { data } = await RedditAPI.get(`r/${subreddit}`, {
+      params: { after, count },
+    });
     return {
       after: data.after,
       before: data.before,
@@ -27,25 +31,5 @@ export const loadSubredditPosts = async (
     };
   } catch (error) {
     throw new Error("Could not get subreddit posts");
-  }
-};
-
-export const loadMoreSubredditPosts = async (
-  subreddit: string | string[],
-  after: string,
-  count: number = 25
-): Promise<SubredditPostData> => {
-  try {
-    const { data } = await RedditAPI.get(`r/${subreddit}`, {
-      params: { after, count },
-    });
-
-    return {
-      after: data.after,
-      before: data.before,
-      children: data.children,
-    };
-  } catch (error) {
-    throw new Error("Could not get any more subreddit posts");
   }
 };

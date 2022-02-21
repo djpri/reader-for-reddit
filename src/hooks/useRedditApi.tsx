@@ -1,8 +1,6 @@
-import { NextRouter, useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 function useRedditApi(apiFunction: () => Promise<any>) {
-  const router: NextRouter = useRouter();
   const [isLoading, setisLoading] = useState(true);
   const [error, setError] = useState(null);
   const [data, setData] = useState(null);
@@ -16,7 +14,6 @@ function useRedditApi(apiFunction: () => Promise<any>) {
     const makeApiCall = async () => {
       try {
         const data = await apiFunction();
-        console.log(data);
         setData(data);
         setisLoading(false);
       } catch (error) {

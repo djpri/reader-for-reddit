@@ -1,16 +1,11 @@
-import { loadCommentsFromPost, loadMoreCommentsFromPost } from "./post";
-import {
-  loadMoreSubredditPosts,
-  loadSubredditInfo,
-  loadSubredditPosts,
-} from "./subreddit";
+import { loadPostDetailsAndComments, loadMoreCommentsFromPost } from "./post";
+import { loadSubredditInfo, loadSubredditPosts } from "./subreddit";
 
 export {
   // SUBREDDIT
   loadSubredditInfo,
   loadSubredditPosts,
-  loadMoreSubredditPosts,
   // POST
-  loadCommentsFromPost,
+  loadPostDetailsAndComments as loadCommentsFromPost,
   loadMoreCommentsFromPost,
 };

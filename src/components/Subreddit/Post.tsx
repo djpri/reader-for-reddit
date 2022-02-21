@@ -6,7 +6,7 @@ import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { ImFileText2 } from "react-icons/im";
 import { PostData } from "src/types/post";
 import styles from "styles/Home.module.css";
-import Comments from "./Comments";
+import Comments from "../Post/Comments";
 
 interface IProps {
   postData: PostData | null;
