@@ -1,15 +1,30 @@
-import { Button, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import {
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Text,
+} from "@chakra-ui/react";
 import { HiChevronDown } from "react-icons/hi";
 
 function SubredditSort({ subSort }) {
-  const { sortPostsBy, sortedPosts } = subSort;
+  const { sortPostsBy, sortedPosts, sortType } = subSort;
 
   if (!sortedPosts) return null;
 
   return (
     <Menu>
-      <MenuButton as={Button} ml="3" size="sm" rightIcon={<HiChevronDown />}>
-        Sorted by
+      <MenuButton
+        as={Button}
+        size="sm"
+        rightIcon={<HiChevronDown />}
+        transitionDelay="100"
+      >
+        Quick sort
+        <Text as="span" color="purple.500" ml="3">
+          {sortType}
+        </Text>
       </MenuButton>
       <MenuList>
         <MenuItem onClick={() => sortPostsBy("score", "Top")}>Top</MenuItem>

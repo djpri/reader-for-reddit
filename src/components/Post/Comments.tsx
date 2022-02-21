@@ -1,11 +1,10 @@
-import { Box, HStack, Text, Link } from "@chakra-ui/react";
-import { MdStar } from "react-icons/md";
+import { Box, Text, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 function Comments({ num_comments, permalink }) {
   return (
     <Box>
-      <NextLink passHref href={`/r/comments/${permalink}`}>
+      <NextLink passHref href={permalink}>
         <Link color="teal.500">
           <Text as="b">{num_comments} comments</Text>
         </Link>

@@ -12,13 +12,7 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { CommentData } from "../../types/comment";
 
-interface IProps {
-  item: CommentData;
-  depth: number;
-  showChildren: boolean;
-}
-
-function Comment({ item, depth, showChildren }: IProps) {
+function Comment({ item, depth, showChildren }) {
   const [showReplies, setShowReplies] = useState(showChildren);
   const [displayBody, setDisplayBody] = useState("block");
   // const repliesRef = useRef();
@@ -29,10 +23,12 @@ function Comment({ item, depth, showChildren }: IProps) {
   );
 
   const renderChildComment = (item, index) => {
-    return <Comment item={item} key={index} depth={depth + 1} showChildren />;
+    return (
+      <Comment item={item.data} key={index} depth={depth + 1} showChildren />
+    );
   };
 
-  const getTotalChildComments = (replies) => {
+  const getTotalChildComments = (replies: []) => {
     const jsonString = JSON.stringify(replies);
     const matches = jsonString.match(/"id"/g).length;
     return matches;
@@ -96,7 +92,7 @@ function Comment({ item, depth, showChildren }: IProps) {
               <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
                 reply
               </Link>
-              {item.replies.length > 0 && depth < 4 && (
+              {item?.replies?.data?.children?.length > 0 && depth < 4 && (
                 <Link
                   onClick={toggleReplies}
                   color="gray.500"
@@ -104,7 +100,9 @@ function Comment({ item, depth, showChildren }: IProps) {
                 >
                   {/* {`showReplies: ${showReplies}`} */}
                   {showReplies
-                    ? `show ${getTotalChildComments(item.replies)} `
+                    ? `show ${getTotalChildComments(
+                        item.replies.data.children
+                      )} `
                     : "hide "}
                   {item.replies.length === 1
                     ? "child comment"
@@ -121,7 +119,9 @@ function Comment({ item, depth, showChildren }: IProps) {
                 </Link>
               )}
             </HStack>
-            {!showReplies && depth < 4 && item.replies.map(renderChildComment)}
+            {!showReplies &&
+              depth < 4 &&
+              item.replies.data.children.map(renderChildComment)}
           </Box>
         </Box>
       </Stack>

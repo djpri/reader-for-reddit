@@ -1,6 +1,5 @@
 import router from "next/router";
 import { useEffect, useState } from "react";
-import { SubredditPost } from "../redditApi/axiosInstance";
 
 type sortType = "score" | "created" | "num_comments";
 
@@ -29,10 +28,8 @@ function useSubredditSort(postsData: any[]) {
   // for sorting posts by new, old, top, most commented
   const sortPostsBy = (type: sortType, sortType: string, ascending = true) => {
     setSortType(sortType);
-    setSortedPosts((data: SubredditPost[]) => {
-      const sortedData = data.sort((a: SubredditPost, b: SubredditPost) => {
-        console.log(a);
-        console.log(b);
+    setSortedPosts((post) => {
+      const sortedData = post.sort((a, b) => {
         if (ascending) {
           return b.data[type] - a.data[type];
         } else {

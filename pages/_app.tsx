@@ -83,7 +83,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <NavBar />
-      <Box as="main" mt="80px">
+      <Box as="main" mt="80px" mb="100px">
         <Component {...pageProps} />
       </Box>
     </ChakraProvider>

@@ -1,41 +1,25 @@
 import { RedditAPI } from "./axiosInstance";
 
-interface CommentsData {
-  after: string | null;
-  before: string | null;
-  children: any[];
-}
-
-export const loadCommentsFromPost = async (
-  subreddit: string | string[]
-): Promise<CommentsData> => {
+export const loadCommentsFromPost = async (permalink: string) => {
   try {
-    const { data } = await RedditAPI.get(`r/${subreddit}`);
-
-    return {
-      after: data.after,
-      before: data.before,
-      children: data.children,
-    };
-  } catch (err) {
+    const data = await RedditAPI.get(permalink);
+    return data;
+  } catch (error) {
+    console.log(error);
     return null;
   }
 };
 
 export const loadMoreCommentsFromPost = async (
-  subreddit: string | string[],
+  permalink: string,
   after: string
-): Promise<CommentsData> => {
+) => {
   try {
-    const { data } = await RedditAPI.get(`r/${subreddit}`, {
+    const data = await RedditAPI.get(permalink, {
       params: { after },
     });
 
-    return {
-      after: data.after,
-      before: data.before,
-      children: data.children,
-    };
+    return data;
   } catch (err) {
     return null;
   }

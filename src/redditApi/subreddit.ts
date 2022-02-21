@@ -8,10 +8,10 @@ interface SubredditPostData {
 
 export const loadSubredditInfo = async (subreddit: string) => {
   try {
-    const { data } = await RedditAPI.get(`r/${subreddit}/about`);
+    const data = await RedditAPI.get(`r/${subreddit}/about`);
     return data;
   } catch (error) {
-    return Promise.reject(error);
+    throw new Error("Could not get subreddit info");
   }
 };
 
@@ -20,14 +20,13 @@ export const loadSubredditPosts = async (
 ): Promise<SubredditPostData> => {
   try {
     const { data } = await RedditAPI.get(`r/${subreddit}`);
-
     return {
       after: data.after,
       before: data.before,
       children: data.children,
     };
   } catch (error) {
-    return Promise.reject(error);
+    throw new Error("Could not get subreddit posts");
   }
 };
 
@@ -47,6 +46,6 @@ export const loadMoreSubredditPosts = async (
       children: data.children,
     };
   } catch (error) {
-    return Promise.reject(error);
+    throw new Error("Could not get any more subreddit posts");
   }
 };

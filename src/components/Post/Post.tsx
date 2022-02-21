@@ -1,15 +1,15 @@
-import React from "react";
-import { Text, Box, Stack, VStack, Button, Flex } from "@chakra-ui/react";
-import styles from "styles/Home.module.css";
+import { Box, Button, Flex, Stack, Text, VStack } from "@chakra-ui/react";
 import moment from "moment";
-import { FaArrowUp, FaArrowDown } from "react-icons/fa";
-import { ImFileText2 } from "react-icons/im";
-import Comments from "./Comments";
 import Link from "next/link";
+import React from "react";
+import { FaArrowDown, FaArrowUp } from "react-icons/fa";
+import { ImFileText2 } from "react-icons/im";
 import { PostData } from "src/types/post";
+import styles from "styles/Home.module.css";
+import Comments from "./Comments";
 
 interface IProps {
-  postData: PostData;
+  postData: PostData | null;
 }
 
 function Post({ postData }: IProps) {
@@ -25,13 +25,6 @@ function Post({ postData }: IProps) {
     num_comments,
   } = postData;
 
-  if (!postData)
-    return (
-      <Box className={styles.post} w="100%" mb="5">
-        no posts
-      </Box>
-    );
-
   return (
     <Box
       className={styles.post}
@@ -44,32 +37,44 @@ function Post({ postData }: IProps) {
       <Stack
         spacing="15px"
         align={["start", "start", "center"]}
-        direction={["column", "column", "row"]}
+        direction={["row", "row", "row"]}
       >
-        {/* Upvote/Downvote */}
-        <VStack w={["100%", "100%", "5%"]}>
-          <Button size="xs">
+        {/* Score */}
+        <VStack w={["5%", "5%", "5%"]}>
+          {/* <Button size="xs">
             <FaArrowUp />
-          </Button>
+          </Button> */}
           <Text fontSize="1rem">
             <b>{score}</b>
           </Text>
-          <Button size="xs">
+          {/* <Button size="xs">
             <FaArrowDown />
-          </Button>
+          </Button> */}
         </VStack>
 
         {/* Thumbnail */}
-        {thumbnail !== "self" && thumbnail !== "default" && thumbnail && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <Box w="70px">
-            <img src={thumbnail} alt={title} />
-          </Box>
-        )}
+        {thumbnail !== "self" &&
+          thumbnail !== "default" &&
+          thumbnail !== "nsfw" &&
+          thumbnail && (
+            <Box w="70px">
+              <img src={thumbnail} alt={title} />
+            </Box>
+          )}
 
         {/* Placeholder if no thumbnail exists */}
-        {(thumbnail === "self" || thumbnail === "default" || !thumbnail) && (
-          <Flex w="70px" h="100%" justify="center">
+        {(thumbnail === "self" ||
+          thumbnail === "default" ||
+          thumbnail === "nsfw" ||
+          !thumbnail) && (
+          <Flex
+            w="70px"
+            h="70px"
+            justify="center"
+            alignItems="center"
+            border="1px"
+            borderColor="whiteAlpha.400"
+          >
             <ImFileText2 size="2rem" />
           </Flex>
         )}
@@ -77,7 +82,7 @@ function Post({ postData }: IProps) {
         {/* Author and time submitted */}
         <Box w={["100%", "100%", "95%"]}>
           <Box w="100%" mb="2">
-            <Link passHref={true} href={`/r/comments/${id}`}>
+            <Link passHref={true} href={permalink}>
               <a>
                 <b>{title}</b>
               </a>
@@ -90,7 +95,7 @@ function Post({ postData }: IProps) {
               <Text as="span">{author}</Text>
             </Box>
           </Box>
-          <Comments num_comments={num_comments} permalink={id} />
+          <Comments num_comments={num_comments} permalink={permalink} />
         </Box>
       </Stack>
     </Box>
