@@ -44,7 +44,9 @@ a {
 
 .comment ul,
 .comment ol {
-  padding-left: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-left: 30px;
 }
 
 .comment pre {

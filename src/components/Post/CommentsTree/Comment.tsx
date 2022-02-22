@@ -39,95 +39,90 @@ function Comment({ item, showChildren }) {
   const toggleReplies = () => setShowReplies((prevState) => !prevState);
 
   return (
-    <div key={item.id}>
-      <Stack
-        ml={(item.depth - 1) * 1}
-        direction="row"
-        border="1px"
-        borderColor="whiteAlpha.400"
-        pt="3"
-        bg={boxColor}
-        pb="3"
-        boxShadow="base"
-        // rounded="md"
-        mb="1"
-        mr="3"
-        mt="3"
-        pr="5"
-        h="auto"
-      >
-        {/* Sidebar for padding */}
-        <Box bg="gray.500" h="100%" mr={[1, 3, 5]}></Box>
-        <Box>
-          {/* Comment info */}
-          <HStack>
-            <Button
-              size="xs"
-              onClick={() =>
-                setDisplayBody((prevState) =>
-                  prevState === "block" ? "none" : "block"
-                )
-              }
-            >
-              <VscCollapseAll />
-            </Button>
-            <Text as="b">{item.author}</Text>{" "}
-            <Text as="span" color="gray.500">
-              {item.ups} points
+    <Stack
+      display="block"
+      // ml={(item.depth - 1) * 5}
+      direction="row"
+      border="1px"
+      borderColor="whiteAlpha.400"
+      pt="3"
+      bg={boxColor}
+      pb="3"
+      boxShadow="base"
+      // rounded="md"
+      mt="3"
+      pl={["1", "2", "3", "4"]}
+      pr="5"
+      h="auto"
+      key={item.id}
+    >
+      {/* Sidebar for padding */}
+      <Box bg="gray.500" h="100%" mr={[1, 3, 5]}></Box>
+      <Box>
+        {/* Comment info */}
+        <HStack>
+          <Button
+            size="xs"
+            onClick={() =>
+              setDisplayBody((prevState) =>
+                prevState === "block" ? "none" : "block"
+              )
+            }
+          >
+            <VscCollapseAll />
+          </Button>
+          <Text as="b">{item.author}</Text>{" "}
+          <Text as="span" color="gray.500">
+            {item.ups} points
+          </Text>
+        </HStack>
+        {/* Comment body */}
+        <Box display={displayBody}>
+          {item.ups > 0 ? (
+            <Box className="comment">
+              <ReactMarkdown linkTarget="_blank">{item.body}</ReactMarkdown>
+            </Box>
+          ) : (
+            <Text color="red.500">
+              too many downdogs to even show this comment
             </Text>
-          </HStack>
-          {/* Comment body */}
-          <Box display={displayBody}>
-            {item.ups > 0 ? (
-              <Box className="comment">
-                <ReactMarkdown linkTarget="_blank">{item.body}</ReactMarkdown>
-              </Box>
-            ) : (
-              <Text color="red.500">
-                too many downdogs to even show this comment
-              </Text>
+          )}
+          <HStack>
+            <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
+              permalink
+            </Link>
+            <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
+              reply
+            </Link>
+            {item?.replies?.data?.children?.length > 0 && item.depth < 3 && (
+              <Link
+                onClick={toggleReplies}
+                color="gray.500"
+                fontSize={["xs", "xs", "sm"]}
+              >
+                {!showReplies
+                  ? `show ${getTotalChildComments(item.replies.data.children)} `
+                  : "hide "}
+                {item.replies.length === 1 ? "child comment" : "child comments"}
+              </Link>
             )}
-            <HStack>
-              <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
-                permalink
+            {item.depth >= 3 && item.replies && (
+              <Link
+                color="teal.500"
+                fontSize={["xs", "xs", "sm"]}
+                fontWeight="bold"
+              >
+                continue this thread -&gt;
               </Link>
-              <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
-                reply
-              </Link>
-              {item?.replies?.data?.children?.length > 0 && item.depth < 3 && (
-                <Link
-                  onClick={toggleReplies}
-                  color="gray.500"
-                  fontSize={["xs", "xs", "sm"]}
-                >
-                  {!showReplies
-                    ? `show ${getTotalChildComments(
-                        item.replies.data.children
-                      )} `
-                    : "hide "}
-                  {item.replies.length === 1
-                    ? "child comment"
-                    : "child comments"}
-                </Link>
-              )}
-              {item.depth >= 3 && item.replies && (
-                <Link
-                  color="teal.500"
-                  fontSize={["xs", "xs", "sm"]}
-                  fontWeight="bold"
-                >
-                  continue this thread -&gt;
-                </Link>
-              )}
-            </HStack>
-            {showReplies &&
-              item.depth < 3 &&
-              item.replies &&
-              item.replies.data.children.map(renderChildComment)}
-          </Box>
+            )}
+          </HStack>
+          {showReplies &&
+            item.depth < 3 &&
+            item.replies &&
+            item.replies.data.children.map(renderChildComment)}
         </Box>
-      </Stack>
-    </div>
+      </Box>
+    </Stack>
   );
 }
 
