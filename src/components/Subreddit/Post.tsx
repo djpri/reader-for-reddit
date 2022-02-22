@@ -4,9 +4,9 @@ import Link from "next/link";
 import React from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { ImFileText2 } from "react-icons/im";
-import { PostData } from "src/types/post";
 import styles from "styles/Home.module.css";
 import Comments from "../Post/Comments";
+import { PostData } from "./types";
 
 interface IProps {
   postData: PostData | null;

@@ -18,7 +18,6 @@ let requestsMade = 0;
 RedditAPI.interceptors.request.use(
   async function (config) {
     requestsMade++;
-    console.log(`SUCCESS! REQUESTS MADE: ${requestsMade}`);
     const token = localStorage.getItem("accessToken");
     if (!token) await getTokenAsync();
     config.headers.Authorization = `bearer ${localStorage.getItem(
@@ -28,7 +27,6 @@ RedditAPI.interceptors.request.use(
   },
   function (error) {
     requestsMade++;
-    console.log(`FAILED. REQUESTS MADE: ${requestsMade}`);
     console.log(error);
   }
 );
@@ -36,10 +34,12 @@ RedditAPI.interceptors.request.use(
 // if successful don't inlcude headers or config, just return the data
 RedditAPI.interceptors.response.use(
   function (response: AxiosResponse) {
+    console.log(`SUCCESS! REQUESTS MADE: ${requestsMade}`);
     console.log(response);
     return response.data;
   },
   async function (error: AxiosError) {
+    console.log(`FAILED. REQUESTS MADE: ${requestsMade}`);
     const noToken = error.response.status === 403;
     const tokenHasFailed = error.response.status === 401;
 

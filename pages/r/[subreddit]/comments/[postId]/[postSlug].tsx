@@ -1,10 +1,11 @@
+import { Container } from "@chakra-ui/react";
 import { NextRouter, useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import { Container } from "@chakra-ui/react";
-import CommentsTree from "src/components/CommentsTree/CommentsTree";
-import { useRedditApi } from "src/hooks";
-import { loadCommentsFromPost } from "src/redditApi";
+import { useQuery } from "react-query";
+import CommentsTree from "src/components/Post/CommentsTree/CommentsTree";
+import { loadPostDetailsAndComments } from "src/components/Post/getPostData";
 import PostHeader from "src/components/Post/PostHeader";
+import useRedditApi from "src/hooks/useRedditApi";
 
 function Submission() {
   const router: NextRouter = useRouter();
@@ -12,12 +13,9 @@ function Submission() {
   const [comments, setComments] = useState(null);
   const [postInfo, setPostInfo] = useState(null);
 
-  const getComments = useCallback(
-    () => loadCommentsFromPost(permalink),
-    [permalink]
+  const { isLoading, error, data } = useQuery(["postDetails", permalink], () =>
+    loadPostDetailsAndComments(permalink)
   );
-
-  const { isLoading, error, data } = useRedditApi(getComments);
 
   useEffect(() => {
     if (data) {

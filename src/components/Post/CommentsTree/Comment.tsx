@@ -10,7 +10,6 @@ import {
 import { VscCollapseAll } from "react-icons/vsc";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { CommentData } from "../Post/types";
 
 function Comment({ item, depth, showChildren }) {
   const [showReplies, setShowReplies] = useState(showChildren);

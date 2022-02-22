@@ -1,23 +1,12 @@
 import { Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
-import useRedditApi from "../../hooks/useRedditApi";
-import { loadSubredditPosts } from "./getSubredditData";
+import React from "react";
 import Post from "./Post";
 import PostSkeleton from "./PostSkeleton";
 import SubredditSort from "./PostsSort";
 import usePostsFilter from "./usePostsFilter";
 
-function Posts({ subreddit }) {
-  const [after, setAfter] = useState(null);
-
-  const apiCallHandler = useCallback(
-    () => loadSubredditPosts(subreddit, after),
-    [subreddit, after]
-  );
-
-  const { isLoading, error, data: posts } = useRedditApi(apiCallHandler);
-
-  const subSort = usePostsFilter(posts?.children);
+function Posts({ subreddit, posts, error, isLoading, setAfter }) {
+  const subSort = usePostsFilter(posts);
 
   if (error) return <p>{error}</p>;
 
@@ -30,7 +19,7 @@ function Posts({ subreddit }) {
   }
 
   return (
-    <Container maxW="container.xl">
+    <div>
       <Flex justifyContent="space-between">
         <Heading as="h1" mb="30px" mt="10px" fontSize="2xl">
           {`/r/${subreddit}`}
@@ -51,7 +40,7 @@ function Posts({ subreddit }) {
       <Button w="100%" onClick={() => setAfter(posts.after)}>
         Get more posts
       </Button>
-    </Container>
+    </div>
   );
 }
 
