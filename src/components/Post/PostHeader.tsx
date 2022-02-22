@@ -1,10 +1,14 @@
-import { Box, Heading, Link } from "@chakra-ui/react";
+import { Box, Link, Heading, HStack } from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
-function PostHeader({ postDetails }) {
-  const { comments, title, selftext, subreddit, url } = postDetails;
+function PostHeader({
+  postDetails,
+  showChildComments,
+  toggleAllChildComments,
+}) {
+  const { num_comments, title, selftext, subreddit, url } = postDetails;
 
   if (!postDetails) return null;
 
@@ -49,6 +53,15 @@ function PostHeader({ postDetails }) {
           </ReactMarkdown>
         </Box>
       )}
+
+      <HStack mt="10px" spacing={5}>
+        <div>{num_comments} comments</div>
+        <Link onClick={toggleAllChildComments} color="gray.500">
+          {showChildComments
+            ? "hide all child comments"
+            : "show all child comments"}
+        </Link>
+      </HStack>
     </div>
   );
 }

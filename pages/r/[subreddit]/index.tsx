@@ -1,10 +1,9 @@
 import { Container } from "@chakra-ui/react";
 import { NextRouter, useRouter } from "next/router";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "react-query";
 import { loadSubredditPosts } from "src/components/Subreddit/getSubredditData";
 import SubredditSearch from "src/components/Subreddit/SubredditSearch";
-import useRedditApi from "src/hooks/useRedditApi";
 import Posts from "../../../src/components/Subreddit/Posts";
 
 function Subreddit() {

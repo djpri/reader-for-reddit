@@ -1,18 +1,20 @@
 import {
-  Flex,
-  Container,
   Box,
+  Button,
+  Container,
+  Flex,
   HStack,
   Text,
-  Button,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { FaFileDownload, FaMoon, FaSun } from "react-icons/fa";
 import { SiReddit } from "react-icons/si";
-import { FaSun, FaMoon } from "react-icons/fa";
+import { useIsFetching } from "react-query";
 import LeftDrawer from "../LeftDrawer/LeftDrawer";
 
 function NavBar() {
+  const isFetching = useIsFetching();
   const { colorMode, toggleColorMode } = useColorMode();
   const color = useColorModeValue("black", "white");
   const bgColor = useColorModeValue("gray.100", "gray.900");
@@ -49,6 +51,7 @@ function NavBar() {
             </Text>
           </Flex>
           <HStack>
+            {isFetching && <FaFileDownload size="1rem" color="green" />}
             <Button
               onClick={toggleColorMode}
               colorScheme="whiteAlpha"

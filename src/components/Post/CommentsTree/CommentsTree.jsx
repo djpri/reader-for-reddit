@@ -1,17 +1,14 @@
 import { VStack } from "@chakra-ui/layout";
 import Comment from "./Comment";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-function CommentsTree({ comments }) {
-  const [showChildren] = useState(true);
-
+function CommentsTree({ comments, showChildComments }) {
   const renderParentComment = (item, index) => {
     return (
       <Comment
         item={item.data}
         index={index}
-        depth={1}
-        showChildren={showChildren}
+        showChildren={showChildComments}
         key={item.data.id}
       />
     );

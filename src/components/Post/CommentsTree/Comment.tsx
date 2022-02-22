@@ -8,23 +8,26 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { VscCollapseAll } from "react-icons/vsc";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
-function Comment({ item, depth, showChildren }) {
+// Note: max depth === 3
+
+function Comment({ item, showChildren }) {
   const [showReplies, setShowReplies] = useState(showChildren);
   const [displayBody, setDisplayBody] = useState("block");
-  // const repliesRef = useRef();
+
+  useEffect(() => {
+    setShowReplies(showChildren);
+  }, [showChildren]);
 
   const boxColor = useColorModeValue(
-    depth % 2 === 0 ? "#e6ecf092" : "white",
-    depth % 2 === 0 ? "gray.800" : "gray.900"
+    item.depth % 2 === 0 ? "#e6ecf092" : "white",
+    item.depth % 2 === 0 ? "gray.800" : "gray.900"
   );
 
   const renderChildComment = (item, index) => {
-    return (
-      <Comment item={item.data} key={index} depth={depth + 1} showChildren />
-    );
+    return <Comment item={item.data} key={index} showChildren={false} />;
   };
 
   const getTotalChildComments = (replies: []) => {
@@ -38,7 +41,7 @@ function Comment({ item, depth, showChildren }) {
   return (
     <div key={item.id}>
       <Stack
-        ml={(depth - 1) * 1}
+        ml={(item.depth - 1) * 1}
         direction="row"
         border="1px"
         borderColor="whiteAlpha.400"
@@ -91,14 +94,13 @@ function Comment({ item, depth, showChildren }) {
               <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
                 reply
               </Link>
-              {item?.replies?.data?.children?.length > 0 && depth < 4 && (
+              {item?.replies?.data?.children?.length > 0 && item.depth < 3 && (
                 <Link
                   onClick={toggleReplies}
                   color="gray.500"
                   fontSize={["xs", "xs", "sm"]}
                 >
-                  {/* {`showReplies: ${showReplies}`} */}
-                  {showReplies
+                  {!showReplies
                     ? `show ${getTotalChildComments(
                         item.replies.data.children
                       )} `
@@ -108,7 +110,7 @@ function Comment({ item, depth, showChildren }) {
                     : "child comments"}
                 </Link>
               )}
-              {depth >= 4 && (
+              {item.depth >= 3 && item.replies && (
                 <Link
                   color="teal.500"
                   fontSize={["xs", "xs", "sm"]}
@@ -118,8 +120,9 @@ function Comment({ item, depth, showChildren }) {
                 </Link>
               )}
             </HStack>
-            {!showReplies &&
-              depth < 4 &&
+            {showReplies &&
+              item.depth < 3 &&
+              item.replies &&
               item.replies.data.children.map(renderChildComment)}
           </Box>
         </Box>
