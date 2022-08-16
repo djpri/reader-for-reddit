@@ -18,13 +18,16 @@ export const loadPostDetailsAndComments = async (permalink: string) => {
   }
 };
 
-export const loadMoreCommentsFromPost = async (
-  permalink: string,
-  after: string
+export const getMoreChildrenComments = async (
+  link_id: string,
+  comments: []
 ) => {
   try {
-    const data = await RedditAPI.get(permalink, {
-      params: { after },
+    const data = await RedditAPI.get("api/morechildren", {
+      params: {
+        link_id,
+        comments: comments.join(","),
+      },
     });
 
     return data;

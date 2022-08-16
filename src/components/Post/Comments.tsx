@@ -3,7 +3,7 @@ import NextLink from "next/link";
 
 function Comments({ num_comments, permalink }) {
   return (
-    <Box>
+    <Box fontSize="sm">
       <NextLink passHref href={permalink}>
         <Link color="teal.500">
           <Text as="b">{num_comments} comments</Text>

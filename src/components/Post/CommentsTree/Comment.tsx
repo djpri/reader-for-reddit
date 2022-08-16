@@ -11,7 +11,6 @@ import { VscCollapseAll } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
-// Note: max depth === 3
 
 function Comment({ item, showChildren }) {
   const [showReplies, setShowReplies] = useState(showChildren);
@@ -21,12 +20,35 @@ function Comment({ item, showChildren }) {
     setShowReplies(showChildren);
   }, [showChildren]);
 
+  const getChildren = () => {
+    if (item.replies.data.children[0].kind === "more") {
+      return item.replies.data.children;
+    } else {
+      return item.replies.data.children;
+    }
+  };
+
   const boxColor = useColorModeValue(
     item.depth % 2 === 0 ? "#e6ecf092" : "white",
     item.depth % 2 === 0 ? "gray.800" : "gray.900"
   );
 
   const renderChildComment = (item, index) => {
+    const isOfKindMore = item.data.children;
+    if (isOfKindMore)
+      return (
+        <Link
+          mt="10px"
+          mb="10px"
+          pl="5px"
+          color="purple.500"
+          fontSize={["xs", "xs", "sm"]}
+          display="block"
+          _hover={{ bgColor: "gray.300" }}
+        >
+          load more comments
+        </Link>
+      );
     return <Comment item={item.data} key={index} showChildren={false} />;
   };
 
@@ -119,7 +141,7 @@ function Comment({ item, showChildren }) {
           {showReplies &&
             item.depth < 3 &&
             item.replies &&
-            item.replies.data.children.map(renderChildComment)}
+            getChildren().map(renderChildComment)}
         </Box>
       </Box>
     </Stack>

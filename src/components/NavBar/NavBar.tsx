@@ -4,14 +4,15 @@ import {
   Container,
   Flex,
   HStack,
+  Link,
   Text,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 import { FaFileDownload, FaMoon, FaSun } from "react-icons/fa";
 import { SiReddit } from "react-icons/si";
 import { useIsFetching } from "react-query";
-import LeftDrawer from "../LeftDrawer/LeftDrawer";
 
 function NavBar() {
   const isFetching = useIsFetching();
@@ -44,11 +45,19 @@ function NavBar() {
           pb={2}
         >
           <Flex align="center">
-            <LeftDrawer />
-            <SiReddit size="1.3rem" />
-            <Text fontSize="lg" ml="3" fontWeight="bold">
-              /r/eader for reddit
-            </Text>
+            {/* <LeftDrawer /> */}
+            <NextLink href="/" passHref>
+              <Link>
+                <SiReddit size="1.3rem" />
+              </Link>
+            </NextLink>
+            <NextLink href="/" passHref>
+              <Link _hover={{ textDecoration: "none" }}>
+                <Text fontSize="lg" ml="3" fontWeight="bold">
+                  /r/eader for reddit
+                </Text>
+              </Link>
+            </NextLink>
           </Flex>
           <HStack>
             {isFetching && <FaFileDownload size="1rem" color="green" />}

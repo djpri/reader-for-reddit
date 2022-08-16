@@ -15,7 +15,7 @@ function CommentsTree({ comments, showChildComments }) {
   };
 
   return (
-    <VStack align="left" spacing={5}>
+    <VStack align="left" spacing={5} pb="5">
       {comments.map(renderParentComment)}
     </VStack>
   );

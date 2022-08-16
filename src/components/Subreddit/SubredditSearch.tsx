@@ -1,15 +1,18 @@
-import { Button, Flex, HStack, Input } from "@chakra-ui/react";
+import {
+  IconButton,
+  Input,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
 import React from "react";
 import useSubredditSearch from "../../hooks/useSubredditSearch";
-import SearchError from "../Errors/SearchError";
+import { BiSearch } from "react-icons/bi";
 
 function SubredditSearch() {
-  const { handleSearch, setSearch, search, isError, isLoading } =
-    useSubredditSearch();
+  const { handleSearch, setSearch, search, isLoading } = useSubredditSearch();
   return (
-    <HStack w="100%" spacing={2} mb="20px">
+    <InputGroup size="md" spacing={2} mb="20px">
       <Input
-        maxWidth="container.md"
         placeholder="Type in a subreddit"
         onKeyUp={(e) => {
           if (e.key === "Enter") {
@@ -19,18 +22,19 @@ function SubredditSearch() {
         onChange={(e) => setSearch(e.target.value)}
         value={search}
       />
-      {isError && <SearchError />}
-      <Button
-        isLoading={isLoading}
-        colorScheme="whiteAlpha"
-        color="purple.500"
-        variant="outline"
-        size="sm"
-        onClick={handleSearch}
-      >
-        Get Posts
-      </Button>
-    </HStack>
+      <InputRightElement w="6rem">
+        <IconButton
+          m="0"
+          colorScheme="whiteAlpha"
+          color="white"
+          isLoading={isLoading}
+          aria-label="Search database"
+          icon={<BiSearch />}
+          onClick={handleSearch}
+          w="100%"
+        />
+      </InputRightElement>
+    </InputGroup>
   );
 }
 

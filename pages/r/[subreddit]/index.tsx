@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 import { loadSubredditPosts } from "src/components/Subreddit/getSubredditData";
 import SubredditSearch from "src/components/Subreddit/SubredditSearch";
-import Posts from "../../../src/components/Subreddit/Posts";
+import Posts from "../../../src/components/Subreddit/SubredditPosts";
 
 function Subreddit() {
   const router: NextRouter = useRouter();

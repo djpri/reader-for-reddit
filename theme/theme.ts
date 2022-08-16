@@ -1,8 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
-import "@fontsource/open-sans/700.css";
-import "@fontsource/open-sans/600.css";
-import "@fontsource/open-sans/400.css";
 
 import "@fontsource/inter/800.css";
 import "@fontsource/inter/700.css";
@@ -18,16 +15,17 @@ const theme = extendTheme({
       },
       body: {
         fontFamily: "body",
-        fontSize: { base: "0.875rem", md: "1rem" },
+        fontSize: { base: "1rem", md: "1rem", sm: "0.875rem" },
         color: mode("gray.800", "whiteAlpha.900")(props),
-        bg: mode("gray.50", "gray.800")(props),
+        bg: mode("gray.50", "#202020")(props),
         lineHeight: "base",
+        letterSpacing: "0.02rem",
       },
     }),
   },
   fonts: {
-    heading: "Inter",
-    body: "Inter",
+    heading: "Inter, sans-serif",
+    body: "Inter, sans-serif",
   },
   textStyles: {
     heading: {

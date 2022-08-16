@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import NProgress from "nprogress";
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import NavBar from "../src/components/NavBar/NavBar";
 import "../styles/globals.css";
 import "../styles/nprogress.css";
@@ -97,6 +98,7 @@ function MyApp({ Component, pageProps }) {
           <Component {...pageProps} />
         </Box>
       </ChakraProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

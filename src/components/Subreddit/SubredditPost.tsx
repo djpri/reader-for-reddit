@@ -1,8 +1,14 @@
-import { Box, Button, Flex, Stack, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Stack,
+  Text,
+  useColorModeValue,
+  VStack,
+} from "@chakra-ui/react";
 import moment from "moment";
 import Link from "next/link";
 import React from "react";
-import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { ImFileText2 } from "react-icons/im";
 import styles from "styles/Home.module.css";
 import Comments from "../Post/Comments";
@@ -18,18 +24,22 @@ function Post({ postData }: IProps) {
     thumbnail,
     created,
     author,
-    url,
-    id,
     title,
     permalink,
     num_comments,
+    over_18,
   } = postData;
+
+  const boxColor = useColorModeValue("#e6ecf092", "gray.800");
+  const nsfwBoxColor = useColorModeValue("red.500", "red.900");
 
   return (
     <Box
       className={styles.post}
+      boxShadow="rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px"
       w="100%"
       mb="5"
+      bgColor={over_18 ? nsfwBoxColor : boxColor}
       border="1px"
       borderColor="whiteAlpha.400"
       borderRadius="sm"
@@ -84,11 +94,13 @@ function Post({ postData }: IProps) {
           <Box w="100%" mb="2">
             <Link passHref={true} href={permalink}>
               <a>
-                <b>{title}</b>
+                <Text size="md" fontWeight="500">
+                  {title}
+                </Text>
               </a>
             </Link>
             <hr />
-            <Box>
+            <Box fontSize="sm">
               <Text color="gray" as="span">
                 submitted {moment(created * 1000).fromNow()} by
               </Text>{" "}
