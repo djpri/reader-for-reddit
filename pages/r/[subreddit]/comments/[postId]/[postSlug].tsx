@@ -1,4 +1,4 @@
-import { Container } from "@chakra-ui/react";
+import { Container, Spinner } from "@chakra-ui/react";
 import { NextRouter, useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
@@ -15,13 +15,30 @@ type sortType =
   | "random"
   | "qa";
 
+const sortTypes = [
+  "confidence",
+  "new",
+  "top",
+  "controversial",
+  "old",
+  "random",
+  "qa",
+];
+
 function Submission() {
   const router: NextRouter = useRouter();
   const permalink = router.asPath;
+  const queryParams = router.query;
   const [comments, setComments] = useState(null);
   const [postInfo, setPostInfo] = useState(null);
   const [sort, setSort] = useState<sortType>("confidence");
   const [showChildComments, setShowChildComments] = useState(false);
+
+  useEffect(() => {
+    if (queryParams.sort && sortTypes.includes(queryParams.sort as string)) {
+      setSort(queryParams.sort as sortType);
+    }
+  }, [queryParams.sort]);
 
   const { isLoading, error, data } = useInfiniteQuery(
     ["postDetails", permalink, sort],
@@ -33,7 +50,7 @@ function Submission() {
   };
 
   useEffect(() => {
-    if (data) {
+    if (data?.pages[0]) {
       setPostInfo(data.pages[0].postDetails);
       setComments(data.pages[0].parentComments);
     } else {
@@ -48,11 +65,26 @@ function Submission() {
     }
   }, [error, isLoading, postInfo]);
 
-  if (isLoading) return <p>is loading</p>;
+  if (isLoading)
+    return (
+      <Container maxW="container.xl" mt="10" mb="20">
+        <Spinner />
+      </Container>
+    );
 
-  if (error) return <p>error</p>;
+  if (error)
+    return (
+      <Container maxW="container.xl" mt="10" mb="20">
+        error
+      </Container>
+    );
 
-  if (!comments) return <p>no comments</p>;
+  if (!comments)
+    return (
+      <Container maxW="container.xl" mt="10" mb="20">
+        no comments
+      </Container>
+    );
 
   return (
     <Container maxW="container.xl" mt="10" mb="20">

@@ -1,18 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
 import {
   Box,
-  Link,
+  Button,
   Heading,
   HStack,
-  Text,
-  MenuItem,
-  MenuButton,
+  Link,
   Menu,
-  Button,
+  MenuButton,
+  MenuItem,
   MenuList,
+  Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import React from "react";
 import { HiChevronDown } from "react-icons/hi";
 import ReactMarkdown from "react-markdown";
 
@@ -34,6 +33,33 @@ function PostHeader({
   setSort,
 }) {
   const { num_comments, title, selftext, subreddit, url } = postDetails;
+
+  const SortMenu = () => (
+    <Menu>
+      <MenuButton
+        as={Button}
+        size="sm"
+        rightIcon={<HiChevronDown />}
+        transitionDelay="100"
+      >
+        Sorted by:
+        <Text as="span" color="teal.400" ml="3">
+          {sortNames[sortType]}
+        </Text>
+      </MenuButton>
+      <MenuList>
+        {Object.keys(sortNames).map((sort) => (
+          <MenuItem
+            key={sort}
+            onClick={() => setSort(sort)}
+            isActive={sort === sortType}
+          >
+            {sortNames[sort]}
+          </MenuItem>
+        ))}
+      </MenuList>
+    </Menu>
+  );
 
   if (!postDetails) return null;
 
@@ -91,29 +117,7 @@ function PostHeader({
             : "show all child comments"}
         </Link>
       </HStack>
-      <Box>
-        <Menu>
-          <MenuButton
-            as={Button}
-            size="sm"
-            rightIcon={<HiChevronDown />}
-            transitionDelay="100"
-          >
-            Sorted by:
-            <Text as="span" color="purple.500" ml="3">
-              {sortNames[sortType]}
-            </Text>
-          </MenuButton>
-          <MenuList>
-            <MenuItem onClick={() => setSort("Top")}>Top</MenuItem>
-            <MenuItem onClick={() => setSort("Newest")}>New</MenuItem>
-            <MenuItem onClick={() => setSort("Old")}>Old</MenuItem>
-            <MenuItem onClick={() => setSort("controvertial")}>
-              Comments
-            </MenuItem>
-          </MenuList>
-        </Menu>
-      </Box>
+      <SortMenu />
     </div>
   );
 }
