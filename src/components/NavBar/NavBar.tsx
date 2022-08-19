@@ -8,17 +8,20 @@ import {
   Text,
   useColorMode,
   useColorModeValue,
+  useMediaQuery,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { FaFileDownload, FaMoon, FaSun } from "react-icons/fa";
 import { SiReddit } from "react-icons/si";
 import { useIsFetching } from "react-query";
+import SubredditSearch from "../Search/SubredditSearch";
 
 function NavBar() {
   const isFetching = useIsFetching();
   const { colorMode, toggleColorMode } = useColorMode();
   const color = useColorModeValue("black", "white");
   const bgColor = useColorModeValue("gray.100", "gray.900");
+  const [isDesktop] = useMediaQuery("(min-width: 768px)");
 
   return (
     <Box
@@ -51,14 +54,17 @@ function NavBar() {
                 <SiReddit size="1.3rem" />
               </Link>
             </NextLink>
-            <NextLink href="/" passHref>
-              <Link _hover={{ textDecoration: "none" }}>
-                <Text fontSize="lg" ml="3" fontWeight="bold">
-                  /r/eader for reddit
-                </Text>
-              </Link>
-            </NextLink>
+            {isDesktop && (
+              <NextLink href="/" passHref>
+                <Link _hover={{ textDecoration: "none" }}>
+                  <Text fontSize="lg" ml="3" fontWeight="bold">
+                    /r/eader for reddit
+                  </Text>
+                </Link>
+              </NextLink>
+            )}
           </Flex>
+          <SubredditSearch />
           <HStack>
             {isFetching && <FaFileDownload size="1rem" color="green" />}
             <Button

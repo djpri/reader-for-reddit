@@ -11,7 +11,6 @@ import { VscCollapseAll } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
-
 function Comment({ item, showChildren }) {
   const [showReplies, setShowReplies] = useState(showChildren);
   const [displayBody, setDisplayBody] = useState("block");
@@ -105,9 +104,7 @@ function Comment({ item, showChildren }) {
               <ReactMarkdown linkTarget="_blank">{item.body}</ReactMarkdown>
             </Box>
           ) : (
-            <Text color="red.500">
-              too many downdogs to even show this comment
-            </Text>
+            <Text color="red.500">Too many downvotes to show comment</Text>
           )}
           <HStack>
             <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
@@ -121,6 +118,7 @@ function Comment({ item, showChildren }) {
                 onClick={toggleReplies}
                 color="gray.500"
                 fontSize={["xs", "xs", "sm"]}
+                userSelect="none"
               >
                 {!showReplies
                   ? `show ${getTotalChildComments(item.replies.data.children)} `

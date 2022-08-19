@@ -1,12 +1,37 @@
-import { Box, Link, Heading, HStack } from "@chakra-ui/react";
+/* eslint-disable @next/next/no-img-element */
+import {
+  Box,
+  Link,
+  Heading,
+  HStack,
+  Text,
+  MenuItem,
+  MenuButton,
+  Menu,
+  Button,
+  MenuList,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
 import React from "react";
+import { HiChevronDown } from "react-icons/hi";
 import ReactMarkdown from "react-markdown";
+
+const sortNames = {
+  confidence: "Best",
+  top: "Top",
+  new: "New",
+  controversial: "Controversial",
+  old: "Old",
+  random: "Random",
+  qa: "Q&A",
+};
 
 function PostHeader({
   postDetails,
   showChildComments,
   toggleAllChildComments,
+  sortType,
+  setSort,
 }) {
   const { num_comments, title, selftext, subreddit, url } = postDetails;
 
@@ -31,7 +56,7 @@ function PostHeader({
       {/* show image for suitable file extensions */}
       {url?.match(/^.*\.(jpg|JPG|png|PNG)$/) && (
         <Box w="300px">
-          <img src={url} />
+          <img src={url} alt={url} />
         </Box>
       )}
 
@@ -54,14 +79,41 @@ function PostHeader({
         </Box>
       )}
 
-      <HStack mt="10px" spacing={5}>
+      <HStack mt="10px" mb="10px" spacing={5}>
         <div>{num_comments} comments</div>
-        <Link onClick={toggleAllChildComments} color="gray.500">
+        <Link
+          onClick={toggleAllChildComments}
+          color="gray.500"
+          userSelect="none"
+        >
           {showChildComments
             ? "hide all child comments"
             : "show all child comments"}
         </Link>
       </HStack>
+      <Box>
+        <Menu>
+          <MenuButton
+            as={Button}
+            size="sm"
+            rightIcon={<HiChevronDown />}
+            transitionDelay="100"
+          >
+            Sorted by:
+            <Text as="span" color="purple.500" ml="3">
+              {sortNames[sortType]}
+            </Text>
+          </MenuButton>
+          <MenuList>
+            <MenuItem onClick={() => setSort("Top")}>Top</MenuItem>
+            <MenuItem onClick={() => setSort("Newest")}>New</MenuItem>
+            <MenuItem onClick={() => setSort("Old")}>Old</MenuItem>
+            <MenuItem onClick={() => setSort("controvertial")}>
+              Comments
+            </MenuItem>
+          </MenuList>
+        </Menu>
+      </Box>
     </div>
   );
 }

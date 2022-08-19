@@ -42,7 +42,7 @@ function useSubredditSearch() {
     // debounce the search
     const timeout = setTimeout(() => {
       fetchData();
-    }, 300);
+    }, 200);
 
     return () => {
       clearTimeout(timeout);

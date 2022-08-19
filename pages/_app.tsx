@@ -50,6 +50,7 @@ function MyApp({ Component, pageProps }) {
   }, [router.events]);
 
   useEffect(() => {
+    document.title = "/r/eader for reddit";
     const getLastVisitDate = (): number => {
       let lastVisitDate: number | null = null;
       lastVisitDate = parseInt(localStorage.getItem("lastVisited"));

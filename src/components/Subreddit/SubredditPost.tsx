@@ -31,7 +31,7 @@ function Post({ postData }: IProps) {
   } = postData;
 
   const boxColor = useColorModeValue("#e6ecf092", "gray.800");
-  const nsfwBoxColor = useColorModeValue("red.500", "red.900");
+  const nsfwBorderColor = useColorModeValue("red.500", "red.700");
 
   return (
     <Box
@@ -39,9 +39,9 @@ function Post({ postData }: IProps) {
       boxShadow="rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px"
       w="100%"
       mb="5"
-      bgColor={over_18 ? nsfwBoxColor : boxColor}
-      border="1px"
-      borderColor="whiteAlpha.400"
+      bgColor={boxColor}
+      borderTopWidth="2px"
+      borderColor={over_18 ? nsfwBorderColor : "whiteAlpha.400"}
       borderRadius="sm"
     >
       <Stack
@@ -99,7 +99,6 @@ function Post({ postData }: IProps) {
                 </Text>
               </a>
             </Link>
-            <hr />
             <Box fontSize="sm">
               <Text color="gray" as="span">
                 submitted {moment(created * 1000).fromNow()} by

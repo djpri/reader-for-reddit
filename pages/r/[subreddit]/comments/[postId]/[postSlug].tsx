@@ -6,16 +6,26 @@ import CommentsTree from "src/components/Post/CommentsTree/CommentsTree";
 import { loadPostDetailsAndComments } from "src/components/Post/getPostData";
 import PostHeader from "src/components/Post/PostHeader";
 
+type sortType =
+  | "confidence"
+  | "new"
+  | "top"
+  | "controversial"
+  | "old"
+  | "random"
+  | "qa";
+
 function Submission() {
   const router: NextRouter = useRouter();
   const permalink = router.asPath;
   const [comments, setComments] = useState(null);
   const [postInfo, setPostInfo] = useState(null);
+  const [sort, setSort] = useState<sortType>("confidence");
   const [showChildComments, setShowChildComments] = useState(false);
 
   const { isLoading, error, data } = useInfiniteQuery(
-    ["postDetails", permalink],
-    () => loadPostDetailsAndComments(permalink)
+    ["postDetails", permalink, sort],
+    () => loadPostDetailsAndComments(permalink, sort)
   );
 
   const toggleAllChildComments = () => {
@@ -32,6 +42,12 @@ function Submission() {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (postInfo && !isLoading && !error) {
+      document.title = postInfo.title;
+    }
+  }, [error, isLoading, postInfo]);
+
   if (isLoading) return <p>is loading</p>;
 
   if (error) return <p>error</p>;
@@ -41,6 +57,8 @@ function Submission() {
   return (
     <Container maxW="container.xl" mt="10" mb="20">
       <PostHeader
+        sortType={sort}
+        setSort={setSort}
         postDetails={postInfo}
         showChildComments={showChildComments}
         toggleAllChildComments={toggleAllChildComments}
