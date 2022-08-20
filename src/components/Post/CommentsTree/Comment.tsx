@@ -10,6 +10,7 @@ import {
 import { VscCollapseAll } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import moment from "moment";
 
 function Comment({ item, showChildren }) {
   const [showReplies, setShowReplies] = useState(showChildren);
@@ -93,8 +94,11 @@ function Comment({ item, showChildren }) {
             <VscCollapseAll />
           </Button>
           <Text as="b">{item.author}</Text>{" "}
-          <Text as="span" color="gray.500">
-            {item.ups} points
+          <Text as="b" color="gray.500">
+            {item.ups} point{item.ups === 1 ? "" : "s"}
+          </Text>
+          <Text color="gray" as="span" fontSize="sm">
+            {moment(item.created_utc * 1000).fromNow()}
           </Text>
         </HStack>
         {/* Comment body */}

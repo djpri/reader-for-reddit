@@ -1,31 +1,33 @@
 import { Container } from "@chakra-ui/react";
-import { NextRouter, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { loadSubredditPosts } from "src/components/Subreddit/getSubredditData";
-import Posts from "../../../src/components/Subreddit/SubredditPosts";
+import Posts from "src/components/Subreddit/SubredditPosts";
+import { SubredditSortType } from "src/components/Subreddit/types";
+
+const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
 
 function Subreddit() {
-  const router: NextRouter = useRouter();
+  const router = useRouter();
+  const { subreddit, sort } = router.query;
   const [after, setAfter] = useState(null);
-  const { subreddit } = router.query;
+  const [sortType, setSortType] = useState<SubredditSortType>("hot");
 
   const {
     isLoading,
     error,
     data: posts,
-    refetch,
-  } = useQuery(
-    ["subredditPosts", subreddit],
-    () => loadSubredditPosts(subreddit, "hot", after),
-    { enabled: false }
+  } = useQuery(["subredditPosts", subreddit, sortType], () =>
+    loadSubredditPosts(subreddit, sortType, after)
   );
 
   useEffect(() => {
-    if (subreddit) {
-      refetch();
+    if (sort && subredditSortTypes.includes(sort as string)) {
+      setSortType(sort as SubredditSortType);
+      setAfter(null);
     }
-  }, [refetch, subreddit]);
+  }, [sort]);
 
   useEffect(() => {
     if (posts && !isLoading && !error) {

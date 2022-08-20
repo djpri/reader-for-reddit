@@ -36,25 +36,7 @@ function usePostsFilter(postsData) {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
   }, []);
-
-  // for sorting posts by new, old, top, most commented
-  const sortPostsBy = (field: sortType, sortType: string, ascending = true) => {
-    setSortType(sortType);
-    setSortedPosts((post) => {
-      const sortedData = post.sort((a, b) => {
-        if (ascending) {
-          return b.data[field] - a.data[field];
-        } else {
-          return a.data[field] - b.data[field];
-        }
-      });
-      // spread operator required because sort does not make a copy of original array
-      return [...sortedData];
-    });
-  };
-
   return {
-    sortPostsBy,
     sortedPosts,
     sortType,
     setSortType,

@@ -1,23 +1,54 @@
-import { Button, Container, Flex, Heading, Text } from "@chakra-ui/react";
+import {
+  Button,
+  Container,
+  Flex,
+  Heading,
+  HStack,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import React from "react";
 import Post from "./SubredditPost";
-import PostSkeleton from "./PostSkeleton";
-import SubredditSort from "./PostsSort";
 import usePostsFilter from "./usePostsFilter";
 import { PostData } from "./types";
+import { useRouter } from "next/router";
+
+const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
 
 function Posts({ subreddit, posts, error, isLoading, setAfter }) {
-  const subSort = usePostsFilter(posts);
+  const filteredPosts = usePostsFilter(posts);
+  const router = useRouter();
+  const { sort } = router.query;
 
   if (error) return <p>{error}</p>;
 
   if (isLoading) {
     return (
       <Container maxW="container.xl">
-        <PostSkeleton />
+        <Spinner />
       </Container>
     );
   }
+
+  const SortButtons = () => (
+    <HStack>
+      {subredditSortTypes.map((type) => (
+        <Button
+          rounded="none"
+          key={type}
+          color={sort === type ? "teal.500" : "gray.200"}
+          textDecoration={sort === type ? "underline" : "none"}
+          textTransform="capitalize"
+          onClick={() => {
+            router.push(`/r/${subreddit}/${type}`);
+            setAfter(null);
+          }}
+        >
+          {type}
+        </Button>
+      ))}
+    </HStack>
+  );
 
   return (
     <div>
@@ -25,13 +56,15 @@ function Posts({ subreddit, posts, error, isLoading, setAfter }) {
         <Heading as="h1" mb="30px" mt="10px" fontSize="2xl">
           {`/r/${subreddit}`}
         </Heading>
-        {posts && <SubredditSort subSort={subSort} />}
+        {posts && <SortButtons />}
       </Flex>
 
-      {subSort?.sortedPosts &&
-        subSort?.sortedPosts.map((post: { data: PostData }, index: number) => (
-          <Post key={index} postData={post.data} />
-        ))}
+      {filteredPosts?.sortedPosts &&
+        filteredPosts?.sortedPosts.map(
+          (post: { data: PostData }, index: number) => (
+            <Post key={index} postData={post.data} />
+          )
+        )}
 
       {!posts && (
         <Text>

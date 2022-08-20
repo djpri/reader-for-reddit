@@ -17,11 +17,12 @@ export const loadSubredditInfo = async (subreddit: string) => {
 
 export const loadSubredditPosts = async (
   subreddit: string | string[],
+  sort: string = "hot",
   after: string | null = null,
   count: number = 25
 ): Promise<SubredditPostData> => {
   try {
-    const { data } = await RedditAPI.get(`r/${subreddit}`, {
+    const { data } = await RedditAPI.get(`r/${subreddit}/${sort}`, {
       params: { after, count },
     });
     return {

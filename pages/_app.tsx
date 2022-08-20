@@ -11,7 +11,7 @@ import "../styles/globals.css";
 import "../styles/nprogress.css";
 import theme from "../theme/theme";
 
-const queryClient: QueryClient = new QueryClient({
+export const queryClient: QueryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 10000,

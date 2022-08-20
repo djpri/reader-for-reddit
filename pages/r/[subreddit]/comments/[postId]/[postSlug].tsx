@@ -54,7 +54,6 @@ function Submission() {
       setPostInfo(data.pages[0].postDetails);
       setComments(data.pages[0].parentComments);
     } else {
-      setPostInfo(null);
       setComments(null);
     }
   }, [data]);
@@ -68,7 +67,16 @@ function Submission() {
   if (isLoading)
     return (
       <Container maxW="container.xl" mt="10" mb="20">
-        <Spinner />
+        {postInfo && (
+          <PostHeader
+            sortType={sort}
+            setSort={setSort}
+            postDetails={postInfo}
+            showChildComments={showChildComments}
+            toggleAllChildComments={toggleAllChildComments}
+          />
+        )}
+        <Spinner my="10px" />
       </Container>
     );
 

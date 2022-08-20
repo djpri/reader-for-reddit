@@ -108,6 +108,13 @@ export interface PostData {
   is_video: boolean;
 }
 
+export type SubredditSortType =
+  | "hot"
+  | "new"
+  | "top"
+  | "controversial"
+  | "rising";
+
 export interface Gildings {}
 
 export interface LinkFlairRichtext {
