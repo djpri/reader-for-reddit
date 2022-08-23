@@ -34,6 +34,19 @@ function Post({ postData }: IProps) {
   const boxColor = useColorModeValue("#e6ecf092", "gray.800");
   const nsfwBorderColor = useColorModeValue("red.500", "red.700");
 
+  const formatScore = (score: number) => {
+    const scoreString = score.toString();
+    // 10,000 -> 10K
+    // 100,000 -> 100K
+    if (10000 <= score && score < 1000000)
+      return `${scoreString.substring(0, scoreString.length - 3)}K`;
+    // 1,000,000 -> 1M
+    // 100,000,000 -> 100M
+    if (1000000 <= score && score < 1000000000)
+      return `${scoreString.substring(0, scoreString.length - 6)}M`;
+    return score;
+  };
+
   return (
     <Box
       className={styles.post}
@@ -56,7 +69,7 @@ function Post({ postData }: IProps) {
             <FaArrowUp />
           </Button> */}
           <Text fontSize="1rem">
-            <b>{score}</b>
+            <b>{formatScore(score)}</b>
           </Text>
           {/* <Button size="xs">
             <FaArrowDown />

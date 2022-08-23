@@ -15,6 +15,7 @@ import moment from "moment";
 function Comment({ item, showChildren }) {
   const [showReplies, setShowReplies] = useState(showChildren);
   const [displayBody, setDisplayBody] = useState("block");
+  const loadMoreCommentsColor = useColorModeValue("gray.200", "gray.700");
 
   useEffect(() => {
     setShowReplies(showChildren);
@@ -44,13 +45,19 @@ function Comment({ item, showChildren }) {
           color="purple.500"
           fontSize={["xs", "xs", "sm"]}
           display="block"
-          _hover={{ bgColor: "gray.300" }}
+          _hover={{ bgColor: loadMoreCommentsColor }}
         >
           load more comments
         </Link>
       );
     return <Comment item={item.data} key={index} showChildren={false} />;
   };
+
+  // const getTotalChildComments = (replies: []) => {
+  //   const jsonString = JSON.stringify(replies);
+  //   const matches = jsonString.match(/"id"/g).length;
+  //   return matches;
+  // };
 
   const getTotalChildComments = (replies: []) => {
     const jsonString = JSON.stringify(replies);

@@ -10,7 +10,8 @@ const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
 
 function Subreddit() {
   const router = useRouter();
-  const { subreddit, sort } = router.query;
+  const { subreddit, sort, t } = router.query;
+  console.log(router.query);
   const [after, setAfter] = useState(null);
   const [sortType, setSortType] = useState<SubredditSortType>("hot");
 
@@ -18,8 +19,8 @@ function Subreddit() {
     isLoading,
     error,
     data: posts,
-  } = useQuery(["subredditPosts", subreddit, sortType], () =>
-    loadSubredditPosts(subreddit, sortType, after)
+  } = useQuery(["subredditPosts", subreddit, sortType, t], () =>
+    loadSubredditPosts(subreddit, sortType, after, t as string)
   );
 
   useEffect(() => {
