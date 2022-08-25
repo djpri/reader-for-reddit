@@ -1,5 +1,4 @@
 import {
-  Button,
   IconButton,
   Input,
   InputGroup,
@@ -14,23 +13,38 @@ import { useEffect, useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import useSubredditSearch from "./useSubredditSearch";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 function SubredditSearch() {
   const { handleSearch, setSearch, search, isLoading, searchResults } =
     useSubredditSearch();
+  const router = useRouter();
   const inputRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const bgColor = useColorModeValue("gray.200", "gray.800");
+  const bgColor = useColorModeValue("gray.50", "gray.800");
   const searchColor = useColorModeValue("black", "white");
 
   // close search results if user clicks outside of input
   useOutsideClick({
     ref: inputRef,
     handler: () => {
-      console.log("clicked outside");
       isOpen && setIsOpen(false);
     },
   });
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setSearch("");
+      setIsOpen(false);
+    };
+    router.events.on("routeChangeStart", handleRouteChange);
+
+    // If the component is unmounted, unsubscribe
+    // from the event with the `off` method:
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [router.events, setSearch]);
 
   // close search results if user presses tab
   useEffect(() => {
@@ -47,7 +61,8 @@ function SubredditSearch() {
 
   return (
     <VStack
-      w="60%"
+      justifySelf="center"
+      w="100%"
       maxW="550px"
       spacing={2}
       position="relative"
@@ -55,7 +70,7 @@ function SubredditSearch() {
       onClick={() => setIsOpen(true)}
       onFocus={() => setIsOpen(true)}
     >
-      <InputGroup spacing={2} right={["0px", "0px", "30px"]}>
+      <InputGroup spacing={2}>
         <Input
           rounded="sm"
           bgColor={bgColor}
@@ -87,7 +102,6 @@ function SubredditSearch() {
           bgColor="gray.100"
           position="absolute"
           color="black"
-          right="30px"
           align="flex-start"
           top="40px"
           w="100%"

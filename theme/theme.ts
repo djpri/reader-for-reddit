@@ -7,6 +7,9 @@ import "@fontsource/inter/500.css";
 import "@fontsource/inter/400.css";
 
 const theme = extendTheme({
+  shadows: {
+    outline: "none",
+  },
   styles: {
     global: (props) => ({
       "#__next": {
@@ -17,15 +20,25 @@ const theme = extendTheme({
         fontFamily: "body",
         fontSize: { base: "1rem", md: "1rem", sm: "0.875rem" },
         color: mode("gray.800", "whiteAlpha.900")(props),
-        bg: mode("gray.50", "#202020")(props),
+        bg: mode("white", "#202020")(props),
         lineHeight: "base",
-        letterSpacing: "0.02rem",
+        letterSpacing: "0.03rem",
       },
     }),
   },
   fonts: {
     heading: "Inter, sans-serif",
     body: "Inter, sans-serif",
+  },
+  components: {
+    Button: {
+      rounded: "none",
+    },
+    Input: {
+      defaultProps: {
+        focusBorderColor: "hsla(220, 56%, 39%, 0.6)",
+      },
+    },
   },
   textStyles: {
     heading: {

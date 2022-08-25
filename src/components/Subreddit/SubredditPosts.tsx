@@ -15,6 +15,7 @@ import { PostData } from "./types";
 import usePostsFilter from "./usePostsFilter";
 
 const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
+const defaultTime = "day";
 
 function Posts({ subreddit, posts, error, isLoading, setAfter }) {
   const filteredPosts = usePostsFilter(posts);
@@ -26,6 +27,11 @@ function Posts({ subreddit, posts, error, isLoading, setAfter }) {
   if (isLoading) {
     return (
       <Container maxW="container.xl">
+        <Flex mb="20px" justifyContent="space-between" alignItems="center">
+          <Heading as="h1" fontSize="2xl">
+            {`/r/${subreddit}`}
+          </Heading>
+        </Flex>
         <Spinner />
       </Container>
     );
@@ -61,13 +67,22 @@ function Posts({ subreddit, posts, error, isLoading, setAfter }) {
       }
     };
 
-    const Option = ({ href, text, time }) => (
-      <Button size="sm" rounded="none" color={t === time && "teal.500"}>
-        <NextLink href={href} passHref scroll={false}>
-          <Link>{text}</Link>
-        </NextLink>
-      </Button>
-    );
+    const Option = ({ href, text, time }) => {
+      return (
+        <Button
+          size="sm"
+          rounded="none"
+          color={
+            (t === time || (t === undefined && time === defaultTime)) &&
+            "teal.500"
+          }
+        >
+          <NextLink href={href} passHref scroll={false}>
+            <Link>{text}</Link>
+          </NextLink>
+        </Button>
+      );
+    };
 
     return (
       <HStack my="20px">

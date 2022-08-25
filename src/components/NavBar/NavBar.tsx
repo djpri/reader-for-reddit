@@ -3,6 +3,7 @@ import {
   Button,
   Container,
   Flex,
+  Grid,
   HStack,
   Link,
   Text,
@@ -20,34 +21,28 @@ function NavBar() {
   const isFetching = useIsFetching();
   const { colorMode, toggleColorMode } = useColorMode();
   const color = useColorModeValue("black", "white");
-  const bgColor = useColorModeValue("gray.100", "gray.900");
+  const bgColor = useColorModeValue("white", "gray.900");
+  const buttonBgColor = useColorModeValue("gray.50", "gray.700");
   const [isDesktop] = useMediaQuery("(min-width: 768px)");
 
   return (
     <Box
       as="header"
+      h="56px"
+      boxShadow="rgb(0 0 0 / 8%) 0 1px 0"
       w="100%"
       bgColor={bgColor}
       color={color}
       position="fixed"
       zIndex="100"
       top="0"
-      border="1px solid"
       borderColor="whiteAlpha.300"
       mb="50px"
       opacity={1}
     >
       <Container maxW="container.xl">
-        <Flex
-          as="nav"
-          align="center"
-          justify="space-between"
-          wrap="wrap"
-          w="100%"
-          pt={2}
-          pb={2}
-        >
-          <Flex align="center">
+        <Grid as="nav" templateColumns="1fr 2fr 1fr" w="100%" pt={2} pb={2}>
+          <Flex align="center" justifySelf="start">
             {/* <LeftDrawer /> */}
             <NextLink href="/" passHref>
               <Link>
@@ -65,13 +60,15 @@ function NavBar() {
             )}
           </Flex>
           <SubredditSearch />
-          <HStack>
+          <HStack justifySelf="end">
             {isFetching && <FaFileDownload size="1rem" color="green" />}
             <Button
               onClick={toggleColorMode}
-              colorScheme="whiteAlpha"
               color={color}
+              bgColor={buttonBgColor}
               size="sm"
+              rounded="sm"
+              boxShadow="rgb(0 0 0 / 8%) 0 1px 0"
             >
               {colorMode === "dark" ? (
                 <FaSun size="1rem" color="white" />
@@ -80,7 +77,7 @@ function NavBar() {
               )}
             </Button>
           </HStack>
-        </Flex>
+        </Grid>
       </Container>
     </Box>
   );

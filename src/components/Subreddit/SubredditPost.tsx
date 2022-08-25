@@ -11,6 +11,7 @@ import moment from "moment";
 import Link from "next/link";
 import React from "react";
 import { ImFileText2 } from "react-icons/im";
+import { formatScore } from "src/helpers";
 import styles from "styles/Home.module.css";
 import Comments from "../Post/Comments";
 import { PostData } from "./types";
@@ -33,19 +34,6 @@ function Post({ postData }: IProps) {
 
   const boxColor = useColorModeValue("#e6ecf092", "gray.800");
   const nsfwBorderColor = useColorModeValue("red.500", "red.700");
-
-  const formatScore = (score: number) => {
-    const scoreString = score.toString();
-    // 10,000 -> 10K
-    // 100,000 -> 100K
-    if (10000 <= score && score < 1000000)
-      return `${scoreString.substring(0, scoreString.length - 3)}K`;
-    // 1,000,000 -> 1M
-    // 100,000,000 -> 100M
-    if (1000000 <= score && score < 1000000000)
-      return `${scoreString.substring(0, scoreString.length - 6)}M`;
-    return score;
-  };
 
   return (
     <Box

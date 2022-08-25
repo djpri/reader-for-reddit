@@ -11,58 +11,76 @@ import { VscCollapseAll } from "react-icons/vsc";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import moment from "moment";
+import { formatScore } from "src/helpers";
 
-function Comment({ item, showChildren }) {
+type CommentType = {
+  kind: string;
+  data: any;
+};
+
+interface IProps {
+  item: CommentType;
+  showChildren: boolean;
+}
+
+function Comment({ item, showChildren }: IProps) {
   const [showReplies, setShowReplies] = useState(showChildren);
   const [displayBody, setDisplayBody] = useState("block");
   const loadMoreCommentsColor = useColorModeValue("gray.200", "gray.700");
+  const data = item.data;
 
   useEffect(() => {
     setShowReplies(showChildren);
   }, [showChildren]);
 
   const getChildren = () => {
-    if (item.replies.data.children[0].kind === "more") {
-      return item.replies.data.children;
+    if (item.data.replies.data.children[0].kind === "more") {
+      return item.data.replies.data.children;
     } else {
-      return item.replies.data.children;
+      return item.data.replies.data.children;
     }
   };
 
   const boxColor = useColorModeValue(
-    item.depth % 2 === 0 ? "#e6ecf092" : "white",
-    item.depth % 2 === 0 ? "gray.800" : "gray.900"
+    data.depth % 2 === 0 ? "gray.100" : "white",
+    data.depth % 2 === 0 ? "gray.800" : "gray.900"
   );
 
-  const renderChildComment = (item, index) => {
-    const isOfKindMore = item.data.children;
-    if (isOfKindMore)
+  const renderChildComment = (item: CommentType, index: number) => {
+    if (item.kind === "more")
       return (
         <Link
           mt="10px"
           mb="10px"
-          pl="5px"
           color="purple.500"
           fontSize={["xs", "xs", "sm"]}
           display="block"
           _hover={{ bgColor: loadMoreCommentsColor }}
         >
-          load more comments
+          load {`${item.data.count}`} more comments
         </Link>
       );
-    return <Comment item={item.data} key={index} showChildren={false} />;
+    return <Comment item={item} key={index} showChildren={false} />;
   };
 
-  // const getTotalChildComments = (replies: []) => {
-  //   const jsonString = JSON.stringify(replies);
-  //   const matches = jsonString.match(/"id"/g).length;
-  //   return matches;
-  // };
-
-  const getTotalChildComments = (replies: []) => {
-    const jsonString = JSON.stringify(replies);
-    const matches = jsonString.match(/"id"/g).length;
-    return matches;
+  const getTotalChildComments = (item: CommentType) => {
+    let count = 0;
+    if (item.kind === "more") {
+      return item.data.count;
+    }
+    if (item.kind === "t1") {
+      if (item.data?.replies === "") {
+        return count;
+      }
+      const { children } = item.data.replies.data;
+      if (children && children.length > 0) {
+        children.forEach((child: CommentType) => {
+          count += getTotalChildComments(child);
+        });
+        count += children.length;
+      }
+    }
+    return count;
   };
 
   const toggleReplies = () => setShowReplies((prevState) => !prevState);
@@ -70,7 +88,6 @@ function Comment({ item, showChildren }) {
   return (
     <Stack
       display="block"
-      // ml={(item.depth - 1) * 5}
       direction="row"
       border="1px"
       borderColor="whiteAlpha.400"
@@ -78,12 +95,12 @@ function Comment({ item, showChildren }) {
       bg={boxColor}
       pb="3"
       boxShadow="base"
-      // rounded="md"
+      rounded="md"
       mt="3"
       pl={["1", "2", "3", "4"]}
       pr="5"
       h="auto"
-      key={item.id}
+      key={data.id}
     >
       {/* Sidebar for padding */}
       <Box bg="gray.500" h="100%" mr={[1, 3, 5]}></Box>
@@ -100,19 +117,19 @@ function Comment({ item, showChildren }) {
           >
             <VscCollapseAll />
           </Button>
-          <Text as="b">{item.author}</Text>{" "}
+          <Text as="b">{data.author}</Text>{" "}
           <Text as="b" color="gray.500">
-            {item.ups} point{item.ups === 1 ? "" : "s"}
+            {data.ups && formatScore(data.ups)} point{data.ups === 1 ? "" : "s"}
           </Text>
           <Text color="gray" as="span" fontSize="sm">
-            {moment(item.created_utc * 1000).fromNow()}
+            {moment(data.created_utc * 1000).fromNow()}
           </Text>
         </HStack>
         {/* Comment body */}
         <Box display={displayBody}>
-          {item.ups > 0 ? (
+          {data.ups > 0 ? (
             <Box className="comment">
-              <ReactMarkdown linkTarget="_blank">{item.body}</ReactMarkdown>
+              <ReactMarkdown linkTarget="_blank">{data.body}</ReactMarkdown>
             </Box>
           ) : (
             <Text color="red.500">Too many downvotes to show comment</Text>
@@ -124,7 +141,8 @@ function Comment({ item, showChildren }) {
             <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
               reply
             </Link>
-            {item?.replies?.data?.children?.length > 0 && item.depth < 3 && (
+            {/* Show/Hide Child Comments */}
+            {getTotalChildComments(item) > 0 && data.depth < 3 && (
               <Link
                 onClick={toggleReplies}
                 color="gray.500"
@@ -132,12 +150,18 @@ function Comment({ item, showChildren }) {
                 userSelect="none"
               >
                 {!showReplies
-                  ? `show ${getTotalChildComments(item.replies.data.children)} `
+                  ? `show ${
+                      getTotalChildComments(item) !== 0
+                        ? `${getTotalChildComments(item)} `
+                        : ""
+                    }`
                   : "hide "}
-                {item.replies.length === 1 ? "child comment" : "child comments"}
+                {data?.replies?.length === 1
+                  ? "child comment"
+                  : "child comments"}
               </Link>
             )}
-            {item.depth >= 3 && item.replies && (
+            {data.depth >= 3 && data.replies && (
               <Link
                 color="teal.500"
                 fontSize={["xs", "xs", "sm"]}
@@ -148,8 +172,8 @@ function Comment({ item, showChildren }) {
             )}
           </HStack>
           {showReplies &&
-            item.depth < 3 &&
-            item.replies &&
+            data.depth < 3 &&
+            data.replies &&
             getChildren().map(renderChildComment)}
         </Box>
       </Box>

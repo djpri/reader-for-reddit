@@ -5,7 +5,7 @@ function CommentsTree({ comments, showChildComments }) {
   const renderParentComment = (item, index) => {
     return (
       <Comment
-        item={item.data}
+        item={item}
         index={index}
         showChildren={showChildComments}
         key={item.data.id}

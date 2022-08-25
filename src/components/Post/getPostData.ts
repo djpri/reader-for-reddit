@@ -8,7 +8,7 @@ export const loadPostDetailsAndComments = async (
     const response = await RedditAPI.get(permalink, {
       params: {
         depth: 4,
-        limit: 200,
+        limit: 300,
         sort,
       },
     });

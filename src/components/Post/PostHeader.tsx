@@ -10,6 +10,7 @@ import {
   MenuItem,
   MenuList,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { HiChevronDown } from "react-icons/hi";
@@ -33,6 +34,7 @@ function PostHeader({
   setSort,
 }) {
   const { num_comments, title, selftext, subreddit, url } = postDetails;
+  const bgColor = useColorModeValue("gray.100", "gray.800");
 
   const SortMenu = () => (
     <Menu>
@@ -81,7 +83,10 @@ function PostHeader({
 
       {/* show image for suitable file extensions */}
       {url?.match(/^.*\.(jpg|JPG|png|PNG)$/) && (
-        <Box w="300px">
+        <Box
+          w="300px"
+          boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
+        >
           <img src={url} alt={url} />
         </Box>
       )}
@@ -89,10 +94,13 @@ function PostHeader({
       {selftext && (
         <Box
           className="comment"
-          border="1px solid gray"
+          bgColor={bgColor}
+          border="1px"
+          borderColor="whiteAlpha.400"
           borderRadius="5px"
-          pl="5"
-          pr="5"
+          px={5}
+          py={2}
+          rounded="md"
           maxW="container.xl"
         >
           <ReactMarkdown
