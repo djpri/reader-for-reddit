@@ -1,20 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  Box,
-  Flex,
-  Stack,
-  Text,
-  useColorModeValue,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Grid, Text, useColorModeValue } from "@chakra-ui/react";
 import moment from "moment";
 import Link from "next/link";
-import React from "react";
+import { useState } from "react";
 import { ImFileText2 } from "react-icons/im";
+import ReactMarkdown from "react-markdown";
 import { formatScore } from "src/helpers";
 import styles from "styles/Home.module.css";
 import Comments from "../Post/Comments";
 import { PostData } from "./types";
+import { IoIosCloseCircleOutline } from "react-icons/io";
 
 interface IProps {
   postData: PostData | null;
@@ -30,9 +25,12 @@ function Post({ postData }: IProps) {
     permalink,
     num_comments,
     over_18,
+    stickied,
+    selftext,
   } = postData;
-
+  const [showSelfText, setShowSelfText] = useState(false);
   const boxColor = useColorModeValue("#e6ecf092", "gray.800");
+  const textColor = useColorModeValue("green.400", "green.400");
   const nsfwBorderColor = useColorModeValue("red.500", "red.700");
 
   return (
@@ -46,30 +44,28 @@ function Post({ postData }: IProps) {
       borderColor={over_18 ? nsfwBorderColor : "whiteAlpha.400"}
       borderRadius="sm"
     >
-      <Stack
-        spacing="15px"
+      <Grid
+        w="100%"
+        px={1}
+        columnGap={3}
+        templateColumns="minMax(2.5rem, 1fr) minMax(3rem, 1fr) 16fr"
         align={["start", "start", "center"]}
-        direction={["row", "row", "row"]}
       >
         {/* Score */}
-        <VStack w={["5%", "5%", "5%"]}>
-          {/* <Button size="xs">
-            <FaArrowUp />
-          </Button> */}
-          <Text fontSize="1rem">
-            <b>{formatScore(score)}</b>
-          </Text>
-          {/* <Button size="xs">
-            <FaArrowDown />
-          </Button> */}
-        </VStack>
+        <Text
+          textAlign="center"
+          alignSelf="center"
+          fontSize={["xs", "sm", "md"]}
+        >
+          <b>{formatScore(score)}</b>
+        </Text>
 
         {/* Thumbnail */}
         {thumbnail !== "self" &&
           thumbnail !== "default" &&
           thumbnail !== "nsfw" &&
           thumbnail && (
-            <Box w="70px">
+            <Box alignSelf="center" justifySelf="center">
               <img src={thumbnail} alt={title} />
             </Box>
           )}
@@ -79,24 +75,37 @@ function Post({ postData }: IProps) {
           thumbnail === "default" ||
           thumbnail === "nsfw" ||
           !thumbnail) && (
-          <Flex
-            w="70px"
-            h="70px"
-            justify="center"
+          <Box
+            w="100%"
+            h="100%"
+            alignSelf="center"
+            justifySelf="center"
+            m="0"
+            userSelect="none"
+            display="flex"
             alignItems="center"
-            border="1px"
-            borderColor="whiteAlpha.400"
+            justifyContent="center"
+            cursor="pointer"
+            onClick={() => setShowSelfText((prevState) => !prevState)}
           >
-            <ImFileText2 size="2rem" />
-          </Flex>
+            {showSelfText ? (
+              <IoIosCloseCircleOutline size="1.8rem" />
+            ) : (
+              <ImFileText2 size="1.8rem" />
+            )}
+          </Box>
         )}
 
-        {/* Author and time submitted */}
+        {/* Title, Author and time submitted */}
         <Box w={["100%", "100%", "95%"]}>
           <Box w="100%" mb="2">
             <Link passHref={true} href={permalink}>
               <a>
-                <Text size="md" fontWeight="500">
+                <Text
+                  size="md"
+                  fontWeight={stickied ? "700" : "500"}
+                  color={stickied && textColor}
+                >
                   {title}
                 </Text>
               </a>
@@ -110,7 +119,23 @@ function Post({ postData }: IProps) {
           </Box>
           <Comments num_comments={num_comments} permalink={permalink} />
         </Box>
-      </Stack>
+      </Grid>
+      {selftext && showSelfText && (
+        <Grid
+          w="100%"
+          px={1}
+          columnGap={3}
+          templateColumns="minMax(2.5rem, 1fr) minMax(3rem, 1fr) 16fr"
+          align={["start", "start", "center"]}
+        >
+          <div />
+          <div />
+          <Box className="comment" overflowX="auto">
+            <hr />
+            <ReactMarkdown linkTarget="_blank">{selftext}</ReactMarkdown>
+          </Box>
+        </Grid>
+      )}
     </Box>
   );
 }

@@ -27,6 +27,7 @@ function Comment({ item, showChildren }: IProps) {
   const [showReplies, setShowReplies] = useState(showChildren);
   const [displayBody, setDisplayBody] = useState("block");
   const loadMoreCommentsColor = useColorModeValue("gray.200", "gray.700");
+  const moderatorColor = useColorModeValue("teal.100", "teal.500");
   const data = item.data;
 
   useEffect(() => {
@@ -86,98 +87,105 @@ function Comment({ item, showChildren }: IProps) {
   const toggleReplies = () => setShowReplies((prevState) => !prevState);
 
   return (
-    <Stack
+    <Box
       display="block"
-      direction="row"
-      border="1px"
-      borderColor="whiteAlpha.400"
+      w="100%"
+      border={data.stickied ? "2px" : "1px"}
+      borderColor={data.stickied ? moderatorColor : "whiteAlpha.400"}
       pt="3"
       bg={boxColor}
       pb="3"
       boxShadow="base"
       rounded="md"
       mt="3"
-      pl={["1", "2", "3", "4"]}
-      pr="5"
-      h="auto"
+      px={["3", "4", "5"]}
       key={data.id}
     >
-      {/* Sidebar for padding */}
-      <Box bg="gray.500" h="100%" mr={[1, 3, 5]}></Box>
-      <Box>
-        {/* Comment info */}
-        <HStack>
-          <Button
-            size="xs"
-            onClick={() =>
-              setDisplayBody((prevState) =>
-                prevState === "block" ? "none" : "block"
-              )
-            }
+      {/* Comment info */}
+      <HStack>
+        <Button
+          size="xs"
+          onClick={() =>
+            setDisplayBody((prevState) =>
+              prevState === "block" ? "none" : "block"
+            )
+          }
+        >
+          <VscCollapseAll />
+        </Button>
+        <Stack flexWrap="wrap" direction="row">
+          <Text
+            as="b"
+            bgColor={data.distinguished === "moderator" && moderatorColor}
           >
-            <VscCollapseAll />
-          </Button>
-          <Text as="b">{data.author}</Text>{" "}
-          <Text as="b" color="gray.500">
-            {data.ups && formatScore(data.ups)} point{data.ups === 1 ? "" : "s"}
+            {data.author}
           </Text>
-          <Text color="gray" as="span" fontSize="sm">
-            {moment(data.created_utc * 1000).fromNow()}
-          </Text>
-        </HStack>
-        {/* Comment body */}
-        <Box display={displayBody}>
-          {data.ups > 0 ? (
-            <Box className="comment">
-              <ReactMarkdown linkTarget="_blank">{data.body}</ReactMarkdown>
-            </Box>
-          ) : (
-            <Text color="red.500">Too many downvotes to show comment</Text>
-          )}
-          <HStack>
-            <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
-              permalink
-            </Link>
-            <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
-              reply
-            </Link>
-            {/* Show/Hide Child Comments */}
-            {getTotalChildComments(item) > 0 && data.depth < 3 && (
-              <Link
-                onClick={toggleReplies}
-                color="gray.500"
-                fontSize={["xs", "xs", "sm"]}
-                userSelect="none"
-              >
-                {!showReplies
-                  ? `show ${
-                      getTotalChildComments(item) !== 0
-                        ? `${getTotalChildComments(item)} `
-                        : ""
-                    }`
-                  : "hide "}
-                {data?.replies?.length === 1
-                  ? "child comment"
-                  : "child comments"}
-              </Link>
-            )}
-            {data.depth >= 3 && data.replies && (
-              <Link
-                color="teal.500"
-                fontSize={["xs", "xs", "sm"]}
-                fontWeight="bold"
-              >
-                continue this thread -&gt;
-              </Link>
+          <HStack m="0">
+            <Text as="b" color="gray.500">
+              {data.ups && formatScore(data.ups)} point
+              {data.ups === 1 ? "" : "s"}
+            </Text>
+            <Text color="gray" as="span" fontSize="sm">
+              {moment(data.created_utc * 1000).fromNow()}
+            </Text>
+            {data.stickied && (
+              <Text fontSize="sm" color="teal.500">
+                stickied comment
+              </Text>
             )}
           </HStack>
-          {showReplies &&
-            data.depth < 3 &&
-            data.replies &&
-            getChildren().map(renderChildComment)}
-        </Box>
+        </Stack>
+      </HStack>
+      {/* Comment body */}
+      <Box display={displayBody}>
+        {data.ups > 0 ? (
+          <Box className="comment">
+            <ReactMarkdown linkTarget="_blank">{data.body}</ReactMarkdown>
+          </Box>
+        ) : (
+          <Text color="red.500">Too many downvotes to show comment</Text>
+        )}
+        <HStack>
+          <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
+            permalink
+          </Link>
+          <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
+            reply
+          </Link>
+          {/* Show/Hide Child Comments */}
+          {getTotalChildComments(item) > 0 && data.depth < 3 && (
+            <Link
+              onClick={toggleReplies}
+              color="gray.500"
+              fontSize={["xs", "xs", "sm"]}
+              userSelect="none"
+            >
+              {!showReplies
+                ? `show ${
+                    getTotalChildComments(item) !== 0
+                      ? `${getTotalChildComments(item)} `
+                      : ""
+                  }`
+                : "hide "}
+              {data?.replies?.length === 1 ? "child comment" : "child comments"}
+            </Link>
+          )}
+          {data.depth >= 3 && data.replies && (
+            <Link
+              color="teal.500"
+              fontSize={["xs", "xs", "sm"]}
+              fontWeight="bold"
+            >
+              continue this thread -&gt;
+            </Link>
+          )}
+        </HStack>
+        {showReplies &&
+          data.depth < 3 &&
+          data.replies &&
+          getChildren().map(renderChildComment)}
       </Box>
-    </Stack>
+    </Box>
   );
 }
 

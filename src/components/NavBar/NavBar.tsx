@@ -12,18 +12,16 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { FaFileDownload, FaMoon, FaSun } from "react-icons/fa";
+import { FaMoon, FaSun } from "react-icons/fa";
 import { SiReddit } from "react-icons/si";
-import { useIsFetching } from "react-query";
 import SubredditSearch from "../Search/SubredditSearch";
 
 function NavBar() {
-  const isFetching = useIsFetching();
   const { colorMode, toggleColorMode } = useColorMode();
   const color = useColorModeValue("black", "white");
-  const bgColor = useColorModeValue("white", "gray.900");
+  const bgColor = useColorModeValue("white", "hsl(222, 47%, 8%)");
   const buttonBgColor = useColorModeValue("gray.50", "gray.700");
-  const [isDesktop] = useMediaQuery("(min-width: 768px)");
+  const [isDesktop] = useMediaQuery("(min-width: 1024px)");
 
   return (
     <Box
@@ -61,7 +59,6 @@ function NavBar() {
           </Flex>
           <SubredditSearch />
           <HStack justifySelf="end">
-            {isFetching && <FaFileDownload size="1rem" color="green" />}
             <Button
               onClick={toggleColorMode}
               color={color}

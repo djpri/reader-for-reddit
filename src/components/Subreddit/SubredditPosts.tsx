@@ -27,8 +27,13 @@ function Posts({ subreddit, posts, error, isLoading, setAfter }) {
   if (isLoading) {
     return (
       <Container maxW="container.xl">
-        <Flex mb="20px" justifyContent="space-between" alignItems="center">
-          <Heading as="h1" fontSize="2xl">
+        <Flex
+          mb="20px"
+          justifyContent="space-between"
+          alignItems="center"
+          gap="5"
+        >
+          <Heading as="h1" fontSize="2xl" mb="20px">
             {`/r/${subreddit}`}
           </Heading>
         </Flex>
@@ -38,12 +43,14 @@ function Posts({ subreddit, posts, error, isLoading, setAfter }) {
   }
 
   const SortButtons = () => (
-    <HStack>
+    <HStack my="10px">
       {subredditSortTypes.map((type) => (
         <Button
           rounded="none"
+          size={"sm"}
+          fontSize={["xs", "sm", "md"]}
           key={type}
-          color={sort === type ? "teal.500" : "gray.200"}
+          color={sort === type && "teal.500"}
           textDecoration={sort === type ? "underline" : "none"}
           textTransform="capitalize"
           onClick={() => {
@@ -123,7 +130,12 @@ function Posts({ subreddit, posts, error, isLoading, setAfter }) {
 
   return (
     <div>
-      <Flex mb="20px" justifyContent="space-between" alignItems="center">
+      <Flex
+        mb="20px"
+        justifyContent="space-between"
+        alignItems="center"
+        flexWrap="wrap"
+      >
         <Heading as="h1" fontSize="2xl">
           {`/r/${subreddit}`}
         </Heading>
