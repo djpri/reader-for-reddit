@@ -61,7 +61,6 @@ function PostHeader({
       const initialDiagonal: number = Math.round(
         Math.hypot(initialPosition[0], initialPosition[1])
       );
-      // const finalWidth = multiplier === 1 ? newWidth : newWidthZoomOut;
       const finalWidth: number =
         (diagonal / initialDiagonal) * currentWidth * multiplier;
 

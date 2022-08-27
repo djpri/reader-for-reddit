@@ -10,6 +10,7 @@ export interface PostData {
   title: string;
   link_flair_richtext: LinkFlairRichtext[];
   subreddit_name_prefixed: string;
+  url_overridden_by_dest: string | undefined;
   hidden: boolean;
   pwls: number;
   link_flair_css_class: string;

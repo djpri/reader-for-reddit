@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 
 function usePostsFilter(postsData: any[]) {
-  const [filteredPosts, setFilteredPosts] = useState(null);
   const [sortType, setSortType] = useState(null);
-  const [showNSFW, setShowNSFW] = useState(null);
-  false;
+  const [showNSFW, setShowNSFW] = useState(true);
   const [sortedPosts, setSortedPosts] = useState(null);
 
   useEffect(() => {
