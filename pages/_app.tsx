@@ -1,6 +1,7 @@
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import axios from "axios";
 import moment from "moment";
+import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import NProgress from "nprogress";
 import { useEffect } from "react";
@@ -20,7 +21,7 @@ export const queryClient: QueryClient = new QueryClient({
   },
 });
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {

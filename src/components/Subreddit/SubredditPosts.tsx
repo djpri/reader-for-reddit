@@ -9,7 +9,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
+import { Dispatch, SetStateAction } from "react";
 import Post from "./SubredditPost";
 import { PostData } from "./types";
 import usePostsFilter from "./usePostsFilter";
@@ -17,9 +18,17 @@ import usePostsFilter from "./usePostsFilter";
 const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
 const defaultTime = "day";
 
-function Posts({ subreddit, posts, error, isLoading, setAfter }) {
+interface IProps {
+  subreddit: string | string[];
+  posts: any;
+  error: unknown;
+  isLoading: boolean;
+  setAfter: Dispatch<SetStateAction<string>>;
+}
+
+function Posts({ subreddit, posts, error, isLoading, setAfter }: IProps) {
   const filteredPosts = usePostsFilter(posts);
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const { sort, t } = router.query;
 
   if (error) return <p>{error}</p>;
@@ -74,7 +83,13 @@ function Posts({ subreddit, posts, error, isLoading, setAfter }) {
       }
     };
 
-    const Option = ({ href, text, time }) => {
+    interface OptionProps {
+      href: string;
+      text: string;
+      time: string;
+    }
+
+    const Option = ({ href, text, time }: OptionProps) => {
       return (
         <Button
           size="sm"

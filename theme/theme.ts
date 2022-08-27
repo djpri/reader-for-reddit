@@ -5,16 +5,18 @@ import "@fontsource/inter/800.css";
 import "@fontsource/inter/700.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/400.css";
+import { Dict } from "@chakra-ui/utils";
 
 // #0f172a
 // rgb(51, 65, 85)
 
-const theme = extendTheme({
+const themeConfig = {
+  useSystemColorMode: true,
   shadows: {
     outline: "none",
   },
   styles: {
-    global: (props) => ({
+    global: (props: Dict<any>) => ({
       "#__next": {
         height: "100%",
         width: "100%",
@@ -70,6 +72,8 @@ const theme = extendTheme({
       fontWeight: "bold",
     },
   },
-});
+};
+
+const theme = extendTheme(themeConfig);
 
 export default theme;

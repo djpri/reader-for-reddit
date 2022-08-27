@@ -1,19 +1,12 @@
 import { Container, Spinner } from "@chakra-ui/react";
 import { NextRouter, useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
 import { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
 import CommentsTree from "src/components/Post/CommentsTree/CommentsTree";
 import { loadPostDetailsAndComments } from "src/components/Post/getPostData";
 import PostHeader from "src/components/Post/PostHeader";
-
-type sortType =
-  | "confidence"
-  | "new"
-  | "top"
-  | "controversial"
-  | "old"
-  | "random"
-  | "qa";
+import { SortType } from "src/types/sortTypes";
 
 const sortTypes = [
   "confidence",
@@ -27,16 +20,16 @@ const sortTypes = [
 
 function Submission() {
   const router: NextRouter = useRouter();
-  const permalink = router.asPath;
-  const queryParams = router.query;
-  const [comments, setComments] = useState(null);
-  const [postInfo, setPostInfo] = useState(null);
-  const [sort, setSort] = useState<sortType>("confidence");
-  const [showChildComments, setShowChildComments] = useState(false);
+  const permalink: string = router.asPath;
+  const queryParams: ParsedUrlQuery = router.query;
+  const [comments, setComments] = useState<any[]>(null);
+  const [postInfo, setPostInfo] = useState<any | null>(null);
+  const [sort, setSort] = useState<SortType>("confidence");
+  const [showChildComments, setShowChildComments] = useState<boolean>(false);
 
   useEffect(() => {
     if (queryParams.sort && sortTypes.includes(queryParams.sort as string)) {
-      setSort(queryParams.sort as sortType);
+      setSort(queryParams.sort as SortType);
     }
   }, [queryParams.sort]);
 

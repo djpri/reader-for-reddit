@@ -13,14 +13,14 @@ import { useEffect, useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import useSubredditSearch from "./useSubredditSearch";
 import NextLink from "next/link";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 
 function SubredditSearch() {
   const { handleSearch, setSearch, search, isLoading, searchResults } =
     useSubredditSearch();
-  const router = useRouter();
+  const router: NextRouter = useRouter();
   const inputRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const searchColor = useColorModeValue("black", "white");
 
@@ -48,7 +48,7 @@ function SubredditSearch() {
 
   // close search results if user presses tab
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Tab") {
         setIsOpen(false);
       }

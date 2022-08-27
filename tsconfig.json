@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "watch": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": "./",
     "allowJs": true,
@@ -20,9 +21,10 @@
     "noUnusedLocals": false,
     "noUnusedParameters": true,
     "incremental": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noImplicitReturns": false,
-    "pretty": true
+    "pretty": true,
+    "suppressImplicitAnyIndexErrors": true
   },
   "watchOptions": {
     "watchFile": "useFsEvents",

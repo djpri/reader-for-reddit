@@ -27,7 +27,7 @@ function Comment({ item, showChildren }: IProps) {
   const [showReplies, setShowReplies] = useState(showChildren);
   const [displayBody, setDisplayBody] = useState("block");
   const loadMoreCommentsColor = useColorModeValue("gray.200", "gray.700");
-  const moderatorColor = useColorModeValue("teal.100", "teal.500");
+  const moderatorColor = useColorModeValue("green.200", "green.500");
   const data = item.data;
 
   useEffect(() => {
@@ -129,7 +129,7 @@ function Comment({ item, showChildren }: IProps) {
               {moment(data.created_utc * 1000).fromNow()}
             </Text>
             {data.stickied && (
-              <Text fontSize="sm" color="teal.500">
+              <Text fontSize="sm" color="green.500">
                 stickied comment
               </Text>
             )}

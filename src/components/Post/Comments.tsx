@@ -1,7 +1,12 @@
 import { Box, Text, Link } from "@chakra-ui/react";
 import NextLink from "next/link";
 
-function Comments({ num_comments, permalink }) {
+interface IProps {
+  num_comments: number;
+  permalink: string;
+}
+
+function Comments({ num_comments, permalink }: IProps) {
   return (
     <Box fontSize="sm">
       <NextLink passHref href={permalink}>
