@@ -1,10 +1,10 @@
 import {
+  Box,
   IconButton,
   Input,
   InputGroup,
   InputRightElement,
   Link,
-  StackDivider,
   useColorModeValue,
   useOutsideClick,
   VStack,
@@ -39,8 +39,6 @@ function SubredditSearch() {
     };
     router.events.on("routeChangeStart", handleRouteChange);
 
-    // If the component is unmounted, unsubscribe
-    // from the event with the `off` method:
     return () => {
       router.events.off("routeChangeStart", handleRouteChange);
     };
@@ -97,21 +95,28 @@ function SubredditSearch() {
       </InputGroup>
       {searchResults?.length > 0 && (
         <VStack
-          spacing={3}
           rounded="sm"
-          bgColor="gray.100"
+          bgColor="white"
           position="absolute"
           color="black"
           align="flex-start"
           top="40px"
           w="100%"
-          divider={<StackDivider borderColor="gray.300" />}
         >
           {isOpen &&
             searchResults.map((result) => (
-              <NextLink key={result.data.id} href={result.data.url} passHref>
-                <Link>{result.data.url}</Link>
-              </NextLink>
+              <Box
+                key={result.data.id}
+                _hover={{ bgColor: "#eeeeee" }}
+                w="100%"
+                h="100%"
+                px={4}
+                py={1}
+              >
+                <NextLink href={result.data.url} passHref>
+                  <Link fontWeight="bold">{result.data.url}</Link>
+                </NextLink>
+              </Box>
             ))}
         </VStack>
       )}

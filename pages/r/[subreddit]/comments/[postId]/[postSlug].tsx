@@ -46,10 +46,13 @@ function Submission() {
     if (data?.pages[0]) {
       setPostInfo(data.pages[0].postDetails);
       setComments(data.pages[0].parentComments);
+      if (sort === "confidence" && data.pages[0].postDetails.suggested_sort) {
+        setSort(data.pages[0].postDetails.suggested_sort);
+      }
     } else {
       setComments(null);
     }
-  }, [data]);
+  }, [data, sort]);
 
   useEffect(() => {
     if (postInfo && !isLoading && !error) {

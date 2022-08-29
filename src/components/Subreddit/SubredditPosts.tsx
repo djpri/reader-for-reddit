@@ -18,16 +18,30 @@ import usePostsFilter from "./usePostsFilter";
 const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
 const defaultTime = "day";
 
+type Page = {
+  after: string;
+  before: string;
+  children: any[];
+};
+
 interface IProps {
   subreddit: string | string[];
-  posts: any;
+  pages: Page[];
   error: unknown;
   isLoading: boolean;
   setAfter: Dispatch<SetStateAction<string>>;
+  fetchNextPage: any;
 }
 
-function Posts({ subreddit, posts, error, isLoading, setAfter }: IProps) {
-  const filteredPosts = usePostsFilter(posts);
+function Posts({
+  subreddit,
+  pages,
+  error,
+  isLoading,
+  setAfter,
+  fetchNextPage,
+}: IProps) {
+  const filteredPosts = usePostsFilter(pages);
   const router: NextRouter = useRouter();
   const { sort, t } = router.query;
 
@@ -154,7 +168,7 @@ function Posts({ subreddit, posts, error, isLoading, setAfter }: IProps) {
         <Heading as="h1" fontSize="2xl">
           {`/r/${subreddit}`}
         </Heading>
-        {posts && <SortButtons />}
+        {pages && <SortButtons />}
       </Flex>
 
       {(sort === "top" || sort === "controversial") && <TimeOptions />}
@@ -166,12 +180,12 @@ function Posts({ subreddit, posts, error, isLoading, setAfter }: IProps) {
           )
         )}
 
-      {!posts && (
+      {!pages && (
         <Text>
           No posts found. This subreddit does not exist or no longer exists.
         </Text>
       )}
-      <Button w="100%" onClick={() => setAfter(posts.after)}>
+      <Button w="100%" onClick={() => fetchNextPage()}>
         Get more posts
       </Button>
     </div>

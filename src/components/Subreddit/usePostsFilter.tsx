@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 
-function usePostsFilter(postsData: any[]) {
+function usePostsFilter(pages: any) {
   const [sortType, setSortType] = useState(null);
   const [showNSFW, setShowNSFW] = useState(true);
-  const [sortedPosts, setSortedPosts] = useState(null);
+  const [sortedPosts, setSortedPosts] = useState([]);
 
   useEffect(() => {
-    setSortedPosts(
-      postsData?.filter((post: any) => {
-        return showNSFW || !post.data.over_18;
-      })
-    );
-  }, [postsData, showNSFW]);
+    if (pages && pages.length > 0) {
+      setSortedPosts(
+        pages[0]?.children?.filter((post: any) => {
+          return showNSFW || !post.data.over_18;
+        })
+      );
+    }
+  }, [pages, showNSFW]);
 
   return {
     sortedPosts,

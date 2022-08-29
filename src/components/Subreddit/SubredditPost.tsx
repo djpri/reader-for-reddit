@@ -2,22 +2,21 @@
 import {
   Box,
   Center,
+  Link,
   Grid,
   Text,
   useColorModeValue,
   Wrap,
 } from "@chakra-ui/react";
 import moment from "moment";
-import Link from "next/link";
 import { useState } from "react";
 import { FaRegSurprise } from "react-icons/fa";
 import { ImFileText2 } from "react-icons/im";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import ReactMarkdown from "react-markdown";
 import { formatScore } from "src/helpers";
-import styles from "styles/Home.module.css";
-import Comments from "../Post/Comments";
 import { PostData } from "./types";
+import NextLink from "next/link";
 
 interface IProps {
   postData: PostData | null;
@@ -47,10 +46,11 @@ function Post({ postData }: IProps) {
 
   return (
     <Box
-      className={styles.post}
       boxShadow="rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px"
       w="100%"
       mb="5"
+      py={1}
+      px={1}
       bgColor={boxColor}
       borderTopWidth="2px"
       borderColor={over_18 ? nsfwBorderColor : "whiteAlpha.400"}
@@ -64,13 +64,9 @@ function Post({ postData }: IProps) {
         align={["start", "start", "center"]}
       >
         {/* Score */}
-        <Text
-          textAlign="center"
-          alignSelf="center"
-          fontSize={["xs", "sm", "md"]}
-        >
+        <Center fontSize={["xs", "sm", "md"]}>
           <b>{formatScore(score)}</b>
-        </Text>
+        </Center>
 
         {/* Thumbnail */}
         {thumbnail !== "self" &&
@@ -78,7 +74,7 @@ function Post({ postData }: IProps) {
           thumbnail !== "nsfw" &&
           thumbnail !== "spoiler" &&
           thumbnail && (
-            <Box alignSelf="center" justifySelf="center">
+            <Center>
               <Link
                 href={
                   url_overridden_by_dest ? url_overridden_by_dest : permalink
@@ -89,21 +85,21 @@ function Post({ postData }: IProps) {
                   <img src={thumbnail} alt={title} />
                 </a>
               </Link>
-            </Box>
+            </Center>
           )}
 
         {/* Spoiler */}
         {thumbnail === "spoiler" && (
-          <Box alignSelf="center" justifySelf="center">
+          <Center>
             <Link
               href={url_overridden_by_dest ? url_overridden_by_dest : permalink}
               passHref
             >
               <a target="_blank">
-                <FaRegSurprise size="1.8rem" />
+                <FaRegSurprise size="1.8rem" color="hsl(31, 100%, 50%)" />
               </a>
             </Link>
-          </Box>
+          </Center>
         )}
 
         {/* Placeholder if no thumbnail exists */}
@@ -111,16 +107,11 @@ function Post({ postData }: IProps) {
           thumbnail === "default" ||
           thumbnail === "nsfw" ||
           !thumbnail) && (
-          <Box
+          <Center
             w="100%"
             h="100%"
-            alignSelf="center"
-            justifySelf="center"
             m="0"
             userSelect="none"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
             cursor="pointer"
             onClick={() => setShowSelfText((prevState) => !prevState)}
           >
@@ -129,7 +120,7 @@ function Post({ postData }: IProps) {
             ) : (
               <ImFileText2 size="1.8rem" />
             )}
-          </Box>
+          </Center>
         )}
 
         {/* Title, Author and time submitted */}
@@ -141,8 +132,8 @@ function Post({ postData }: IProps) {
                   fontSize="xs"
                   bgColor={linkFlairColor}
                   fontWeight="600"
-                  rounded="sm"
-                  px={2}
+                  // rounded="md"
+                  px={1}
                 >
                   {link_flair_text}
                 </Center>
@@ -168,7 +159,13 @@ function Post({ postData }: IProps) {
               <Text as="span">{author}</Text>
             </Box>
           </Box>
-          <Comments num_comments={num_comments} permalink={permalink} />
+          <Box fontSize="sm">
+            <NextLink passHref href={permalink}>
+              <Link color="gray.500">
+                <Text as="b">{num_comments} comments</Text>
+              </Link>
+            </NextLink>
+          </Box>
         </Box>
       </Grid>
       {selftext && showSelfText && (

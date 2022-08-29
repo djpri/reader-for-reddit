@@ -47,27 +47,32 @@ function PostHeader({
   const { num_comments, title, selftext, subreddit, url } = postDetails;
   const bgColor = useColorModeValue("gray.100", "gray.800");
   const imageRef = useRef(null);
-  const [position, setPosition] = useState([0, 0, 0]);
   const [isDragging, setIsDragging] = useState(false);
   const [initialPosition, setInitialPosition] = useState([0, 0]);
+  const [initialWidth, setInitialWidth] = useState(0);
 
   useEffect(() => {
     const onMove = (event: MouseEvent) => {
-      let { width: currentWidth } = imageRef.current.getBoundingClientRect();
+      const currentWidth = initialWidth;
       const deltaX: number = event.clientX - initialPosition[0];
       const deltaY: number = event.clientY - initialPosition[1];
-      const multiplier: number = deltaX < 0 || deltaY < 0 ? -1 : 1;
-      const diagonal: number = Math.round(Math.hypot(deltaX, deltaY));
+      let multiplier: number = 1;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        multiplier = deltaX / Math.abs(deltaX);
+      } else {
+        multiplier = deltaY / Math.abs(deltaY);
+      }
+
+      const diagonal: number = Math.round(
+        Math.hypot(deltaX, deltaY) * multiplier
+      );
       const initialDiagonal: number = Math.round(
         Math.hypot(initialPosition[0], initialPosition[1])
       );
-      const finalWidth: number =
-        (diagonal / initialDiagonal) * currentWidth * multiplier;
+      const finalWidth: number = (diagonal / initialDiagonal) * currentWidth;
 
-      setPosition([diagonal, initialDiagonal, finalWidth]);
-      if (finalWidth > 200) {
-        imageRef.current.style.width = `${currentWidth + finalWidth}px`;
-      }
+      imageRef.current.style.width = `${currentWidth + finalWidth * 1.6}px`;
     };
     if (isDragging) {
       document.addEventListener("mousemove", onMove);
@@ -81,7 +86,7 @@ function PostHeader({
         setIsDragging(false);
       });
     };
-  }, [isDragging, initialPosition]);
+  }, [isDragging, initialPosition, initialWidth]);
 
   const SortMenu = () => (
     <Menu>
@@ -93,7 +98,7 @@ function PostHeader({
       >
         Sorted by:
         <Text as="span" color="teal.400" ml="3">
-          {sortNames[sortType]}
+          {sortNames[sortType]}{" "}
         </Text>
       </MenuButton>
       <MenuList>
@@ -131,22 +136,26 @@ function PostHeader({
       {/* show image for suitable file extensions */}
       {url?.match(/^.*\.(jpg|JPG|png|PNG)$/) && (
         <Box
-          ref={imageRef}
           onMouseDown={(e) => {
             e.preventDefault();
             setInitialPosition([e.clientX, e.clientY]);
+            setInitialWidth(imageRef.current.clientWidth);
             setIsDragging(true);
           }}
-          maxW="30vw"
-          boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
+          maxW="100%"
         >
-          <chakra.img src={url} alt={url} cursor="pointer" draggable="false" />
+          <chakra.img
+            ref={imageRef}
+            src={url}
+            alt={url}
+            cursor="pointer"
+            draggable="false"
+            minW="10vw"
+            w="30vw"
+            boxShadow="rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px"
+          />
         </Box>
       )}
-
-      <Text>
-        {position[0]}, {position[1]}, {position[2]}
-      </Text>
 
       {selftext && (
         <Box

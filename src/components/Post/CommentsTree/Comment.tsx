@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import moment from "moment";
 import { formatScore } from "src/helpers";
+import NextLink from "next/link";
 
 type CommentType = {
   kind: string;
@@ -146,12 +147,11 @@ function Comment({ item, showChildren }: IProps) {
           <Text color="red.500">Too many downvotes to show comment</Text>
         )}
         <HStack>
-          <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
-            permalink
-          </Link>
-          <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
-            reply
-          </Link>
+          <NextLink href={data.id} passHref>
+            <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
+              permalink
+            </Link>
+          </NextLink>
           {/* Show/Hide Child Comments */}
           {getTotalChildComments(item) > 0 && data.depth < 3 && (
             <Link
