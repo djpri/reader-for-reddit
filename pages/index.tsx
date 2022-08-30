@@ -1,6 +1,15 @@
-import { Button, Container, Grid, Heading, Link, Wrap } from "@chakra-ui/react";
+import {
+  Button,
+  Container,
+  Grid,
+  Heading,
+  Link,
+  Wrap,
+  Text,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
-import { NextRouter, useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { getSubsFromLocalStorage } from "src/localStorage";
 
 const popularSubs = [
   "announcements",
@@ -20,24 +29,23 @@ const popularSubs = [
   "jokes",
 ];
 
-const mySubs = [
-  "learnprogramming",
-  "soccer",
-  "formula1",
-  "liverpoolfc",
-  "webdev",
-];
-
 export default function Home() {
+  const [savedSubreddits, setSavedSubreddits] = useState([]);
+
+  useEffect(() => {
+    setSavedSubreddits(getSubsFromLocalStorage);
+  }, []);
+
   const SubLink = ({ sub }: { sub: string }) => {
     return (
-      <NextLink href={`r/${sub}`} passHref>
+      <NextLink href={`/r/${sub}`} passHref>
         <Link _hover={{ textDecoration: "none" }}>
           <Button width="15rem">{sub}</Button>
         </Link>
       </NextLink>
     );
   };
+
   return (
     <Container maxW="container.xl">
       <Wrap spacing={5} my={5}>
@@ -45,7 +53,7 @@ export default function Home() {
         <SubLink sub="Popular" />
         <SubLink sub="All" />
       </Wrap>
-      <Heading as="h1" fontSize="3xl" mb={5}>
+      <Heading as="h1" fontSize="2xl" mb={5}>
         Popular Subreddits
       </Heading>
       <Grid templateColumns="repeat(auto-fit, 15rem)" gap={4} my={5}>
@@ -53,13 +61,18 @@ export default function Home() {
           <SubLink key={sub} sub={sub} />
         ))}
       </Grid>
-      <Heading as="h1" fontSize="3xl" mb={5}>
+      <Heading as="h1" fontSize="2xl" mb={5}>
         My Subreddits
       </Heading>
       <Grid templateColumns="repeat(auto-fit, 15rem)" gap={4} my={5}>
-        {mySubs.map((sub) => (
-          <SubLink key={sub} sub={sub} />
-        ))}
+        {savedSubreddits.length > 0 ? (
+          savedSubreddits.map((sub: string) => <SubLink key={sub} sub={sub} />)
+        ) : (
+          <Text>
+            No Subreddits found. Use &quot;Save&quot; button to save sub to list
+            when visiting a subreddit.
+          </Text>
+        )}
       </Grid>
     </Container>
   );

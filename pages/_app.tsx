@@ -11,6 +11,7 @@ import NavBar from "../src/components/NavBar/NavBar";
 import "../styles/globals.css";
 import "../styles/nprogress.css";
 import theme from "../theme/theme";
+import Head from "next/head";
 
 export const queryClient: QueryClient = new QueryClient({
   defaultOptions: {
@@ -95,6 +96,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
+        <Head>
+          <link rel="shortcut icon" href="/reddit-favicon-blue.png" />
+          <title>/r/eader for reddit</title>
+        </Head>
+
         <NavBar />
         <Box as="main" mt="80px" mb="100px">
           <Component {...pageProps} />

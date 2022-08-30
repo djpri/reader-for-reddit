@@ -4,16 +4,23 @@ import {
   Flex,
   Heading,
   HStack,
+  IconButton,
   Link,
   Spinner,
   Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { NextRouter, useRouter } from "next/router";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Post from "./SubredditPost";
 import { PostData } from "./types";
 import usePostsFilter from "./usePostsFilter";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import {
+  addSubToLocalStorage,
+  isSavedInStorage,
+  removeSubFromLocalStorage,
+} from "src/localStorage";
 
 const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
 const defaultTime = "day";
@@ -44,6 +51,11 @@ function Posts({
   const filteredPosts = usePostsFilter(pages);
   const router: NextRouter = useRouter();
   const { sort, t } = router.query;
+  const [isSavedSubreddit, setIsSavedSubreddit] = useState(false);
+
+  useEffect(() => {
+    setIsSavedSubreddit(isSavedInStorage(subreddit as string));
+  }, [subreddit]);
 
   if (error) return <p>{error}</p>;
 
@@ -165,9 +177,34 @@ function Posts({
         alignItems="center"
         flexWrap="wrap"
       >
-        <Heading as="h1" fontSize="2xl">
-          {`/r/${subreddit}`}
-        </Heading>
+        <HStack>
+          <Heading as="h1" fontSize="2xl">
+            {`/r/${subreddit}`}
+          </Heading>
+          {isSavedSubreddit ? (
+            <IconButton
+              size="xs"
+              icon={<AiFillStar color="yellow" />}
+              aria-label={"add-subreddit"}
+              color="white"
+              onClick={() => {
+                setIsSavedSubreddit(false);
+                removeSubFromLocalStorage(subreddit as string);
+              }}
+            />
+          ) : (
+            <IconButton
+              size="xs"
+              icon={<AiOutlineStar color="white" />}
+              aria-label={"add-subreddit"}
+              color="white"
+              onClick={() => {
+                setIsSavedSubreddit(true);
+                addSubToLocalStorage(subreddit as string);
+              }}
+            />
+          )}
+        </HStack>
         {pages && <SortButtons />}
       </Flex>
 

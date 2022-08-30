@@ -1,4 +1,4 @@
-import router from "next/router";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { RedditAPI } from "src/redditApi";
 
@@ -29,6 +29,7 @@ function useSubredditSearch() {
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchData() {

@@ -7,6 +7,7 @@ import {
   Text,
   useColorModeValue,
   Wrap,
+  chakra,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { useState } from "react";
@@ -17,6 +18,7 @@ import ReactMarkdown from "react-markdown";
 import { formatScore } from "src/helpers";
 import { PostData } from "./types";
 import NextLink from "next/link";
+import DragToResizeImage from "../Images/DragToResizeImage";
 
 interface IProps {
   postData: PostData | null;
@@ -39,6 +41,7 @@ function Post({ postData }: IProps) {
     link_flair_text,
   } = postData;
   const [showSelfText, setShowSelfText] = useState(false);
+  const [showImage, setShowImage] = useState(false);
   const boxColor = useColorModeValue("#e6ecf092", "gray.800");
   const textColor = useColorModeValue("green.400", "green.400");
   const nsfwBorderColor = useColorModeValue("red.500", "red.700");
@@ -74,17 +77,18 @@ function Post({ postData }: IProps) {
           thumbnail !== "nsfw" &&
           thumbnail !== "spoiler" &&
           thumbnail && (
-            <Center>
-              <Link
-                href={
-                  url_overridden_by_dest ? url_overridden_by_dest : permalink
+            <Center
+              cursor={
+                url_overridden_by_dest?.match(/^.*\.(jpg|JPG|png|PNG)$/) &&
+                "pointer"
+              }
+              onClick={() => {
+                if (url_overridden_by_dest.match(/^.*\.(jpg|JPG|png|PNG)$/)) {
+                  setShowImage((prevState) => !prevState);
                 }
-                passHref
-              >
-                <a target="_blank">
-                  <img src={thumbnail} alt={title} />
-                </a>
-              </Link>
+              }}
+            >
+              <img src={thumbnail} alt={title} />
             </Center>
           )}
 
@@ -93,11 +97,9 @@ function Post({ postData }: IProps) {
           <Center>
             <Link
               href={url_overridden_by_dest ? url_overridden_by_dest : permalink}
-              passHref
+              target="_blank"
             >
-              <a target="_blank">
-                <FaRegSurprise size="1.8rem" color="hsl(31, 100%, 50%)" />
-              </a>
+              <FaRegSurprise size="1.8rem" color="hsl(31, 100%, 50%)" />
             </Link>
           </Center>
         )}
@@ -182,6 +184,22 @@ function Post({ postData }: IProps) {
             <hr />
             <ReactMarkdown linkTarget="_blank">{selftext}</ReactMarkdown>
           </Box>
+        </Grid>
+      )}
+      {showImage && (
+        <Grid
+          w="100%"
+          px={1}
+          columnGap={3}
+          templateColumns="minMax(2.5rem, 1fr) minMax(3rem, 1fr) 16fr"
+          align={["start", "start", "center"]}
+        >
+          <div />
+          <div />
+          <DragToResizeImage
+            url={url_overridden_by_dest}
+            alt="subreddit-post-image"
+          />
         </Grid>
       )}
     </Box>
