@@ -7,7 +7,6 @@ import {
   Text,
   useColorModeValue,
   Wrap,
-  chakra,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { useState } from "react";

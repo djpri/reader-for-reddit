@@ -13,6 +13,7 @@ import ReactMarkdown from "react-markdown";
 import moment from "moment";
 import { formatScore } from "src/helpers";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 type CommentType = {
   kind: string;
@@ -30,6 +31,7 @@ function Comment({ item, showChildren }: IProps) {
   const loadMoreCommentsColor = useColorModeValue("gray.200", "gray.700");
   const moderatorColor = useColorModeValue("green.200", "green.500");
   const data = item.data;
+  const router = useRouter();
 
   useEffect(() => {
     setShowReplies(showChildren);
@@ -147,7 +149,7 @@ function Comment({ item, showChildren }: IProps) {
           <Text color="red.500">Too many downvotes to show comment</Text>
         )}
         <HStack>
-          <NextLink href={data.id} passHref>
+          <NextLink href={`${router.asPath}/${data.id}`} passHref>
             <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
               permalink
             </Link>

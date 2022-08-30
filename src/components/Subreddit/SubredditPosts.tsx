@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { NextRouter, useRouter } from "next/router";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Post from "./SubredditPost";
 import { PostData } from "./types";
 import usePostsFilter from "./usePostsFilter";
@@ -36,8 +36,8 @@ interface IProps {
   pages: Page[];
   error: unknown;
   isLoading: boolean;
-  setAfter: Dispatch<SetStateAction<string>>;
   fetchNextPage: any;
+  isFetchingNextPage: boolean;
 }
 
 function Posts({
@@ -45,10 +45,10 @@ function Posts({
   pages,
   error,
   isLoading,
-  setAfter,
   fetchNextPage,
+  isFetchingNextPage,
 }: IProps) {
-  const filteredPosts = usePostsFilter(pages);
+  const { filteredPosts } = usePostsFilter(pages);
   const router: NextRouter = useRouter();
   const { sort, t } = router.query;
   const [isSavedSubreddit, setIsSavedSubreddit] = useState(false);
@@ -90,7 +90,6 @@ function Posts({
           textTransform="capitalize"
           onClick={() => {
             router.push(`/r/${subreddit}/${type}`);
-            setAfter(null);
           }}
         >
           {type}
@@ -210,19 +209,22 @@ function Posts({
 
       {(sort === "top" || sort === "controversial") && <TimeOptions />}
 
-      {filteredPosts?.sortedPosts &&
-        filteredPosts?.sortedPosts.map(
-          (post: { data: PostData }, index: number) => (
-            <Post key={index} postData={post.data} />
-          )
-        )}
+      {filteredPosts?.length > 0 &&
+        filteredPosts.map((post: { data: PostData }, index: number) => (
+          <Post key={index} postData={post.data} />
+        ))}
 
       {!pages && (
         <Text>
           No posts found. This subreddit does not exist or no longer exists.
         </Text>
       )}
-      <Button w="100%" onClick={() => fetchNextPage()}>
+      <Button
+        w="100%"
+        onClick={() => fetchNextPage()}
+        disabled={isFetchingNextPage}
+        isLoading={isFetchingNextPage}
+      >
         Get more posts
       </Button>
     </div>

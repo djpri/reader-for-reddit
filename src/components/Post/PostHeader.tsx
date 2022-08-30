@@ -1,8 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 import {
   Box,
   Button,
-  chakra,
   Heading,
   HStack,
   Link,

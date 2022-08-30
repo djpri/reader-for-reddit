@@ -12,7 +12,6 @@ function Subreddit() {
   const router = useRouter();
   const { subreddit, sort, t } = router.query;
   console.log(router.query);
-  const [after, setAfter] = useState(null);
   const [sortType, setSortType] = useState<SubredditSortType>("hot");
 
   const {
@@ -20,14 +19,16 @@ function Subreddit() {
     error,
     data: posts,
     fetchNextPage,
-  } = useInfiniteQuery(["subredditPosts", subreddit, sortType, t], () =>
-    loadSubredditPosts(subreddit, sortType, after, t as string)
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ["subredditPosts", subreddit, sortType, t],
+    ({ pageParam = null }) =>
+      loadSubredditPosts(subreddit, sortType, pageParam, t as string)
   );
 
   useEffect(() => {
     if (sort && subredditSortTypes.includes(sort as string)) {
       setSortType(sort as SubredditSortType);
-      setAfter(null);
     }
   }, [sort]);
 
@@ -44,8 +45,8 @@ function Subreddit() {
         pages={posts?.pages}
         isLoading={isLoading}
         error={error}
-        setAfter={setAfter}
         fetchNextPage={fetchNextPage}
+        isFetchingNextPage={isFetchingNextPage}
       />
     </Container>
   );

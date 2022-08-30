@@ -11,6 +11,7 @@ export const removeSubFromLocalStorage = (sub: string) => {
   if (subs !== null && subs.length > 0) {
     subs.splice(subs.indexOf(sub), 1);
   }
+  localStorage.setItem("savedSubreddits", JSON.stringify(subs));
 };
 
 export const isSavedInStorage = (sub: string) => {

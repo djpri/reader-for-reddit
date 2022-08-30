@@ -1,13 +1,12 @@
 import { Container } from "@chakra-ui/react";
 import { NextRouter, useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import { loadSubredditPosts } from "src/components/Subreddit/getSubredditData";
 import Posts from "../../../src/components/Subreddit/SubredditPosts";
 
 function Subreddit() {
   const router: NextRouter = useRouter();
-  const [after, setAfter] = useState(null);
   const { subreddit } = router.query;
 
   const {
@@ -16,10 +15,16 @@ function Subreddit() {
     data: posts,
     refetch,
     fetchNextPage,
+    isFetchingNextPage,
   } = useInfiniteQuery(
     ["subredditPosts", subreddit],
-    () => loadSubredditPosts(subreddit, "hot", after),
-    { enabled: false, getNextPageParam: (lastPage) => lastPage.after }
+    ({ pageParam = null }) => loadSubredditPosts(subreddit, "hot", pageParam),
+    {
+      enabled: false,
+      getNextPageParam: (lastPage) => {
+        return lastPage.after;
+      },
+    }
   );
 
   useEffect(() => {
@@ -41,8 +46,8 @@ function Subreddit() {
         pages={posts?.pages}
         isLoading={isLoading}
         error={error}
-        setAfter={setAfter}
         fetchNextPage={fetchNextPage}
+        isFetchingNextPage={isFetchingNextPage}
       />
     </Container>
   );
