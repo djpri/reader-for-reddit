@@ -5,6 +5,7 @@ import "@fontsource/inter/800.css";
 import "@fontsource/inter/700.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/400.css";
+import "@fontsource/dm-sans";
 import { Dict } from "@chakra-ui/utils";
 
 // #0f172a
@@ -27,12 +28,20 @@ const themeConfig = {
         color: mode("rgb(51, 65, 85)", "whiteAlpha.900")(props),
         bg: mode("white", "#0f172a")(props),
         lineHeight: "base",
-        letterSpacing: "0.03rem",
+        letterSpacing: "0.01rem",
+      },
+      ".comment": {
+        blockquote: {
+          bgColor: mode("blackAlpha.200", "whiteAlpha.300")(props),
+          borderLeft: "2px solid whiteAlpha.500",
+          paddingLeft: "5px",
+          fontStyle: "italic",
+        },
       },
     }),
   },
   fonts: {
-    heading: "Inter, sans-serif",
+    heading: "DM Sans, sans-serif",
     body: "Inter, sans-serif",
   },
   components: {
@@ -50,7 +59,7 @@ const themeConfig = {
       fontFamily: "heading",
       textAlign: "center",
       fontWeight: "bold",
-      letterSpacing: "-0.015em",
+      letterSpacing: "0.015em",
       lineHeight: "1.24",
       fontSize: { base: "1.75rem", md: "3.5rem" },
     },
@@ -58,7 +67,7 @@ const themeConfig = {
       fontFamily: "heading",
       textAlign: "center",
       fontWeight: "bold",
-      letterSpacing: "-0.015em",
+      letterSpacing: "0.015em",
       lineHeight: "1.24",
       fontSize: { base: "1.75rem", md: "2.75rem" },
     },

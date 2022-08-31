@@ -61,6 +61,12 @@ a {
   border-radius: 2px;
 }
 
+/* .comment blockquote {
+  background-color: rgb(126, 126, 126);
+  border-left: 2px solid #fff;
+  padding-left: 5px;
+} */
+
 .css-0 {
   max-width: 100%;
 }

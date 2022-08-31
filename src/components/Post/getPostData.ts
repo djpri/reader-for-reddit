@@ -2,7 +2,8 @@ import { RedditAPI } from "../../redditApi";
 
 export const loadPostDetailsAndComments = async (
   permalink: string,
-  sort = "confidence"
+  sort = "confidence",
+  commentId?: string
 ) => {
   try {
     const response = await RedditAPI.get(permalink, {
@@ -10,6 +11,7 @@ export const loadPostDetailsAndComments = async (
         depth: 4,
         limit: 300,
         sort,
+        comment: commentId,
       },
     });
     const postDetails = response[0].data.children[0].data;

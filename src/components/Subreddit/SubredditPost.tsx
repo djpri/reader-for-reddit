@@ -7,6 +7,7 @@ import {
   Text,
   useColorModeValue,
   Wrap,
+  Heading,
 } from "@chakra-ui/react";
 import moment from "moment";
 import { useState } from "react";
@@ -91,6 +92,9 @@ function Post({ postData }: IProps) {
             </Center>
           )}
 
+        {/* Default */}
+        {thumbnail === "default" && <Center></Center>}
+
         {/* Spoiler */}
         {thumbnail === "spoiler" && (
           <Center>
@@ -104,10 +108,7 @@ function Post({ postData }: IProps) {
         )}
 
         {/* Placeholder if no thumbnail exists */}
-        {(thumbnail === "self" ||
-          thumbnail === "default" ||
-          thumbnail === "nsfw" ||
-          !thumbnail) && (
+        {(thumbnail === "self" || thumbnail === "nsfw" || !thumbnail) && (
           <Center
             w="100%"
             h="100%"
@@ -141,14 +142,14 @@ function Post({ postData }: IProps) {
               )}
               <Link href={permalink} passHref>
                 <a>
-                  <Text
+                  <Heading
                     px={0}
-                    size="md"
+                    fontSize="lg"
                     fontWeight={stickied ? "700" : "500"}
                     color={stickied && textColor}
                   >
                     {title}
-                  </Text>
+                  </Heading>
                 </a>
               </Link>
               <Center fontSize="xs" color="gray.500">{`(${domain})`}</Center>

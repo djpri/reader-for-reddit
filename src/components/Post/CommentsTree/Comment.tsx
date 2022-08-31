@@ -1,19 +1,19 @@
 import {
   Box,
   Button,
-  Text,
-  Stack,
-  Link,
   HStack,
+  Link,
+  Stack,
+  Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { VscCollapseAll } from "react-icons/vsc";
-import { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
 import moment from "moment";
-import { formatScore } from "src/helpers";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
+import { VscCollapseAll } from "react-icons/vsc";
+import ReactMarkdown from "react-markdown";
+import { formatScore } from "src/helpers";
 
 type CommentType = {
   kind: string;
@@ -30,8 +30,18 @@ function Comment({ item, showChildren }: IProps) {
   const [displayBody, setDisplayBody] = useState("block");
   const loadMoreCommentsColor = useColorModeValue("gray.200", "gray.700");
   const moderatorColor = useColorModeValue("green.200", "green.500");
+  const opColor = useColorModeValue("blue.100", "blue.600");
   const data = item.data;
   const router = useRouter();
+
+  const authorColor = useMemo(() => {
+    if (data.distinguished === "moderator") {
+      return moderatorColor;
+    }
+    if (data.is_submitter) {
+      return opColor;
+    }
+  }, [data, moderatorColor, opColor]);
 
   useEffect(() => {
     setShowReplies(showChildren);
@@ -117,12 +127,10 @@ function Comment({ item, showChildren }: IProps) {
           <VscCollapseAll />
         </Button>
         <Stack flexWrap="wrap" direction="row">
-          <Text
-            as="b"
-            bgColor={data.distinguished === "moderator" && moderatorColor}
-          >
+          <Text as="b" bgColor={authorColor}>
             {data.author}
           </Text>
+
           <HStack m="0">
             <Text as="b" color="gray.500">
               {data.ups && formatScore(data.ups)} point
@@ -173,13 +181,15 @@ function Comment({ item, showChildren }: IProps) {
             </Link>
           )}
           {data.depth >= 3 && data.replies && (
-            <Link
-              color="teal.500"
-              fontSize={["xs", "xs", "sm"]}
-              fontWeight="bold"
-            >
-              continue this thread -&gt;
-            </Link>
+            <NextLink href={`${router.asPath}/${data.id}`} passHref>
+              <Link
+                color="teal.500"
+                fontSize={["xs", "xs", "sm"]}
+                fontWeight="bold"
+              >
+                continue this thread -&gt;
+              </Link>
+            </NextLink>
           )}
         </HStack>
         {showReplies &&

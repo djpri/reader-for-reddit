@@ -11,6 +11,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import moment from "moment";
 import NextLink from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import { HiChevronDown } from "react-icons/hi";
@@ -43,8 +44,10 @@ function PostHeader({
   sortType,
   setSort,
 }: IProps) {
-  const { num_comments, title, selftext, subreddit, url } = postDetails;
+  const { num_comments, title, selftext, subreddit, url, created, author } =
+    postDetails;
   const bgColor = useColorModeValue("gray.100", "gray.800");
+  const sortColor = useColorModeValue("blue.400", "blue.300");
 
   const SortMenu = () => (
     <Menu>
@@ -55,7 +58,7 @@ function PostHeader({
         transitionDelay="100"
       >
         Sorted by:
-        <Text as="span" color="teal.400" ml="3">
+        <Text as="span" color={sortColor} ml="3">
           {sortNames[sortType]}{" "}
         </Text>
       </MenuButton>
@@ -117,6 +120,13 @@ function PostHeader({
           </ReactMarkdown>
         </Box>
       )}
+
+      <Box fontSize="sm" my={2}>
+        <Text color="gray" as="span">
+          submitted {moment(created * 1000).fromNow()} by
+        </Text>{" "}
+        <Text as="span">{author}</Text>
+      </Box>
 
       <HStack mt="10px" mb="10px" spacing={5}>
         <div>{num_comments} comments</div>
