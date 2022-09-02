@@ -3,7 +3,7 @@ import { NextRouter, useRouter } from "next/router";
 import { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import { loadSubredditPosts } from "src/components/Subreddit/getSubredditData";
-import Posts from "../../../src/components/Subreddit/SubredditPosts";
+import Posts from "../../../src/components/Subreddit/PostsList/SubredditPosts";
 
 function Subreddit() {
   const router: NextRouter = useRouter();

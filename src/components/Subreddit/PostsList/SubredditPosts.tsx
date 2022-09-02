@@ -5,25 +5,23 @@ import {
   Heading,
   HStack,
   IconButton,
-  Link,
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import NextLink from "next/link";
 import { NextRouter, useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Post from "./SubredditPost";
-import { PostData } from "./types";
-import usePostsFilter from "./usePostsFilter";
+import usePostsFilter from "../usePostsFilter";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import {
   addSubToLocalStorage,
   isSavedInStorage,
   removeSubFromLocalStorage,
 } from "src/localStorage";
+import Post from "../PostRow/SubredditPost";
+import { PostData } from "../types";
+import TimeOptions from "./TimeOptions";
 
 const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
-const defaultTime = "day";
 
 type Page = {
   after: string;
@@ -82,8 +80,8 @@ function Posts({
       {subredditSortTypes.map((type) => (
         <Button
           rounded="none"
-          size={"sm"}
-          fontSize={["xs", "sm", "md"]}
+          size="xs"
+          fontSize={["xs", "sm", "sm"]}
           key={type}
           color={sort === type && "teal.500"}
           textDecoration={sort === type ? "underline" : "none"}
@@ -97,76 +95,6 @@ function Posts({
       ))}
     </HStack>
   );
-
-  const TimeOptions = () => {
-    const pathNameWithoutQuery = () => {
-      const queryStartIndex = router.asPath.indexOf("?");
-      if (queryStartIndex !== -1) {
-        return router.asPath.substring(0, queryStartIndex);
-      } else {
-        return router.asPath;
-      }
-    };
-
-    interface OptionProps {
-      href: string;
-      text: string;
-      time: string;
-    }
-
-    const Option = ({ href, text, time }: OptionProps) => {
-      return (
-        <Button
-          size="sm"
-          rounded="none"
-          color={
-            (t === time || (t === undefined && time === defaultTime)) &&
-            "teal.500"
-          }
-        >
-          <NextLink href={href} passHref scroll={false}>
-            <Link>{text}</Link>
-          </NextLink>
-        </Button>
-      );
-    };
-
-    return (
-      <HStack my="20px">
-        <Text>Links from:</Text>
-        <Option
-          href={`${pathNameWithoutQuery()}?t=hour`}
-          text="Past Hour"
-          time="hour"
-        />
-        <Option
-          href={`${pathNameWithoutQuery()}?t=day`}
-          text="Past 24 Hours"
-          time="day"
-        />
-        <Option
-          href={`${pathNameWithoutQuery()}?t=week`}
-          text="Past Week"
-          time="week"
-        />
-        <Option
-          href={`${pathNameWithoutQuery()}?t=month`}
-          text="Past Month"
-          time="month"
-        />
-        <Option
-          href={`${pathNameWithoutQuery()}?t=year`}
-          text="Past Year"
-          time="year"
-        />
-        <Option
-          href={`${pathNameWithoutQuery()}?t=all`}
-          text="All Time"
-          time="all"
-        />
-      </HStack>
-    );
-  };
 
   return (
     <div>
@@ -207,7 +135,9 @@ function Posts({
         {pages && <SortButtons />}
       </Flex>
 
-      {(sort === "top" || sort === "controversial") && <TimeOptions />}
+      {(sort === "top" || sort === "controversial") && (
+        <TimeOptions t={t as string} />
+      )}
 
       {filteredPosts?.length > 0 &&
         filteredPosts.map((post: { data: PostData }, index: number) => (

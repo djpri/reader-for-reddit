@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
 import { loadSubredditPosts } from "src/components/Subreddit/getSubredditData";
-import Posts from "src/components/Subreddit/SubredditPosts";
+import Posts from "src/components/Subreddit/PostsList/SubredditPosts";
 import { SubredditSortType } from "src/components/Subreddit/types";
 
 const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
