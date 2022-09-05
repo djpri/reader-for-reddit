@@ -16,6 +16,7 @@ function Post({ postData }: IProps) {
   const [showSelfText, setShowSelfText] = useState(false);
   const [showImage, setShowImage] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+  const [showEmbeddedContent, setShowEmbeddedContent] = useState(false);
   const boxColor = useColorModeValue("#e6ecf092", "gray.800");
   const nsfwBorderColor = useColorModeValue("red.500", "red.700");
   const gridTemplate = "minMax(2.5rem, 1fr) minMax(3rem, 1fr) 16fr";
@@ -50,6 +51,7 @@ function Post({ postData }: IProps) {
           showSelfText={showSelfText}
           setShowSelfText={setShowSelfText}
           setShowVideo={setShowVideo}
+          setShowEmbeddedContent={setShowEmbeddedContent}
         />
 
         <TitleAuthorAndComments postData={postData} />
@@ -60,6 +62,7 @@ function Post({ postData }: IProps) {
         gridTemplate={gridTemplate}
         showImage={showImage}
         showVideo={showVideo}
+        showEmbeddedContent={showEmbeddedContent}
       />
     </Box>
   );

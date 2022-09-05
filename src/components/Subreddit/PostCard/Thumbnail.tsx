@@ -1,7 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { Box, Center, Link, useColorModeValue } from "@chakra-ui/react";
-import { Dispatch, ReactElement, SetStateAction, useState } from "react";
-import { FaImage, FaRegSurprise, FaVideo } from "react-icons/fa";
+import { Dispatch, ReactElement, SetStateAction } from "react";
+import {
+  FaExternalLinkSquareAlt,
+  FaImage,
+  FaRegSurprise,
+  FaVideo,
+} from "react-icons/fa";
+import { GrGallery } from "react-icons/gr";
 import { ImFileText2 } from "react-icons/im";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { SiReddit } from "react-icons/si";
@@ -12,6 +18,7 @@ interface IProps {
   setShowImage: Dispatch<SetStateAction<boolean>>;
   showSelfText: boolean;
   setShowSelfText: Dispatch<SetStateAction<boolean>>;
+  setShowEmbeddedContent: Dispatch<SetStateAction<boolean>>;
   setShowVideo: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -20,6 +27,7 @@ function Thumbnail({
   showSelfText,
   setShowSelfText,
   setShowVideo,
+  setShowEmbeddedContent,
   postData,
 }: IProps) {
   const {
@@ -29,58 +37,73 @@ function Thumbnail({
     thumbnail,
     selftext,
     is_video,
+    is_gallery,
+    secure_media,
   } = postData;
   const iconColor = useColorModeValue("black", "white");
   const imageBgColor = useColorModeValue("blue.200", "blue.600");
   const videoBgColor = useColorModeValue("orange.300", "orange.600");
 
-  const alternativeThumbnail = url_overridden_by_dest?.match(
-    /^.*\.(jpg|JPG|jpeg|png|PNG|webp)$/
-  )
-    ? url_overridden_by_dest
-    : null;
-  const thumbnailExists = thumbnail !== "" || alternativeThumbnail;
+  const imageContentExists =
+    url_overridden_by_dest?.match(/^.*\.(jpg|JPG|jpeg|png|PNG|webp|gif)$/) !==
+    null;
 
-  const HoverIcon = ({ icon }: { icon: ReactElement }) => (
-    <Box
-      position="absolute"
-      bgColor={is_video ? videoBgColor : imageBgColor}
-      w="40%"
-      p={1}
-      bottom="0"
-      right="0"
-      color={iconColor}
-    >
-      {icon}
-    </Box>
-  );
+  const HoverIcon = ({ icon }: { icon: ReactElement }) => {
+    if (icon === null) {
+      return null;
+    }
+    return (
+      <Box
+        position="absolute"
+        bgColor={is_video ? videoBgColor : imageBgColor}
+        w="40%"
+        p={1}
+        bottom="0"
+        right="0"
+        color={iconColor}
+      >
+        {icon}
+      </Box>
+    );
+  };
 
   const MediaThumbnail = () => {
-    let url = thumbnail || alternativeThumbnail;
-
-    console.log(url);
     return (
       <Center
         userSelect="none"
         w="100%"
         h="100%"
         fontSize="xs"
-        cursor={(thumbnailExists || is_video) && "pointer"}
+        cursor={(imageContentExists || secure_media || is_video) && "pointer"}
         onClick={() => {
           if (is_video) {
             setShowVideo((prevState) => !prevState);
           }
-          if (!is_video && thumbnailExists) {
+          if (!is_video && imageContentExists) {
             setShowImage((prevState) => !prevState);
+          }
+          if (secure_media) {
+            setShowEmbeddedContent((prevState) => !prevState);
           }
         }}
         position="relative"
       >
         <HoverIcon
-          icon={is_video ? <FaVideo size="100%" /> : <FaImage size="100%" />}
+          icon={(() => {
+            if (is_video) {
+              return <FaVideo size="100%" />;
+            }
+            if (secure_media) {
+              return <FaExternalLinkSquareAlt size="100%" />;
+            }
+            if (!is_video && imageContentExists) {
+              return <FaImage size="100%" />;
+            }
+            return null;
+          })()}
         />
         <img
-          src={url}
+          src={thumbnail}
           alt={title.length > 30 ? `${title.substring(0, 30)}...` : title}
         />
       </Center>
@@ -135,7 +158,16 @@ function Thumbnail({
     return <DefaultThumbnail />;
   }
 
-  if (thumbnailExists) {
+  if (is_gallery) {
+    return (
+      <Center w="100%" h="100%">
+        {" "}
+        <GrGallery size="2rem" />
+      </Center>
+    );
+  }
+
+  if (thumbnail.match(/^.*\.(jpg|JPG|jpeg|png|PNG|webp)$/) && !is_gallery) {
     return <MediaThumbnail />;
   }
 

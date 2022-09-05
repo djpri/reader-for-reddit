@@ -1,5 +1,6 @@
 export interface PostData {
   approved_at_utc: any;
+  is_gallery?: boolean;
   subreddit: string;
   selftext: string;
   author_fullname: string;
@@ -35,7 +36,7 @@ export interface PostData {
   is_reddit_media_domain: boolean;
   is_meta: boolean;
   category: any;
-  secure_media_embed: Gildings;
+  secure_media_embed: any;
   link_flair_text: string;
   can_mod_post: boolean;
   score: number;
