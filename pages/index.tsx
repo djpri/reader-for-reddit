@@ -6,10 +6,12 @@ import {
   Link,
   Wrap,
   Text,
+  IconButton,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { getSubsFromLocalStorage } from "src/localStorage";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const popularSubs = [
   "announcements",
@@ -69,8 +71,13 @@ export default function Home() {
           savedSubreddits.map((sub: string) => <SubLink key={sub} sub={sub} />)
         ) : (
           <Text>
-            No Subreddits found. Use &quot;Save&quot; button to save sub to list
-            when visiting a subreddit.
+            No Subreddits found. Use the{" "}
+            <IconButton
+              icon={<AiFillStar />}
+              aria-label={"star button"}
+              size="xs"
+            />{" "}
+            button to save sub to list when visiting a subreddit.
           </Text>
         )}
       </Grid>

@@ -1,6 +1,5 @@
 import {
   Button,
-  Container,
   Flex,
   Heading,
   HStack,
@@ -17,7 +16,7 @@ import {
   isSavedInStorage,
   removeSubFromLocalStorage,
 } from "src/localStorage";
-import Post from "../PostRow/SubredditPost";
+import Post from "../PostCard/SubredditPost";
 import { PostData } from "../types";
 import TimeOptions from "./TimeOptions";
 
@@ -59,7 +58,7 @@ function Posts({
 
   if (isLoading) {
     return (
-      <Container maxW="container.xl">
+      <>
         <Flex
           mb="20px"
           justifyContent="space-between"
@@ -71,7 +70,7 @@ function Posts({
           </Heading>
         </Flex>
         <Spinner />
-      </Container>
+      </>
     );
   }
 

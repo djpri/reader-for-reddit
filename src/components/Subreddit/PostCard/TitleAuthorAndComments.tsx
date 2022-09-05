@@ -1,7 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   Box,
+  Button,
   Center,
+  chakra,
   Heading,
+  HStack,
   Link,
   Text,
   useColorModeValue,
@@ -21,6 +25,8 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
     stickied,
     domain,
     link_flair_text,
+    link_flair_richtext,
+    link_flair_type,
   } = postData;
   const linkFlairColor = useColorModeValue("gray.200", "gray.700");
   const textColor = useColorModeValue("green.400", "green.400");
@@ -45,6 +51,21 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
       {link_flair_text}
     </Center>
   );
+
+  const RichTextFlair = ({ flairInfo }: { flairInfo: unknown }) => {
+    return (
+      <Center
+        fontSize="xs"
+        bgColor={linkFlairColor}
+        fontWeight="600"
+        // rounded="md"
+        px={1}
+      >
+        <chakra.img src={flairInfo[0].u} alt={flairInfo[0].a} w="1rem" mr={1} />
+        {flairInfo[1].e === "text" && flairInfo[1].t}
+      </Center>
+    );
+  };
 
   const Title = () => (
     <Link href={permalink} passHref>
@@ -73,15 +94,20 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
 
   return (
     <Box w={["100%", "100%", "95%"]}>
-      <Box mb={1}>
-        <Wrap alignItems="center" spacing={2}>
-          {link_flair_text && <Flair />}
-          <Title />
-          <Center fontSize="xs" color="gray.500">{`(${domain})`}</Center>
-        </Wrap>
-        <Author />
-      </Box>
-      <NumComments />
+      <Wrap alignItems="center" spacing={2}>
+        {link_flair_type !== "richtext" && link_flair_text && <Flair />}
+        {link_flair_type === "richtext" && link_flair_richtext && (
+          <RichTextFlair flairInfo={link_flair_richtext} />
+        )}
+        <Title />
+        <Center fontSize="xs" color="gray.500">{`(${domain})`}</Center>
+      </Wrap>
+      <HStack>
+        <div>
+          <Author />
+          <NumComments />
+        </div>
+      </HStack>
     </Box>
   );
 }
