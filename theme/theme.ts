@@ -37,6 +37,14 @@ const themeConfig = {
           paddingLeft: "5px",
           fontStyle: "italic",
         },
+        a: {
+          color: mode("blue.500", "blue.300")(props),
+          fontWeight: "bold",
+          _hover: {
+            textDecoration: "underline",
+            color: mode("blue.400", "blue.200")(props),
+          },
+        },
       },
     }),
   },

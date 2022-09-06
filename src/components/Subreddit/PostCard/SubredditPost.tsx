@@ -16,6 +16,7 @@ function Post({ postData }: IProps) {
   const [showSelfText, setShowSelfText] = useState(false);
   const [showImage, setShowImage] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
+  const [showGallery, setShowGallery] = useState(false);
   const [showEmbeddedContent, setShowEmbeddedContent] = useState(false);
   const boxColor = useColorModeValue("#e6ecf092", "gray.800");
   const nsfwBorderColor = useColorModeValue("red.500", "red.700");
@@ -52,6 +53,7 @@ function Post({ postData }: IProps) {
           setShowSelfText={setShowSelfText}
           setShowVideo={setShowVideo}
           setShowEmbeddedContent={setShowEmbeddedContent}
+          setShowGallery={setShowGallery}
         />
 
         <TitleAuthorAndComments postData={postData} />
@@ -63,6 +65,7 @@ function Post({ postData }: IProps) {
         showImage={showImage}
         showVideo={showVideo}
         showEmbeddedContent={showEmbeddedContent}
+        showGallery={showGallery}
       />
     </Box>
   );

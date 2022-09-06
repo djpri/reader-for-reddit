@@ -4,6 +4,7 @@ import { Dispatch, ReactElement, SetStateAction } from "react";
 import {
   FaExternalLinkSquareAlt,
   FaImage,
+  FaImages,
   FaRegSurprise,
   FaVideo,
 } from "react-icons/fa";
@@ -20,15 +21,17 @@ interface IProps {
   setShowSelfText: Dispatch<SetStateAction<boolean>>;
   setShowEmbeddedContent: Dispatch<SetStateAction<boolean>>;
   setShowVideo: Dispatch<SetStateAction<boolean>>;
+  setShowGallery: Dispatch<SetStateAction<boolean>>;
 }
 
 function Thumbnail({
-  setShowImage,
+  postData,
   showSelfText,
+  setShowImage,
   setShowSelfText,
   setShowVideo,
   setShowEmbeddedContent,
-  postData,
+  setShowGallery,
 }: IProps) {
   const {
     title,
@@ -110,6 +113,21 @@ function Thumbnail({
     );
   };
 
+  const GalleryThumbnail = () => {
+    return (
+      <Center
+        w="100%"
+        h="100%"
+        cursor="pointer"
+        userSelect="none"
+        onClick={() => setShowGallery((prevState) => !prevState)}
+      >
+        {" "}
+        <FaImages size="2rem" color={iconColor} />
+      </Center>
+    );
+  };
+
   const SelfTextThumbnail = () => (
     <Center
       w="100%"
@@ -150,7 +168,7 @@ function Thumbnail({
   }
 
   // selftext and image are mutually exclusive for submissions
-  if (thumbnail === "self" || thumbnail === "nsfw" || selftext) {
+  if (thumbnail === "self" || selftext || thumbnail === "nsfw") {
     return <SelfTextThumbnail />;
   }
 
@@ -159,12 +177,7 @@ function Thumbnail({
   }
 
   if (is_gallery) {
-    return (
-      <Center w="100%" h="100%">
-        {" "}
-        <GrGallery size="2rem" />
-      </Center>
-    );
+    return <GalleryThumbnail />;
   }
 
   if (thumbnail.match(/^.*\.(jpg|JPG|jpeg|png|PNG|webp)$/) && !is_gallery) {

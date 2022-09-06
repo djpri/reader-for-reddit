@@ -132,10 +132,17 @@ function Comment({ item, showChildren }: IProps) {
           </Text>
 
           <HStack m="0">
-            <Text as="b" color="gray.500">
-              {data.ups && formatScore(data.ups)} point
-              {data.ups === 1 ? "" : "s"}
-            </Text>
+            {!data.score_hidden && (
+              <Text as="b" color="gray.500">
+                {data.ups && formatScore(data.ups)} point
+                {data.ups === 1 ? "" : "s"}
+              </Text>
+            )}
+            {data.score_hidden && (
+              <Text as="b" color="gray.500">
+                [score hidden]
+              </Text>
+            )}
             <Text color="gray" as="span" fontSize="sm">
               {moment(data.created_utc * 1000).fromNow()}
             </Text>

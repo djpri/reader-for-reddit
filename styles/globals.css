@@ -36,16 +36,6 @@ a {
   font-weight: bold;
 }
 
-.comment a {
-  font-weight: bold;
-  color: #3475be;
-}
-
-.comment a:hover {
-  color: #63b3ed;
-  text-decoration: underline;
-}
-
 .comment ul,
 .comment ol {
   margin-top: 10px;

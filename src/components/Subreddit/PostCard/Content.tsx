@@ -1,15 +1,17 @@
+/* eslint-disable @next/next/no-img-element */
 import { Box, Grid } from "@chakra-ui/react";
-import ReactMarkdown from "react-markdown";
+import * as DOMPurify from "dompurify";
+import ReactHtmlParser from "react-html-parser";
 import DragToResizeImage from "src/components/Images/DragToResizeImage";
 import ReactHlsPlayer from "src/components/ReactHlsPlayer";
 import { PostData } from "../types";
-import ReactHtmlParser from "react-html-parser";
-import * as DOMPurify from "dompurify";
+import ImageGallery from "./ImageGallery";
 
 interface IProps {
   showSelfText: boolean;
   gridTemplate: string;
   showImage: boolean;
+  showGallery: boolean;
   postData: PostData;
   showVideo: boolean;
   showEmbeddedContent: boolean;
@@ -22,10 +24,19 @@ function Content({
   postData,
   showVideo,
   showEmbeddedContent,
+  showGallery,
 }: IProps) {
-  const { selftext, url_overridden_by_dest, media, secure_media_embed } =
-    postData;
+  const {
+    selftext,
+    selftext_html,
+    url_overridden_by_dest,
+    media,
+    secure_media_embed,
+    media_metadata,
+  } = postData;
+
   if (selftext && showSelfText) {
+    const sanitizedSelfText = DOMPurify.sanitize(selftext_html) || selftext;
     return (
       <Grid
         w="100%"
@@ -38,7 +49,17 @@ function Content({
         <div />
         <Box className="comment" overflowX="auto">
           <hr />
-          <ReactMarkdown linkTarget="_blank">{selftext}</ReactMarkdown>
+          {ReactHtmlParser(sanitizedSelfText, {
+            transform(node: {
+              type: string;
+              name: string;
+              attribs: { target: string };
+            }) {
+              if (node.type === "tag" && node.name === "a") {
+                node.attribs.target = "_blank";
+              }
+            },
+          })}
         </Box>
       </Grid>
     );
@@ -46,21 +67,54 @@ function Content({
 
   if (showEmbeddedContent && secure_media_embed.content) {
     const sanitizedContent = DOMPurify.sanitize(secure_media_embed.content, {
-      ALLOWED_TAGS: ["iframe"],
-      ALLOWED_ATTR: ["src", "width", "height"],
+      ADD_TAGS: ["iframe"],
+      ADD_ATTR: [
+        "frameborder",
+        "allowFullScreen",
+        "autoplay",
+        "encrypted-media",
+        "picture-in-picture",
+        "allowFullScreen",
+      ],
     });
     console.log(sanitizedContent);
     return (
       <Grid
-        h="50vh"
         px={1}
         columnGap={3}
-        templateColumns="minMax(2.5rem, 1fr) minMax(3rem, 1fr) 16fr"
+        templateColumns={gridTemplate}
+        align={["start", "start", "center"]}
+        maxW="100%"
+      >
+        <div />
+        <div />
+        <Box
+          position="relative"
+          width={secure_media_embed?.width}
+          height={secure_media_embed?.height}
+          maxH="50vh"
+          maxW="100%"
+          overflowY="auto"
+        >
+          {ReactHtmlParser(sanitizedContent)}
+        </Box>
+      </Grid>
+    );
+  }
+
+  if (showGallery) {
+    console.log(media_metadata);
+    return (
+      <Grid
+        w="100%"
+        px={1}
+        columnGap={3}
+        templateColumns={gridTemplate}
         align={["start", "start", "center"]}
       >
         <div />
         <div />
-        {ReactHtmlParser(sanitizedContent)}
+        <ImageGallery media_metadata={media_metadata} />
       </Grid>
     );
   }
@@ -71,7 +125,7 @@ function Content({
         w="100%"
         px={1}
         columnGap={3}
-        templateColumns="minMax(2.5rem, 1fr) minMax(3rem, 1fr) 16fr"
+        templateColumns={gridTemplate}
         align={["start", "start", "center"]}
       >
         <div />
@@ -95,7 +149,7 @@ function Content({
         w="100%"
         px={1}
         columnGap={3}
-        templateColumns="minMax(2.5rem, 1fr) minMax(3rem, 1fr) 16fr"
+        templateColumns={gridTemplate}
         align={["start", "start", "center"]}
       >
         <div />

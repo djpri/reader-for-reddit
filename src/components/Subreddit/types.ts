@@ -1,6 +1,7 @@
 export interface PostData {
   approved_at_utc: any;
   is_gallery?: boolean;
+  media_metadata?: unknown[];
   subreddit: string;
   selftext: string;
   author_fullname: string;
