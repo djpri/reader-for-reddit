@@ -8,7 +8,6 @@ import {
   FaRegSurprise,
   FaVideo,
 } from "react-icons/fa";
-import { GrGallery } from "react-icons/gr";
 import { ImFileText2 } from "react-icons/im";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { SiReddit } from "react-icons/si";

@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import {
   Box,
-  Button,
   Center,
   chakra,
   Heading,
@@ -20,6 +19,7 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
     created,
     author,
     title,
+    url,
     permalink,
     num_comments,
     stickied,
@@ -73,7 +73,7 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
   };
 
   const Title = () => (
-    <Link href={permalink} passHref>
+    <Link href={url} passHref target="_blank" rel="noopener">
       <a>
         <Heading
           px={0}

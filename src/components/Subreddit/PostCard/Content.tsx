@@ -31,6 +31,7 @@ function Content({
     selftext_html,
     url_overridden_by_dest,
     media,
+    domain,
     secure_media_embed,
     media_metadata,
   } = postData;
@@ -85,14 +86,15 @@ function Content({
         templateColumns={gridTemplate}
         align={["start", "start", "center"]}
         maxW="100%"
+        my={2}
       >
         <div />
         <div />
         <Box
           position="relative"
-          width={secure_media_embed?.width}
-          height={secure_media_embed?.height}
-          maxH="50vh"
+          width={domain !== "twitter.com" && secure_media_embed?.width}
+          height={domain !== "twitter.com" && secure_media_embed?.height}
+          maxH={domain !== "twitter.com" && "50vh"}
           maxW="100%"
           overflowY="auto"
         >

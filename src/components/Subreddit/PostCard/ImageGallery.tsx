@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Box, Button, HStack, IconButton, Text } from "@chakra-ui/react";
+import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
 import React, { useMemo, useState } from "react";
 import { GiNextButton, GiPreviousButton } from "react-icons/gi";
 import DragToResizeImage from "src/components/Images/DragToResizeImage";

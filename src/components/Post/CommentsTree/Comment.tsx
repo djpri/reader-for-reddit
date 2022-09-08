@@ -26,12 +26,14 @@ interface IProps {
 }
 
 function Comment({ item, showChildren }: IProps) {
+  const data = item.data;
   const [showReplies, setShowReplies] = useState(showChildren);
-  const [displayBody, setDisplayBody] = useState("block");
+  const [displayBody, setDisplayBody] = useState(
+    data.ups < 0 ? "none" : "block"
+  );
   const loadMoreCommentsColor = useColorModeValue("gray.200", "gray.700");
   const moderatorColor = useColorModeValue("green.200", "green.500");
   const opColor = useColorModeValue("blue.100", "blue.600");
-  const data = item.data;
   const router = useRouter();
 
   const authorColor = useMemo(() => {
@@ -133,7 +135,7 @@ function Comment({ item, showChildren }: IProps) {
 
           <HStack m="0">
             {!data.score_hidden && (
-              <Text as="b" color="gray.500">
+              <Text as="b" color={data.ups < 0 ? "red.500" : "gray.500"}>
                 {data.ups && formatScore(data.ups)} point
                 {data.ups === 1 ? "" : "s"}
               </Text>
@@ -156,13 +158,9 @@ function Comment({ item, showChildren }: IProps) {
       </HStack>
       {/* Comment body */}
       <Box display={displayBody}>
-        {data.ups > 0 ? (
-          <Box className="comment">
-            <ReactMarkdown linkTarget="_blank">{data.body}</ReactMarkdown>
-          </Box>
-        ) : (
-          <Text color="red.500">Too many downvotes to show comment</Text>
-        )}
+        <Box className="comment">
+          <ReactMarkdown linkTarget="_blank">{data.body}</ReactMarkdown>
+        </Box>
         <HStack>
           <NextLink href={`${router.asPath}/${data.id}`} passHref>
             <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>

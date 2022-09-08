@@ -11,7 +11,7 @@ import {
 import NextLink from "next/link";
 import { useEffect, useState } from "react";
 import { getSubsFromLocalStorage } from "src/localStorage";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { AiFillStar } from "react-icons/ai";
 
 const popularSubs = [
   "announcements",

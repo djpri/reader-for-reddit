@@ -1,6 +1,6 @@
+import { parsedHtmlStyles } from "./parsedHtmlStyles";
 import { extendTheme } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
-
 import "@fontsource/inter/800.css";
 import "@fontsource/inter/700.css";
 import "@fontsource/inter/500.css";
@@ -30,22 +30,8 @@ const themeConfig = {
         lineHeight: "base",
         letterSpacing: "0.01rem",
       },
-      ".comment": {
-        blockquote: {
-          bgColor: mode("blackAlpha.200", "whiteAlpha.300")(props),
-          borderLeft: "2px solid whiteAlpha.500",
-          paddingLeft: "5px",
-          fontStyle: "italic",
-        },
-        a: {
-          color: mode("blue.500", "blue.300")(props),
-          fontWeight: "bold",
-          _hover: {
-            textDecoration: "underline",
-            color: mode("blue.400", "blue.200")(props),
-          },
-        },
-      },
+      ".comment": parsedHtmlStyles(props),
+      ".twitter-video": parsedHtmlStyles(props),
     }),
   },
   fonts: {
