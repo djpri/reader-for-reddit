@@ -14,6 +14,7 @@ import { useEffect, useMemo, useState } from "react";
 import { VscCollapseAll } from "react-icons/vsc";
 import ReactMarkdown from "react-markdown";
 import { formatScore } from "src/helpers";
+import { getMoreChildrenComments } from "../getPostData";
 
 type CommentType = {
   kind: string;
@@ -23,17 +24,26 @@ type CommentType = {
 interface IProps {
   item: CommentType;
   showChildren: boolean;
+  linkId: string;
 }
 
-function Comment({ item, showChildren }: IProps) {
+function Comment({ item, showChildren, linkId }: IProps) {
   const data = item.data;
   const [showReplies, setShowReplies] = useState(showChildren);
+  const [moreComments, setMoreComments] = useState(null);
+  const [moreCommentsLoading, setMoreCommentsLoading] = useState(null);
+  false;
   const [displayBody, setDisplayBody] = useState(
     data.ups < 0 ? "none" : "block"
   );
   const loadMoreCommentsColor = useColorModeValue("gray.200", "gray.700");
   const moderatorColor = useColorModeValue("green.200", "green.500");
   const opColor = useColorModeValue("blue.100", "blue.600");
+  const boxColor = useColorModeValue(
+    data.depth % 2 === 0 ? "gray.100" : "white",
+    data.depth % 2 === 0 ? "gray.800" : "gray.900"
+  );
+
   const router = useRouter();
 
   const authorColor = useMemo(() => {
@@ -45,24 +55,31 @@ function Comment({ item, showChildren }: IProps) {
     }
   }, [data, moderatorColor, opColor]);
 
+  const getMoreChildren = async (children: []) => {
+    setMoreCommentsLoading(true);
+    const result: any = await getMoreChildrenComments(data.parent_id, children);
+    const commentsArray = result?.jquery[10][3][0];
+    setMoreComments(commentsArray);
+    setMoreCommentsLoading(false);
+  };
+
   useEffect(() => {
     setShowReplies(showChildren);
   }, [showChildren]);
 
-  const getChildren = () => {
-    if (item.data.replies.data.children[0].kind === "more") {
-      return item.data.replies.data.children;
+  const children = useMemo(() => {
+    const allChildren = item.data?.replies?.data?.children || [];
+    if (allChildren.length > 0 && allChildren[0].kind === "more") {
+      return allChildren;
     } else {
-      return item.data.replies.data.children;
+      return allChildren;
     }
-  };
-
-  const boxColor = useColorModeValue(
-    data.depth % 2 === 0 ? "gray.100" : "white",
-    data.depth % 2 === 0 ? "gray.800" : "gray.900"
-  );
+  }, [item.data]);
 
   const renderChildComment = (item: CommentType, index: number) => {
+    if (item.kind === "more" && moreComments) {
+      return null;
+    }
     if (item.kind === "more")
       return (
         <Link
@@ -72,11 +89,15 @@ function Comment({ item, showChildren }: IProps) {
           fontSize={["xs", "xs", "sm"]}
           display="block"
           _hover={{ bgColor: loadMoreCommentsColor }}
+          onClick={() => getMoreChildren(item.data.children)}
+          pointerEvents={moreCommentsLoading ? "none" : "auto"}
         >
           load {`${item.data.count}`} more comments
         </Link>
       );
-    return <Comment item={item} key={index} showChildren={false} />;
+    return (
+      <Comment item={item} key={index} showChildren={false} linkId={linkId} />
+    );
   };
 
   const getTotalChildComments = (item: CommentType) => {
@@ -100,6 +121,10 @@ function Comment({ item, showChildren }: IProps) {
   };
 
   const toggleReplies = () => setShowReplies((prevState) => !prevState);
+
+  if (item.kind === "more") {
+    return <Button>Load more comments</Button>;
+  }
 
   return (
     <Box
@@ -200,7 +225,8 @@ function Comment({ item, showChildren }: IProps) {
         {showReplies &&
           data.depth < 3 &&
           data.replies &&
-          getChildren().map(renderChildComment)}
+          children.map(renderChildComment)}
+        {showReplies && moreComments && moreComments.map(renderChildComment)}
       </Box>
     </Box>
   );

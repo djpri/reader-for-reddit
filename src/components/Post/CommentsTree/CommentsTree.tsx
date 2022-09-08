@@ -1,12 +1,18 @@
 import { VStack } from "@chakra-ui/layout";
 import Comment from "./Comment";
 
-function CommentsTree({ comments, showChildComments }) {
-  const renderParentComment = (item, index) => {
+interface IProps {
+  comments: any[];
+  showChildComments: boolean;
+  linkId: string;
+}
+
+function CommentsTree({ comments, showChildComments, linkId }: IProps) {
+  const renderParentComment = (item: any) => {
     return (
       <Comment
         item={item}
-        index={index}
+        linkId={linkId}
         showChildren={showChildComments}
         key={item.data.id}
       />

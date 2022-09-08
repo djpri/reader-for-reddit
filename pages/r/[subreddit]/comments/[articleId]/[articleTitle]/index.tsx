@@ -1,4 +1,3 @@
-import React from "react";
 import SubmissionPage from "../..";
 
 function Index() {

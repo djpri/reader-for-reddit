@@ -143,7 +143,7 @@ function SingleCommentThreadPage() {
       <CommentsTree
         comments={comments}
         showChildComments={showChildComments}
-        isSingleCommentThread
+        linkId={postInfo.name}
       />
     </Container>
   );

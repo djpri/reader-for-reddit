@@ -135,8 +135,8 @@ function Content({
         {media.reddit_video && (
           <ReactHlsPlayer
             src={media.reddit_video.hls_url}
-            autoPlay={true}
-            controls={true}
+            autoPlay
+            controls
             width="30%"
             height="auto"
           />

@@ -102,7 +102,7 @@ function SubmissionPage() {
       <CommentsTree
         comments={comments}
         showChildComments={showChildComments}
-        isSingleCommentThread={false}
+        linkId={postInfo.name}
       />
     </Container>
   );

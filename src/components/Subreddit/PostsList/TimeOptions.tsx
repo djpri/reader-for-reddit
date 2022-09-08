@@ -1,6 +1,5 @@
 import { Button, Link, HStack, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import React from "react";
 import NextLink from "next/link";
 
 const TimeOptions = ({ t }: { t: string }) => {

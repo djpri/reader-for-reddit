@@ -29,6 +29,8 @@ const themeConfig = {
         bg: mode("white", "#0f172a")(props),
         lineHeight: "base",
         letterSpacing: "0.01rem",
+        transitionProperty: "background-color",
+        transitionDuration: "0ms",
       },
       ".comment": parsedHtmlStyles(props),
       ".twitter-video": parsedHtmlStyles(props),
@@ -40,9 +42,25 @@ const themeConfig = {
   },
   components: {
     Button: {
+      baseStyle: {
+        transitionProperty: "background-color",
+        transitionDuration: "0",
+      },
       rounded: "none",
     },
+    InputGroup: {
+      baseStyle: {
+        transitionProperty: "background-color",
+        transitionDuration: "0",
+      },
+    },
     Input: {
+      baseStyle: {
+        field: {
+          transitionProperty: "background-color",
+          transitionDuration: "0",
+        },
+      },
       defaultProps: {
         focusBorderColor: "hsla(220, 56%, 39%, 0.6)",
       },
