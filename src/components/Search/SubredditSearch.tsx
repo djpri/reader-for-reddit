@@ -9,11 +9,11 @@ import {
   useOutsideClick,
   VStack,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
+import { NextRouter, useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import useSubredditSearch from "./useSubredditSearch";
-import NextLink from "next/link";
-import { NextRouter, useRouter } from "next/router";
 
 function SubredditSearch() {
   const { handleSearch, setSearch, search, isLoading, searchResults } =
@@ -113,7 +113,7 @@ function SubredditSearch() {
                 px={4}
                 py={1}
               >
-                <NextLink href={result.data.url} passHref>
+                <NextLink href={result.data.url} passHref legacyBehavior>
                   <Link fontWeight="bold">{result.data.url}</Link>
                 </NextLink>
               </Box>

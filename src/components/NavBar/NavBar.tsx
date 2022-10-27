@@ -42,13 +42,13 @@ function NavBar() {
         <Grid as="nav" templateColumns="1fr 2fr 1fr" w="100%" pt={2} pb={2}>
           <Flex align="center" justifySelf="start">
             {/* <LeftDrawer /> */}
-            <NextLink href="/" passHref>
+            <NextLink href="/" passHref legacyBehavior>
               <Link>
                 <SiReddit size="1.3rem" />
               </Link>
             </NextLink>
             {isDesktop && (
-              <NextLink href="/" passHref>
+              <NextLink href="/" passHref legacyBehavior>
                 <Link _hover={{ textDecoration: "none" }}>
                   <Text fontSize="lg" ml="3" fontWeight="bold">
                     /r/eader for reddit

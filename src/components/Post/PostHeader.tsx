@@ -81,7 +81,7 @@ function PostHeader({
   return (
     <div>
       {subreddit ? (
-        <NextLink href={`/r/${subreddit}`} passHref>
+        <NextLink href={`/r/${subreddit}`} passHref legacyBehavior>
           <Link>{subreddit}</Link>
         </NextLink>
       ) : (
@@ -89,7 +89,7 @@ function PostHeader({
       )}
 
       <Heading as="h4" size="md" mb="5">
-        <NextLink href={url} passHref>
+        <NextLink href={url} passHref legacyBehavior>
           <Link target="_blank">{title}</Link>
         </NextLink>
       </Heading>

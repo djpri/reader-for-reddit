@@ -132,6 +132,7 @@ function SingleCommentThreadPage() {
         <NextLink
           href={router.asPath.slice(0, router.asPath.lastIndexOf("/"))}
           passHref
+          legacyBehavior
         >
           <Link>
             <Button size="sm" bgColor={bgColor}>

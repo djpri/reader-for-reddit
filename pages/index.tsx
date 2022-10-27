@@ -3,14 +3,13 @@ import {
   Container,
   Grid,
   Heading,
-  Link,
-  Wrap,
-  Text,
   IconButton,
+  Link,
+  Text,
+  Wrap,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useEffect, useState } from "react";
-import { getSubsFromLocalStorage } from "src/localStorage";
 import { AiFillStar } from "react-icons/ai";
 
 const popularSubs = [
@@ -35,12 +34,19 @@ export default function Home() {
   const [savedSubreddits, setSavedSubreddits] = useState([]);
 
   useEffect(() => {
+    const getSubsFromLocalStorage = () => {
+      if (localStorage?.getItem("savedSubreddits") !== null) {
+        return JSON.parse(localStorage.getItem("savedSubreddits"));
+      } else {
+        return [];
+      }
+    };
     setSavedSubreddits(getSubsFromLocalStorage);
   }, []);
 
   const SubLink = ({ sub }: { sub: string }) => {
     return (
-      <NextLink href={`/r/${sub}`} passHref>
+      <NextLink href={`/r/${sub}`} passHref legacyBehavior>
         <Link _hover={{ textDecoration: "none" }}>
           <Button width="15rem">{sub}</Button>
         </Link>

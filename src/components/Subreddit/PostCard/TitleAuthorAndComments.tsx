@@ -73,7 +73,7 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
   };
 
   const Title = () => (
-    <Link href={url} passHref target="_blank" rel="noopener">
+    <Link href={url} passHref legacyBehavior target="_blank" rel="noopener">
       <a>
         <Heading
           px={0}
@@ -89,7 +89,7 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
 
   const NumComments = () => (
     <Box fontSize="sm">
-      <NextLink passHref href={permalink}>
+      <NextLink passHref legacyBehavior href={permalink}>
         <Link color="gray.500">
           <Text as="b">{num_comments} comments</Text>
         </Link>

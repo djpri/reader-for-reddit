@@ -187,7 +187,11 @@ function Comment({ item, showChildren, linkId }: IProps) {
           <ReactMarkdown linkTarget="_blank">{data.body}</ReactMarkdown>
         </Box>
         <HStack>
-          <NextLink href={`${router.asPath}/${data.id}`} passHref>
+          <NextLink
+            href={`${router.asPath}/${data.id}`}
+            passHref
+            legacyBehavior
+          >
             <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
               permalink
             </Link>
@@ -211,7 +215,11 @@ function Comment({ item, showChildren, linkId }: IProps) {
             </Link>
           )}
           {data.depth >= 3 && data.replies && (
-            <NextLink href={`${router.asPath}/${data.id}`} passHref>
+            <NextLink
+              href={`${router.asPath}/${data.id}`}
+              passHref
+              legacyBehavior
+            >
               <Link
                 color="teal.500"
                 fontSize={["xs", "xs", "sm"]}

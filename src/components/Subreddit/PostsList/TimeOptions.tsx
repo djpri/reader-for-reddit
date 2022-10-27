@@ -1,6 +1,6 @@
-import { Button, Link, HStack, Text } from "@chakra-ui/react";
-import { useRouter } from "next/router";
+import { Button, HStack, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 const TimeOptions = ({ t }: { t: string }) => {
   const defaultTime = "day";
@@ -30,7 +30,7 @@ const TimeOptions = ({ t }: { t: string }) => {
           "teal.500"
         }
       >
-        <NextLink href={href} passHref scroll={false}>
+        <NextLink href={href} passHref legacyBehavior scroll={false}>
           <Link>{text}</Link>
         </NextLink>
       </Button>
