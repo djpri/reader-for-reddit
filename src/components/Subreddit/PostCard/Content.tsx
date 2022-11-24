@@ -44,7 +44,7 @@ function Content({
         px={1}
         columnGap={3}
         templateColumns={gridTemplate}
-        align={["start", "start", "center"]}
+        alignItems={["start", "start", "center"]}
       >
         <div />
         <div />
@@ -84,7 +84,7 @@ function Content({
         px={1}
         columnGap={3}
         templateColumns={gridTemplate}
-        align={["start", "start", "center"]}
+        alignItems={["start", "start", "center"]}
         maxW="100%"
         my={2}
       >
@@ -112,7 +112,7 @@ function Content({
         px={1}
         columnGap={3}
         templateColumns={gridTemplate}
-        align={["start", "start", "center"]}
+        alignItems={["start", "start", "center"]}
       >
         <div />
         <div />
@@ -128,7 +128,7 @@ function Content({
         px={1}
         columnGap={3}
         templateColumns={gridTemplate}
-        align={["start", "start", "center"]}
+        alignItems={["start", "start", "center"]}
       >
         <div />
         <div />
@@ -152,7 +152,7 @@ function Content({
         px={1}
         columnGap={3}
         templateColumns={gridTemplate}
-        align={["start", "start", "center"]}
+        alignItems={["start", "start", "center"]}
       >
         <div />
         <div />

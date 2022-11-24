@@ -30,8 +30,8 @@ function Post({ postData }: IProps) {
       py={1}
       px={1}
       bgColor={boxColor}
-      borderTopWidth="2px"
       borderColor={over_18 ? nsfwBorderColor : "whiteAlpha.400"}
+      borderTopWidth={over_18 && "2px"}
       borderRadius="sm"
     >
       <Grid
@@ -39,7 +39,7 @@ function Post({ postData }: IProps) {
         px={1}
         columnGap={3}
         templateColumns={gridTemplate}
-        align={["start", "start", "center"]}
+        alignItems={["start", "start", "center"]}
       >
         {/* Score */}
         <Center fontSize={["xs", "sm", "md"]}>

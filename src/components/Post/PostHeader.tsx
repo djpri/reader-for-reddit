@@ -64,11 +64,7 @@ function PostHeader({
       </MenuButton>
       <MenuList>
         {Object.keys(sortNames).map((sort: string) => (
-          <MenuItem
-            key={sort}
-            onClick={() => setSort(sort as SortType)}
-            isActive={sort === sortType}
-          >
+          <MenuItem key={sort} onClick={() => setSort(sort as SortType)}>
             {sortNames[sort as SortType]}
           </MenuItem>
         ))}

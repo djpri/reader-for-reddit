@@ -6,7 +6,7 @@ type Page = { before: string; after: string; children: Post[] };
 
 function usePostsFilter(pages: any) {
   const [sortType, setSortType] = useState(null);
-  const [showNSFW, setShowNSFW] = useState(false);
+  const [showNSFW, setShowNSFW] = useState(true);
 
   const unfilteredPosts = useMemo(() => {
     if (!pages || !pages.length) return [];

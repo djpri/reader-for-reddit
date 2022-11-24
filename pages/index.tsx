@@ -47,7 +47,7 @@ export default function Home() {
   const SubLink = ({ sub }: { sub: string }) => {
     return (
       <NextLink href={`/r/${sub}`} passHref legacyBehavior>
-        <Link _hover={{ textDecoration: "none" }}>
+        <Link _hover={{ textDecoration: "none" }} as={NextLink}>
           <Button width="15rem">{sub}</Button>
         </Link>
       </NextLink>

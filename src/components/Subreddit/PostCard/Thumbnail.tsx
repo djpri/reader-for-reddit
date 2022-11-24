@@ -134,7 +134,7 @@ function Thumbnail({
       m="0"
       userSelect="none"
       cursor="pointer"
-      postion="relative"
+      position="relative"
       onClick={() => setShowSelfText((prevState) => !prevState)}
     >
       {showSelfText ? (

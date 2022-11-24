@@ -78,8 +78,8 @@ function Posts({
     <HStack my="10px">
       {subredditSortTypes.map((type) => (
         <Button
-          rounded="none"
-          size="xs"
+          rounded="md"
+          size="sm"
           fontSize={["xs", "sm", "sm"]}
           key={type}
           color={sort === type && "teal.500"}

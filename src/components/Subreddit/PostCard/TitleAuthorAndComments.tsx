@@ -73,8 +73,8 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
   };
 
   const Title = () => (
-    <Link href={url} passHref legacyBehavior target="_blank" rel="noopener">
-      <a>
+    <NextLink href={url} passHref legacyBehavior target="_blank" rel="noopener">
+      <Link>
         <Heading
           px={0}
           fontSize="lg"
@@ -83,8 +83,8 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
         >
           {title}
         </Heading>
-      </a>
-    </Link>
+      </Link>
+    </NextLink>
   );
 
   const NumComments = () => (

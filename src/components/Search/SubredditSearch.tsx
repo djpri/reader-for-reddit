@@ -68,7 +68,7 @@ function SubredditSearch() {
       onClick={() => setIsOpen(true)}
       onFocus={() => setIsOpen(true)}
     >
-      <InputGroup spacing={2}>
+      <InputGroup gap={2}>
         <Input
           rounded="sm"
           bgColor={bgColor}
