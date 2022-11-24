@@ -77,8 +77,8 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
       <Link>
         <Heading
           px={0}
-          fontSize="lg"
-          fontWeight={stickied ? "700" : "500"}
+          fontSize="md"
+          fontWeight={stickied ? "700" : "600"}
           color={stickied && textColor}
         >
           {title}

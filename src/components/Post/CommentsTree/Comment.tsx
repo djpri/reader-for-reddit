@@ -132,9 +132,8 @@ function Comment({ item, showChildren, linkId }: IProps) {
       w="100%"
       border={data.stickied ? "2px" : "1px"}
       borderColor={data.stickied ? moderatorColor : "whiteAlpha.400"}
-      pt="3"
+      py={2}
       bg={boxColor}
-      pb="3"
       boxShadow="base"
       rounded="md"
       mt="3"

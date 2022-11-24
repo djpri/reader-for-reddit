@@ -48,7 +48,7 @@ function Content({
       >
         <div />
         <div />
-        <Box className="comment" overflowX="auto">
+        <Box className="comment" overflowX="auto" fontSize="sm">
           <hr />
           {ReactHtmlParser(sanitizedSelfText, {
             transform(node: {

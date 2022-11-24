@@ -110,7 +110,7 @@ function Posts({
           {isSavedSubreddit ? (
             <IconButton
               size="xs"
-              icon={<AiFillStar color="yellow" />}
+              icon={<AiFillStar color="#FFF4BD" />}
               aria-label={"add-subreddit"}
               color="white"
               onClick={() => {

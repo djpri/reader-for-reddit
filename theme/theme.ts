@@ -1,7 +1,9 @@
 import { parsedHtmlStyles } from "./parsedHtmlStyles";
 import { extendTheme } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
-import "@fontsource/open-sans"
+import "@fontsource/open-sans/500.css";
+import "@fontsource/open-sans/600.css";
+import "@fontsource/open-sans/700.css";
 import { Dict } from "@chakra-ui/utils";
 
 const themeConfig = {

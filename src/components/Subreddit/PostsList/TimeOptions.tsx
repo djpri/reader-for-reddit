@@ -23,8 +23,8 @@ const TimeOptions = ({ t }: { t: string }) => {
   const Option = ({ href, text, time }: OptionProps) => {
     return (
       <Button
-        size="xs"
-        rounded="none"
+        size="sm"
+        rounded="md"
         color={
           (t === time || (t === undefined && time === defaultTime)) &&
           "teal.500"
