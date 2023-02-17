@@ -96,7 +96,7 @@ function Comment({ item, showChildren, linkId }: IProps) {
         </Link>
       );
     return (
-      <Comment item={item} key={index} showChildren={false} linkId={linkId} />
+      <Comment item={item} key={index} showChildren={showReplies} linkId={linkId} />
     );
   };
 

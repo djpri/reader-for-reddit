@@ -21,7 +21,7 @@ const themeConfig = {
         fontFamily: "body",
         fontSize: { base: "1rem", md: "1rem", sm: "0.875rem" },
         color: mode("rgb(51, 65, 85)", "whiteAlpha.900")(props),
-        bg: mode("white", "#0f172a")(props),
+        bg: mode("white", "#0d121c")(props),
         lineHeight: "base",
         transitionProperty: "background-color",
         transitionDuration: "0ms",

@@ -1,6 +1,7 @@
 import {
   Button,
   Container,
+  Flex,
   Grid,
   Heading,
   IconButton,
@@ -48,7 +49,11 @@ export default function Home() {
     return (
       <NextLink href={`/r/${sub}`} passHref legacyBehavior>
         <Link _hover={{ textDecoration: "none" }} as={NextLink}>
-          <Button width="15rem">{sub}</Button>
+          <Button
+            boxShadow="rgb(0 0 0 / 6%) 0px 1px 4px, rgb(0 0 0 / 18%) 0px 3px 3px"
+          >
+            {sub}
+          </Button>
         </Link>
       </NextLink>
     );
@@ -56,7 +61,7 @@ export default function Home() {
 
   return (
     <Container maxW="container.xl">
-      <Wrap spacing={5} my={5}>
+      <Wrap spacing={5} my={3} pb={5}>
         <SubLink sub="Home" />
         <SubLink sub="Popular" />
         <SubLink sub="All" />
@@ -64,29 +69,32 @@ export default function Home() {
       <Heading as="h1" fontSize="2xl" mb={5}>
         Popular Subreddits
       </Heading>
-      <Grid templateColumns="repeat(auto-fit, 15rem)" gap={4} my={5}>
+      <Wrap spacing={5} my={5}>
         {popularSubs.map((sub) => (
           <SubLink key={sub} sub={sub} />
         ))}
-      </Grid>
+      </Wrap>
       <Heading as="h1" fontSize="2xl" mb={5}>
         My Subreddits
       </Heading>
-      <Grid templateColumns="repeat(auto-fit, 15rem)" gap={4} my={5}>
-        {savedSubreddits.length > 0 ? (
-          savedSubreddits.map((sub: string) => <SubLink key={sub} sub={sub} />)
-        ) : (
-          <Text>
-            No Subreddits found. Use the{" "}
-            <IconButton
-              icon={<AiFillStar />}
-              aria-label={"star button"}
-              size="xs"
-            />{" "}
-            button to save sub to list when visiting a subreddit.
-          </Text>
-        )}
-      </Grid>
+
+      {savedSubreddits.length > 0 ? (
+        <Wrap spacing={5} my={5}>
+          {savedSubreddits.map((sub: string) => (
+            <SubLink key={sub} sub={sub} />
+          ))}
+        </Wrap>
+      ) : (
+        <Text>
+          No Subreddits found. Use the{" "}
+          <IconButton
+            icon={<AiFillStar />}
+            aria-label={"star button"}
+            size="xs"
+          />{" "}
+          button to save sub to list when visiting a subreddit.
+        </Text>
+      )}
     </Container>
   );
 }

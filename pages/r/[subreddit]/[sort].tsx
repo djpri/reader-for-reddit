@@ -34,8 +34,8 @@ function Subreddit() {
 
   useEffect(() => {
     if (posts && !isLoading && !error) {
-      document.title = posts.pages[0]?.children[0].data.subreddit_name_prefixed;
-    }
+      document.title = posts.pages[0]?.children[0]?.data.subreddit_name_prefixed || "No posts found";
+    }       
   }, [error, isLoading, posts]);
 
   return (
@@ -47,7 +47,7 @@ function Subreddit() {
         error={error}
         fetchNextPage={fetchNextPage}
         isFetchingNextPage={isFetchingNextPage}
-      />
+        />
     </Container>
   );
 }

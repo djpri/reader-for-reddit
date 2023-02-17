@@ -24,7 +24,7 @@ function Post({ postData }: IProps) {
 
   return (
     <Box
-      boxShadow="rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px"
+      boxShadow="rgb(0 0 0 / 6%) 0px 1px 4px, rgb(0 0 0 / 18%) 0px 3px 3px"
       w="100%"
       mb="5"
       py={1}

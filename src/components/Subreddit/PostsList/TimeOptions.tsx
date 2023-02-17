@@ -29,6 +29,7 @@ const TimeOptions = ({ t }: { t: string }) => {
           (t === time || (t === undefined && time === defaultTime)) &&
           "teal.500"
         }
+        boxShadow="rgb(0 0 0 / 6%) 0px 1px 4px, rgb(0 0 0 / 18%) 0px 3px 3px"
       >
         <NextLink href={href} passHref legacyBehavior scroll={false}>
           <Link>{text}</Link>

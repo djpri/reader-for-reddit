@@ -19,7 +19,7 @@ import SubredditSearch from "../Search/SubredditSearch";
 function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
   const color = useColorModeValue("black", "white");
-  const bgColor = useColorModeValue("white", "hsl(222, 47%, 8%)");
+  const bgColor = useColorModeValue("white", "hsl(220 38% 8% / 1)");
   const buttonBgColor = useColorModeValue("gray.50", "gray.700");
   const [isDesktop] = useMediaQuery("(min-width: 1024px)");
 

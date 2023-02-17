@@ -9,7 +9,6 @@ import {
 } from "@chakra-ui/react";
 import { NextRouter, useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import usePostsFilter from "../usePostsFilter";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import {
   addSubToLocalStorage,
@@ -18,6 +17,7 @@ import {
 } from "src/localStorage";
 import Post from "../PostCard/SubredditPost";
 import { PostData } from "../types";
+import usePostsFilter from "../usePostsFilter";
 import TimeOptions from "./TimeOptions";
 
 const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
@@ -83,7 +83,7 @@ function Posts({
           fontSize={["xs", "sm", "sm"]}
           key={type}
           color={sort === type && "teal.500"}
-          textDecoration={sort === type ? "underline" : "none"}
+          boxShadow="rgb(0 0 0 / 6%) 0px 1px 4px, rgb(0 0 0 / 18%) 0px 3px 3px"
           textTransform="capitalize"
           onClick={() => {
             router.push(`/r/${subreddit}/${type}`);
@@ -143,19 +143,18 @@ function Posts({
           <Post key={index} postData={post.data} />
         ))}
 
-      {!pages && (
-        <Text>
-          No posts found. This subreddit does not exist or no longer exists.
-        </Text>
+      {!pages || pages[0].children.length <= 0 ? (
+        <Text>No posts found.</Text>
+      ) : (
+        <Button
+          w="100%"
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
+          isLoading={isFetchingNextPage}
+        >
+          Get more posts
+        </Button>
       )}
-      <Button
-        w="100%"
-        onClick={() => fetchNextPage()}
-        disabled={isFetchingNextPage}
-        isLoading={isFetchingNextPage}
-      >
-        Get more posts
-      </Button>
     </div>
   );
 }

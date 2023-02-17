@@ -29,7 +29,7 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
     link_flair_type,
   } = postData;
   const linkFlairColor = useColorModeValue("gray.200", "gray.500");
-  const textColor = useColorModeValue("green.400", "green.400");
+  const textColor = useColorModeValue("#008136", "#34a764");
 
   const Author = () => (
     <Box fontSize="sm">

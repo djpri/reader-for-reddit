@@ -1,4 +1,5 @@
 import { VStack } from "@chakra-ui/layout";
+import { useMemo } from "react";
 import Comment from "./Comment";
 
 interface IProps {
@@ -8,12 +9,14 @@ interface IProps {
 }
 
 function CommentsTree({ comments, showChildComments, linkId }: IProps) {
+  const showChildren = useMemo(() => showChildComments, [showChildComments]);
+  
   const renderParentComment = (item: any) => {
     return (
       <Comment
         item={item}
         linkId={linkId}
-        showChildren={showChildComments}
+        showChildren={showChildren}
         key={item.data.id}
       />
     );
