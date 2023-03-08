@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { VscCollapseAll } from "react-icons/vsc";
 import ReactMarkdown from "react-markdown";
+import { textMaxWidth } from "src/constants";
 import { formatScore } from "src/helpers";
 import { getMoreChildrenComments } from "../getPostData";
 
@@ -137,7 +138,7 @@ function Comment({ item, showChildren, linkId }: IProps) {
       boxShadow="base"
       rounded="md"
       mt="3"
-      px={["3", "4", "5"]}
+      px={["3", "4"]}
       key={data.id}
     >
       {/* Comment info */}
@@ -182,7 +183,7 @@ function Comment({ item, showChildren, linkId }: IProps) {
       </HStack>
       {/* Comment body */}
       <Box display={displayBody}>
-        <Box className="comment">
+        <Box className="comment" maxW={textMaxWidth}>
           <ReactMarkdown linkTarget="_blank">{data.body}</ReactMarkdown>
         </Box>
         <HStack>

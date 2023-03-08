@@ -4,6 +4,7 @@ import * as DOMPurify from "dompurify";
 import ReactHtmlParser from "react-html-parser";
 import DragToResizeImage from "src/components/Images/DragToResizeImage";
 import ReactHlsPlayer from "src/components/ReactHlsPlayer";
+import { textMaxWidth } from "src/constants";
 import { PostData } from "../types";
 import ImageGallery from "./ImageGallery";
 
@@ -48,7 +49,7 @@ function Content({
       >
         <div />
         <div />
-        <Box className="comment" overflowX="auto" fontSize="sm">
+        <Box className="comment" overflowX="auto" fontSize="sm" maxW={textMaxWidth}>
           <hr />
           {ReactHtmlParser(sanitizedSelfText, {
             transform(node: {

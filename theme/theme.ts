@@ -65,7 +65,6 @@ const themeConfig = {
       fontFamily: "heading",
       textAlign: "center",
       fontWeight: "bold",
-      letterSpacing: "0.015em",
       lineHeight: "1.24",
       fontSize: { base: "1.75rem", md: "3.5rem" },
     },
@@ -77,7 +76,8 @@ const themeConfig = {
       fontSize: { base: "1.75rem", md: "2.75rem" },
     },
     body: {
-      fontSize: { base: "1rem" },
+      fontSize: { base: "0.9rem", md: "0.9rem" },
+      letterSpacing: "0.015em",
     },
     caps: {
       textTransform: "uppercase",

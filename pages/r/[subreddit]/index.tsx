@@ -40,7 +40,7 @@ function Subreddit() {
   }, [error, isLoading, posts]);
 
   return (
-    <Container maxWidth="container.xl">
+    <Container maxWidth="90vw">
       <Posts
         subreddit={subreddit}
         pages={posts?.pages}

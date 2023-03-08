@@ -62,7 +62,7 @@ function SubmissionPage() {
 
   if (isLoading)
     return (
-      <Container maxW="container.xl" mt="10" mb="20">
+      <Container maxW="90vw" mt="10" mb="20">
         {postInfo && (
           <PostHeader
             sortType={sort}
@@ -78,20 +78,20 @@ function SubmissionPage() {
 
   if (error)
     return (
-      <Container maxW="container.xl" mt="10" mb="20">
+      <Container maxW="90vw" mt="10" mb="20">
         error
       </Container>
     );
 
   if (!comments)
     return (
-      <Container maxW="container.xl" mt="10" mb="20">
+      <Container maxW="90vw" mt="10" mb="20">
         no comments
       </Container>
     );
 
   return (
-    <Container maxW="container.xl" mt="10" mb="20">
+    <Container maxW="90vw" mt="10" mb="20">
       <PostHeader
         sortType={sort}
         setSort={setSort}

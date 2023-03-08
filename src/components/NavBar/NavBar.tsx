@@ -38,7 +38,7 @@ function NavBar() {
       mb="50px"
       opacity={1}
     >
-      <Container maxW="container.xl">
+      <Container maxW="90vw">
         <Grid as="nav" templateColumns="1fr 2fr 1fr" w="100%" pt={2} pb={2}>
           <Flex align="center" justifySelf="start">
             {/* <LeftDrawer /> */}

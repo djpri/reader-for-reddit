@@ -20,7 +20,7 @@ function Post({ postData }: IProps) {
   const [showEmbeddedContent, setShowEmbeddedContent] = useState(false);
   const boxColor = useColorModeValue("#e6ecf092", "gray.800");
   const nsfwBorderColor = useColorModeValue("red.500", "red.700");
-  const gridTemplate = "minMax(2.5rem, 1fr) minMax(3rem, 1fr) 16fr";
+  const gridTemplate = "minMax(2.5rem, 1fr) minMax(3rem, 1fr) 25fr";
 
   return (
     <Box
@@ -39,7 +39,7 @@ function Post({ postData }: IProps) {
         px={1}
         columnGap={3}
         templateColumns={gridTemplate}
-        alignItems={["start", "start", "center"]}
+        alignItems={["center"]}
       >
         {/* Score */}
         <Center fontSize={["xs", "sm", "md"]}>

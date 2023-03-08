@@ -16,6 +16,7 @@ import NextLink from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import { HiChevronDown } from "react-icons/hi";
 import ReactMarkdown from "react-markdown";
+import { textMaxWidth } from "src/constants";
 import { SortType } from "src/types/sortTypes";
 import DragToResizeImage from "../Images/DragToResizeImage";
 
@@ -105,7 +106,7 @@ function PostHeader({
           px={5}
           py={2}
           rounded="md"
-          maxW="container.xl"
+          maxW={textMaxWidth}
         >
           <ReactMarkdown
           // transformLinkUri={(href) => (

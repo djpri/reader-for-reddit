@@ -1,8 +1,6 @@
 import {
   Button,
   Container,
-  Flex,
-  Grid,
   Heading,
   IconButton,
   Link,
@@ -60,7 +58,7 @@ export default function Home() {
   };
 
   return (
-    <Container maxW="container.xl">
+    <Container maxW="90vw">
       <Wrap spacing={5} my={3} pb={5}>
         <SubLink sub="Home" />
         <SubLink sub="Popular" />
@@ -79,7 +77,7 @@ export default function Home() {
       </Heading>
 
       {savedSubreddits.length > 0 ? (
-        <Wrap spacing={5} my={5}>
+        <Wrap spacing={5} my={5} pb={5}>
           {savedSubreddits.map((sub: string) => (
             <SubLink key={sub} sub={sub} />
           ))}
