@@ -45,10 +45,12 @@ export default function Home() {
 
   const SubLink = ({ sub }: { sub: string }) => {
     return (
-      <NextLink href={`/r/${sub}`} passHref legacyBehavior>
+      <NextLink href={`/r/${sub}`} passHref legacyBehavior className="home-subreddit-link">
         <Link _hover={{ textDecoration: "none" }} as={NextLink}>
           <Button
             boxShadow="rgb(0 0 0 / 6%) 0px 1px 4px, rgb(0 0 0 / 18%) 0px 3px 3px"
+            rounded="sm"
+            // my={2}
           >
             {sub}
           </Button>
@@ -67,7 +69,7 @@ export default function Home() {
       <Heading as="h1" fontSize="2xl" mb={5}>
         Popular Subreddits
       </Heading>
-      <Wrap spacing={5} my={5}>
+      <Wrap spacing={5} my={2} py={2}>
         {popularSubs.map((sub) => (
           <SubLink key={sub} sub={sub} />
         ))}

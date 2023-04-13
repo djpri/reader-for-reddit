@@ -6,6 +6,7 @@ import {
   IconButton,
   Spinner,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { NextRouter, useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -49,6 +50,7 @@ function Posts({
   const router: NextRouter = useRouter();
   const { sort, t } = router.query;
   const [isSavedSubreddit, setIsSavedSubreddit] = useState(false);
+  const iconColor = useColorModeValue("#737504", "#c4c722");
 
   useEffect(() => {
     setIsSavedSubreddit(isSavedInStorage(subreddit as string));
@@ -75,15 +77,16 @@ function Posts({
   }
 
   const SortButtons = () => (
-    <HStack my="10px">
+    <HStack my="10px" className="post-sort-menu">
       {subredditSortTypes.map((type) => (
         <Button
-          rounded="md"
+          className="post-sort-button"
+          rounded="sm"
           size="sm"
           fontSize={["xs", "sm", "sm"]}
           key={type}
           color={sort === type && "teal.500"}
-          boxShadow="rgb(0 0 0 / 6%) 0px 1px 4px, rgb(0 0 0 / 18%) 0px 3px 3px"
+          boxShadow="rgb(0 0 0 / 6%) 0px 1px 4px, rgb(0 0 0 / 18%) 0px 2px 2px"
           textTransform="capitalize"
           onClick={() => {
             router.push(`/r/${subreddit}/${type}`);
@@ -109,8 +112,9 @@ function Posts({
           </Heading>
           {isSavedSubreddit ? (
             <IconButton
+              boxShadow="rgb(0 0 0 / 6%) 0px 1px 2px, rgb(0 0 0 / 28%) 0px 2px 2px"
               size="xs"
-              icon={<AiFillStar color="#FFF4BD" />}
+              icon={<AiFillStar color={iconColor}/>}
               aria-label={"add-subreddit"}
               color="white"
               onClick={() => {

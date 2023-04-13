@@ -24,15 +24,16 @@ function Post({ postData }: IProps) {
 
   return (
     <Box
-      boxShadow="rgb(0 0 0 / 6%) 0px 1px 4px, rgb(0 0 0 / 18%) 0px 3px 3px"
+      boxShadow="rgb(0 0 0 / 6%) 0px 1px 4px, rgb(0 0 0 / 18%) 0px 3px 0px"
       w="100%"
-      mb="5"
+      mb={3}
       py={1}
       px={1}
       bgColor={boxColor}
       borderColor={over_18 ? nsfwBorderColor : "whiteAlpha.400"}
       borderTopWidth={over_18 && "2px"}
       borderRadius="sm"
+      className="post"
     >
       <Grid
         w="100%"

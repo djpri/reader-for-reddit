@@ -33,10 +33,10 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
 
   const Author = () => (
     <Box fontSize="sm">
-      <Text color="gray" as="span">
+      <Text color="gray" as="span" className="post-time-submitted">
         submitted {moment(created * 1000).fromNow()} by
       </Text>{" "}
-      <Text as="span">{author}</Text>
+      <Text as="span" className="post-author">{author}</Text>
     </Box>
   );
 
@@ -45,8 +45,10 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
       fontSize="xs"
       bgColor={linkFlairColor}
       fontWeight="600"
+      opacity={0.95}
       // rounded="md"
-      px={1}
+      px={2}
+      className="post-flair"
     >
       {link_flair_text}
     </Center>
@@ -73,13 +75,14 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
   };
 
   const Title = () => (
-    <NextLink href={url} passHref legacyBehavior target="_blank" rel="noopener">
+    <NextLink href={url} passHref legacyBehavior target="_blank" rel="noopener" >
       <Link>
         <Heading
           px={0}
           fontSize="md"
           fontWeight={stickied ? "700" : "600"}
           color={stickied && textColor}
+          className="post-title"
         >
           {title}
         </Heading>
@@ -88,7 +91,7 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
   );
 
   const NumComments = () => (
-    <Box fontSize="sm">
+    <Box fontSize="sm" className="post-num-comments">
       <NextLink passHref legacyBehavior href={permalink}>
         <Link color="gray.500">
           <Text as="b">{num_comments} comments</Text>

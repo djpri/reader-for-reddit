@@ -119,7 +119,7 @@ function PostHeader({
       )}
 
       <Box fontSize="sm" my={2}>
-        <Text color="gray" as="span">
+        <Text color="gray" as="span" >
           submitted {moment(created * 1000).fromNow()} by
         </Text>{" "}
         <Text as="span">{author}</Text>
