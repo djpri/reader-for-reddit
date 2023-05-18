@@ -92,7 +92,7 @@ export default function Home() {
             aria-label={"star button"}
             size="xs"
           />{" "}
-          button to save sub to list when visiting a subreddit.
+          button to save a subreddit to this list when visiting a subreddit.
         </Text>
       )}
     </Container>

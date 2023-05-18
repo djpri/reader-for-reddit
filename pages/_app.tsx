@@ -12,6 +12,7 @@ import "../styles/globals.css";
 import "../styles/nprogress.css";
 import theme from "../theme/theme";
 import Head from "next/head";
+import useProgressBar from "src/hooks/useProgressBar";
 
 export const queryClient: QueryClient = new QueryClient({
   defaultOptions: {
@@ -23,33 +24,8 @@ export const queryClient: QueryClient = new QueryClient({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-
-  useEffect(() => {
-    router.events.on("routeChangeStart", () => {
-      NProgress.start();
-    });
-
-    router.events.on("routeChangeComplete", () => {
-      NProgress.done();
-    });
-
-    router.events.on("routeChangeError", () => {
-      NProgress.done();
-    });
-    return () => {
-      router.events.off("routeChangeStart", () => {
-        NProgress.start();
-      });
-      router.events.off("routeChangeComplete", () => {
-        NProgress.done();
-      });
-
-      router.events.off("routeChangeError", () => {
-        NProgress.done();
-      });
-    };
-  }, [router.events]);
+  
+  useProgressBar()
 
   useEffect(() => {
     document.title = "/r/eader for reddit";
@@ -88,7 +64,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     if (tokenIsNeeded()) {
       console.log("Token is needed");
-      getTokenAsync();
+      try {
+        getTokenAsync();
+      } catch (error) {
+        setTimeout(() => {
+          getTokenAsync()
+        }, 2000)
+      }
+      
     }
     updateSessionTimeInfo();
   }, []);

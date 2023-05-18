@@ -29,6 +29,7 @@ function useSubredditSearch() {
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setisLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -40,13 +41,18 @@ function useSubredditSearch() {
       setIsError(false);
       return results;
     }
-    // debounce the search
-    const timeout = setTimeout(() => {
-      fetchData();
-    }, 200);
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+
+    if (isTyping) {
+      timeout = setTimeout(() => {
+        fetchData();
+      }, 200);
+    }
 
     return () => {
-      clearTimeout(timeout);
+      if (timeout !== null) {
+        clearTimeout(timeout);
+      }
     };
   }, [search]);
 
@@ -57,11 +63,17 @@ function useSubredditSearch() {
     }
     setisLoading(true);
     setIsError(false);
-    router.push(`/r/${search}`);
+
+    if (search.startsWith("/r/")) {
+      router.push(search);
+    } else {
+      router.push(`/r/${search}`);
+    }
+
     setisLoading(false);
   };
 
-  return { handleSearch, setSearch, search, isError, isLoading, searchResults };
+  return { handleSearch, setSearch, isTyping, setIsTyping, search, isError, isLoading, searchResults };
 }
 
 export default useSubredditSearch;

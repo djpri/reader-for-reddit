@@ -16,21 +16,44 @@ import { BiSearch } from "react-icons/bi";
 import useSubredditSearch from "./useSubredditSearch";
 
 function SubredditSearch() {
-  const { handleSearch, setSearch, search, isLoading, searchResults } =
+  const { handleSearch, setSearch, search, setIsTyping, isTyping, isLoading, searchResults } =
     useSubredditSearch();
   const router: NextRouter = useRouter();
   const inputRef = useRef(null);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const searchColor = useColorModeValue("black", "white");
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // close search results if user clicks outside of input
   useOutsideClick({
     ref: inputRef,
     handler: () => {
-      isOpen && setIsOpen(false);
+      setSelectedIndex(0);
+      if (isOpen) {
+        setIsOpen(false);
+      }
     },
   });
+
+  const handleInputKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowDown") {
+      setIsTyping(false);
+      if (selectedIndex < searchResults?.length - 1) {
+        setSelectedIndex((prevIndex) => prevIndex + 1);
+        setSearch(searchResults[selectedIndex + 1].data.url);
+      }
+      return;
+    }
+    if (e.key === "ArrowUp") {
+      setIsTyping(false);
+      if (searchResults && selectedIndex > 0) {
+        setSelectedIndex((prevIndex) => prevIndex - 1);
+        setSearch(searchResults[selectedIndex - 1].data.url);
+      }
+      return;
+    }
+    setIsTyping(true);
+  };
 
   useEffect(() => {
     const handleRouteChange = () => {
@@ -47,7 +70,7 @@ function SubredditSearch() {
   // close search results if user presses tab
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Tab") {
+      if (e.key === "Tab" || e.key === "Escape") {
         setIsOpen(false);
       }
     };
@@ -78,6 +101,7 @@ function SubredditSearch() {
               handleSearch();
             }
           }}
+          onKeyDown={handleInputKeyDown}
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
@@ -104,10 +128,12 @@ function SubredditSearch() {
           w="100%"
         >
           {isOpen &&
-            searchResults.map((result) => (
+            searchResults.map((result, index) => (
               <Box
                 key={result.data.id}
                 _hover={{ bgColor: "#eeeeee" }}
+                onMouseOver={() => setSelectedIndex(index)}
+                bgColor={selectedIndex === index ? "#eeeeee" : "none"}
                 w="100%"
                 h="100%"
                 px={4}

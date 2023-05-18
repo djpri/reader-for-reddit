@@ -24,7 +24,6 @@
     "noImplicitAny": true,
     "noImplicitReturns": false,
     "pretty": true,
-    "suppressImplicitAnyIndexErrors": true
   },
   "watchOptions": {
     "watchFile": "useFsEvents",

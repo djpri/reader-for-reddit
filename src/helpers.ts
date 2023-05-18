@@ -1,4 +1,4 @@
-export const formatScore = (score: number | string) => {
+export const formatScore = (score: number) => {
   const scoreString = score.toString();
   // 10,000 -> 10K
   // 100,000 -> 100K
