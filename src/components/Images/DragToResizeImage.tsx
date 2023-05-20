@@ -17,7 +17,7 @@ function DragToResizeImage({ url, alt }: IProps) {
       const currentWidth = initialWidth;
       const deltaX: number = event.clientX - initialPosition[0];
       const deltaY: number = event.clientY - initialPosition[1];
-      let multiplier: number = 1;
+      let multiplier = 1;
 
       if (Math.abs(deltaX) > Math.abs(deltaY)) {
         multiplier = deltaX / Math.abs(deltaX);

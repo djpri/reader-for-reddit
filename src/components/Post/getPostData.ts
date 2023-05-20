@@ -6,7 +6,7 @@ export const loadPostDetailsAndComments = async (
   commentId?: string
 ) => {
   try {
-    const response = await RedditAPI.get(permalink, {
+    const response: any = await RedditAPI.get(permalink, {
       params: {
         depth: 4,
         limit: 300,

@@ -8,6 +8,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Spinner,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -19,6 +20,7 @@ import ReactMarkdown from "react-markdown";
 import { textMaxWidth } from "src/constants";
 import { SortType } from "src/types/sortTypes";
 import DragToResizeImage from "../Images/DragToResizeImage";
+import { IoMdRefreshCircle } from "react-icons/io";
 
 const sortNames = {
   confidence: "Best",
@@ -36,6 +38,8 @@ interface IProps {
   toggleAllChildComments: () => void;
   sortType: SortType;
   setSort: Dispatch<SetStateAction<SortType>>;
+  refreshComments: () => void;
+  isLoading: boolean;
 }
 
 function PostHeader({
@@ -44,6 +48,8 @@ function PostHeader({
   toggleAllChildComments,
   sortType,
   setSort,
+  refreshComments,
+  isLoading
 }: IProps) {
   const { num_comments, title, selftext, subreddit, url, created, author } =
     postDetails;
@@ -137,7 +143,11 @@ function PostHeader({
             : "show all child comments"}
         </Link>
       </HStack>
-      <SortMenu />
+      <HStack>
+        <SortMenu />
+        <Button aria-label="refresh" size="sm" rightIcon={<IoMdRefreshCircle />} onClick={refreshComments}>Refresh comments</Button>
+        {isLoading && <Spinner size="sm" />}
+      </HStack>
     </div>
   );
 }

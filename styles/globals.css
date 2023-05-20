@@ -22,6 +22,7 @@ a {
 .comment {
   width: 100%;
   max-width: 100%;
+  line-height: 1.35;
 }
 
 .comment p {
@@ -49,6 +50,11 @@ a {
   border: 1px solid gray;
   padding: 0 10px;
   border-radius: 2px;
+}
+
+.comment code {
+  font-family: monospace;
+  font-weight: 600;
 }
 
 /* .comment blockquote {

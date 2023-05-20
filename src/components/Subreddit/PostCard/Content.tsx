@@ -49,7 +49,7 @@ function Content({
       >
         <div />
         <div />
-        <Box className="comment" overflowX="auto" fontSize="sm" maxW={textMaxWidth}>
+        <Box className="comment" overflowX="auto" fontSize="1rem" maxW={textMaxWidth}>
           <hr />
           {ReactHtmlParser(sanitizedSelfText, {
             transform(node: {
@@ -133,7 +133,7 @@ function Content({
       >
         <div />
         <div />
-        {media.reddit_video && (
+        {media?.reddit_video && (
           <ReactHlsPlayer
             src={media.reddit_video.hls_url}
             autoPlay

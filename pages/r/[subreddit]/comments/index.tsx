@@ -1,11 +1,11 @@
 import { Container, Spinner } from "@chakra-ui/react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { NextRouter, useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { useEffect, useState } from "react";
-import { useInfiniteQuery } from "react-query";
 import CommentsTree from "src/components/Post/CommentsTree/CommentsTree";
-import { loadPostDetailsAndComments } from "src/components/Post/getPostData";
 import PostHeader from "src/components/Post/PostHeader";
+import { loadPostDetailsAndComments } from "src/components/Post/getPostData";
 import { SortType } from "src/types/sortTypes";
 
 const sortTypes = [
@@ -33,7 +33,7 @@ function SubmissionPage() {
     }
   }, [queryParams]);
 
-  const { isLoading, error, data } = useInfiniteQuery(
+  const { isLoading, error, data, refetch, isRefetching } = useInfiniteQuery(
     ["postDetails", permalink, sort],
     () => loadPostDetailsAndComments(permalink, sort)
   );
@@ -70,6 +70,8 @@ function SubmissionPage() {
             postDetails={postInfo}
             showChildComments={showChildComments}
             toggleAllChildComments={toggleAllChildComments}
+            refreshComments={refetch}
+            isLoading={isRefetching}
           />
         )}
         <Spinner my="10px" />
@@ -98,6 +100,8 @@ function SubmissionPage() {
         postDetails={postInfo}
         showChildComments={showChildComments}
         toggleAllChildComments={toggleAllChildComments}
+        refreshComments={refetch}
+        isLoading={isRefetching}
       />
       <CommentsTree
         comments={comments}

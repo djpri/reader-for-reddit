@@ -9,31 +9,50 @@ import TitleAuthorAndComments from "./TitleAuthorAndComments";
 
 interface IProps {
   postData: PostData | null;
+  selectedId: string;
+  // eslint-disable-next-line no-unused-vars
+  setSelectedId: (value: string) => void;
 }
 
-function Post({ postData }: IProps) {
-  const { score, over_18 } = postData;
+function Post({ postData, selectedId, setSelectedId }: IProps) {
+  const { score, over_18, id } = postData;
   const [showSelfText, setShowSelfText] = useState(false);
   const [showImage, setShowImage] = useState(false);
   const [showVideo, setShowVideo] = useState(false);
   const [showGallery, setShowGallery] = useState(false);
   const [showEmbeddedContent, setShowEmbeddedContent] = useState(false);
-  const boxColor = useColorModeValue("#e6ecf092", "gray.800");
+  const boxColor = useColorModeValue("#e1e1e147", "gray.800");
   const nsfwBorderColor = useColorModeValue("red.500", "red.700");
+  const selectedColor = useColorModeValue("green.600", "green.200");
   const gridTemplate = "minMax(2.5rem, 1fr) minMax(3rem, 1fr) 25fr";
+
+  const borderColor = () => {
+    if (over_18) {
+      return nsfwBorderColor;
+    }
+    if (selectedId === id) {
+      return selectedColor;
+    }
+    return "whiteAlpha.200";
+  };
 
   return (
     <Box
-      boxShadow="rgb(0 0 0 / 6%) 0px 1px 4px, rgb(0 0 0 / 18%) 0px 3px 0px"
+      boxShadow="rgb(0 0 100 / 6%) 0px 2px 0px, rgb(0 0 0 / 18%) 0px 2px 0px;"
       w="100%"
       mb={3}
       py={1}
       px={1}
       bgColor={boxColor}
-      borderColor={over_18 ? nsfwBorderColor : "whiteAlpha.400"}
-      borderTopWidth={over_18 && "2px"}
-      borderRadius="sm"
+      borderColor={borderColor()}
+      borderWidth={"2px"}
+      borderRadius="md"
       className="post"
+      onClick={() => {
+        if (selectedId !== id) {
+          setSelectedId(id);
+        }
+      }}
     >
       <Grid
         w="100%"

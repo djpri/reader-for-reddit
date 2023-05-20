@@ -51,12 +51,13 @@ function Posts({
   const { sort, t } = router.query;
   const [isSavedSubreddit, setIsSavedSubreddit] = useState(false);
   const iconColor = useColorModeValue("#737504", "#c4c722");
+  const [selectedId, setSelectedId] = useState("");
 
   useEffect(() => {
     setIsSavedSubreddit(isSavedInStorage(subreddit as string));
   }, [subreddit]);
 
-  if (error) return <p>{error}</p>;
+  if (error) return <p>Something went wrong loading posts.</p>;
 
   if (isLoading) {
     return (
@@ -108,13 +109,13 @@ function Posts({
       >
         <HStack>
           <Heading as="h1" fontSize="2xl">
-            {`/r/${subreddit}`}
+            {subreddit && `/r/${subreddit}`}
           </Heading>
           {isSavedSubreddit ? (
             <IconButton
               boxShadow="rgb(0 0 0 / 6%) 0px 1px 2px, rgb(0 0 0 / 28%) 0px 2px 2px"
               size="xs"
-              icon={<AiFillStar color={iconColor}/>}
+              icon={<AiFillStar color={iconColor} />}
               aria-label={"add-subreddit"}
               color="white"
               onClick={() => {
@@ -144,7 +145,12 @@ function Posts({
 
       {filteredPosts?.length > 0 &&
         filteredPosts.map((post: { data: PostData }, index: number) => (
-          <Post key={index} postData={post.data} />
+          <Post
+            key={index}
+            postData={post.data}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+          />
         ))}
 
       {!pages || pages[0].children.length <= 0 ? (

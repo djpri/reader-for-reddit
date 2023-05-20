@@ -17,10 +17,10 @@ export const loadSubredditInfo = async (subreddit: string) => {
 
 export const loadSubredditPosts = async (
   subreddit: string | string[],
-  sort: string = "hot",
+  sort = "hot",
   after: string | null = null,
-  t: string = "day",
-  count: number = 25
+  t = "day",
+  count = 25
 ): Promise<SubredditPostData> => {
   try {
     const params =

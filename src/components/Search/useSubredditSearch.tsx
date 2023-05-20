@@ -54,7 +54,7 @@ function useSubredditSearch() {
         clearTimeout(timeout);
       }
     };
-  }, [search]);
+  }, [search, isTyping]);
 
   const handleSearch = () => {
     if (!search) {

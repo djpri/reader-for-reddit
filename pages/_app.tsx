@@ -1,18 +1,19 @@
 import { Box, ChakraProvider } from "@chakra-ui/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import axios from "axios";
 import moment from "moment";
 import { AppProps } from "next/app";
-import { useRouter } from "next/router";
-import NProgress from "nprogress";
+import Head from "next/head";
 import { useEffect } from "react";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import useProgressBar from "src/hooks/useProgressBar";
+import { persistor, store } from "src/redux/store";
 import NavBar from "../src/components/NavBar/NavBar";
 import "../styles/globals.css";
 import "../styles/nprogress.css";
 import theme from "../theme/theme";
-import Head from "next/head";
-import useProgressBar from "src/hooks/useProgressBar";
 
 export const queryClient: QueryClient = new QueryClient({
   defaultOptions: {
@@ -24,8 +25,7 @@ export const queryClient: QueryClient = new QueryClient({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
-  
-  useProgressBar()
+  useProgressBar();
 
   useEffect(() => {
     document.title = "/r/eader for reddit";
@@ -68,10 +68,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         getTokenAsync();
       } catch (error) {
         setTimeout(() => {
-          getTokenAsync()
-        }, 2000)
+          getTokenAsync();
+        }, 2000);
       }
-      
     }
     updateSessionTimeInfo();
   }, []);
@@ -79,15 +78,19 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={theme}>
-        <Head>
-          <link rel="shortcut icon" href="/reddit-favicon-blue.png" />
-          <title>/r/eader for reddit</title>
-        </Head>
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <Head>
+              <link rel="shortcut icon" href="/reddit-favicon-blue.png" />
+              <title>/r/eader for reddit</title>
+            </Head>
 
-        <NavBar />
-        <Box as="main" mt="80px" mb="100px">
-          <Component {...pageProps} />
-        </Box>
+            <NavBar />
+            <Box as="main" mt="80px" mb="100px">
+              <Component {...pageProps} />
+            </Box>
+          </PersistGate>
+        </Provider>
       </ChakraProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

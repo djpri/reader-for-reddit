@@ -3,8 +3,11 @@
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:react/jsx-runtime"
+    "plugin:react/jsx-runtime",
+    "plugin:@typescript-eslint/recommended"
   ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "rules": {
     "no-unused-vars": "warn",
     "no-undef": "warn",
@@ -13,6 +16,7 @@
     "prefer-template": "error",
     "react/jsx-key": "error",
     "react/jsx-boolean-value": "warn",
-    "react/jsx-pascal-case": "warn"
+    "react/jsx-pascal-case": "warn",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }

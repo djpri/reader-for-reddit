@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "es5",
     "watch": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "baseUrl": "./",
     "allowJs": true,
     "skipLibCheck": true,
@@ -23,7 +27,7 @@
     "incremental": true,
     "noImplicitAny": true,
     "noImplicitReturns": false,
-    "pretty": true,
+    "pretty": true
   },
   "watchOptions": {
     "watchFile": "useFsEvents",
@@ -31,6 +35,12 @@
     "fallbackPolling": "dynamicPriority",
     "synchronousWatchDirectory": true
   },
-  "include": ["pages", "src", "additional.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "pages",
+    "src",
+    "additional.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,6 +1,6 @@
 import NProgress from "nprogress";
 import { useRouter } from "next/router";
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 function useProgressBar() {
   const router = useRouter();

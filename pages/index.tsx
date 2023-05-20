@@ -48,7 +48,7 @@ export default function Home() {
       <NextLink href={`/r/${sub}`} passHref legacyBehavior className="home-subreddit-link">
         <Link _hover={{ textDecoration: "none" }} as={NextLink}>
           <Button
-            boxShadow="rgb(0 0 0 / 6%) 0px 1px 4px, rgb(0 0 0 / 18%) 0px 3px 3px"
+            boxShadow="rgb(10 0 30 / 30%) 0px 1px 2px, rgb(0 0 0 / 18%) 0px 2px 2px"
             rounded="sm"
             // my={2}
           >
@@ -78,7 +78,7 @@ export default function Home() {
         My Subreddits
       </Heading>
 
-      {savedSubreddits.length > 0 ? (
+      {savedSubreddits?.length > 0 ? (
         <Wrap spacing={5} my={5} pb={5}>
           {savedSubreddits.map((sub: string) => (
             <SubLink key={sub} sub={sub} />

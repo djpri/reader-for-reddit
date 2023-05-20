@@ -118,7 +118,7 @@ export type SubredditSortType =
   | "controversial"
   | "rising";
 
-export interface Gildings {}
+export type Gildings = object;
 
 export interface LinkFlairRichtext {
   e: string;

@@ -11,12 +11,12 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { NextRouter, useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
+import { KeyboardEvent as ReactKeyboardEvent, useEffect, useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import useSubredditSearch from "./useSubredditSearch";
 
 function SubredditSearch() {
-  const { handleSearch, setSearch, search, setIsTyping, isTyping, isLoading, searchResults } =
+  const { handleSearch, setSearch, search, setIsTyping, isLoading, searchResults } =
     useSubredditSearch();
   const router: NextRouter = useRouter();
   const inputRef = useRef(null);
@@ -35,7 +35,7 @@ function SubredditSearch() {
     },
   });
 
-  const handleInputKeyDown = (e: React.KeyboardEvent) => {
+  const handleInputKeyDown = (e: ReactKeyboardEvent) => {
     if (e.key === "ArrowDown") {
       setIsTyping(false);
       if (selectedIndex < searchResults?.length - 1) {
@@ -94,6 +94,7 @@ function SubredditSearch() {
       <InputGroup gap={2}>
         <Input
           rounded="sm"
+          focusBorderColor='#a4a9ab'
           bgColor={bgColor}
           placeholder="Search subreddits"
           onKeyUp={(e) => {
@@ -131,7 +132,6 @@ function SubredditSearch() {
             searchResults.map((result, index) => (
               <Box
                 key={result.data.id}
-                _hover={{ bgColor: "#eeeeee" }}
                 onMouseOver={() => setSelectedIndex(index)}
                 bgColor={selectedIndex === index ? "#eeeeee" : "none"}
                 w="100%"

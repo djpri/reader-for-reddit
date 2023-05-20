@@ -1,7 +1,7 @@
 import { Container } from "@chakra-ui/react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { NextRouter, useRouter } from "next/router";
 import { useEffect } from "react";
-import { useInfiniteQuery } from "react-query";
 import { loadSubredditPosts } from "src/components/Subreddit/getSubredditData";
 import Posts from "../../../src/components/Subreddit/PostsList/SubredditPosts";
 

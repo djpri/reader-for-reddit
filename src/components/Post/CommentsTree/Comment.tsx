@@ -29,36 +29,47 @@ interface IProps {
 }
 
 function Comment({ item, showChildren, linkId }: IProps) {
-  const data = item.data;
+  const {
+    parent_id,
+    depth,
+    distinguished,
+    is_submitter,
+    ups,
+    stickied,
+    id,
+    author,
+    score_hidden,
+    created_utc,
+    body,
+    replies,
+  } = item.data;
   const [showReplies, setShowReplies] = useState(showChildren);
   const [moreComments, setMoreComments] = useState(null);
   const [moreCommentsLoading, setMoreCommentsLoading] = useState(null);
   false;
-  const [displayBody, setDisplayBody] = useState(
-    data.ups < 0 ? "none" : "block"
-  );
+  const [displayBody, setDisplayBody] = useState(ups < 0 ? "none" : "block");
   const loadMoreCommentsColor = useColorModeValue("gray.200", "gray.700");
   const moderatorColor = useColorModeValue("green.200", "green.500");
   const opColor = useColorModeValue("blue.100", "blue.600");
   const boxColor = useColorModeValue(
-    data.depth % 2 === 0 ? "gray.100" : "white",
-    data.depth % 2 === 0 ? "gray.800" : "gray.900"
+    depth % 2 === 0 ? "gray.100" : "white",
+    depth % 2 === 0 ? "gray.800" : "gray.900"
   );
 
   const router = useRouter();
 
-  const authorColor = useMemo(() => {
-    if (data.distinguished === "moderator") {
+  const authorColor = () => {
+    if (distinguished === "moderator") {
       return moderatorColor;
     }
-    if (data.is_submitter) {
+    if (is_submitter) {
       return opColor;
     }
-  }, [data, moderatorColor, opColor]);
+  };
 
   const getMoreChildren = async (children: []) => {
     setMoreCommentsLoading(true);
-    const result: any = await getMoreChildrenComments(data.parent_id, children);
+    const result: any = await getMoreChildrenComments(parent_id, children);
     const commentsArray = result?.jquery[10][3][0];
     setMoreComments(commentsArray);
     setMoreCommentsLoading(false);
@@ -97,7 +108,12 @@ function Comment({ item, showChildren, linkId }: IProps) {
         </Link>
       );
     return (
-      <Comment item={item} key={index} showChildren={showReplies} linkId={linkId} />
+      <Comment
+        item={item}
+        key={index}
+        showChildren={showReplies}
+        linkId={linkId}
+      />
     );
   };
 
@@ -131,15 +147,16 @@ function Comment({ item, showChildren, linkId }: IProps) {
     <Box
       display="block"
       w="100%"
-      border={data.stickied ? "2px" : "1px"}
-      borderColor={data.stickied ? moderatorColor : "whiteAlpha.400"}
+      border={stickied ? "2px" : "1px"}
+      borderColor={stickied ? moderatorColor : "whiteAlpha.400"}
       py={2}
       bg={boxColor}
       boxShadow="base"
       rounded="md"
       mt="3"
       px={["3", "4"]}
-      key={data.id}
+      key={id}
+      fontWeight="700"
     >
       {/* Comment info */}
       <HStack>
@@ -154,26 +171,26 @@ function Comment({ item, showChildren, linkId }: IProps) {
           <VscCollapseAll />
         </Button>
         <Stack flexWrap="wrap" direction="row">
-          <Text as="b" bgColor={authorColor}>
-            {data.author}
+          <Text as="b" bgColor={authorColor()} px={(is_submitter || distinguished === "moderator") && 2} rounded="md">
+            {author}
           </Text>
 
           <HStack m="0">
-            {!data.score_hidden && (
-              <Text as="b" color={data.ups < 0 ? "red.500" : "gray.500"}>
-                {data.ups && formatScore(data.ups)} point
-                {data.ups === 1 ? "" : "s"}
+            {!score_hidden && (
+              <Text as="b" color={ups < 0 ? "red.500" : "gray.500"}>
+                {ups && formatScore(ups)} point
+                {ups === 1 ? "" : "s"}
               </Text>
             )}
-            {data.score_hidden && (
+            {score_hidden && (
               <Text as="b" color="gray.500">
                 [score hidden]
               </Text>
             )}
             <Text color="gray" as="span" fontSize="sm">
-              {moment(data.created_utc * 1000).fromNow()}
+              {moment(created_utc * 1000).fromNow()}
             </Text>
-            {data.stickied && (
+            {stickied && (
               <Text fontSize="sm" color="green.500">
                 stickied comment
               </Text>
@@ -184,20 +201,16 @@ function Comment({ item, showChildren, linkId }: IProps) {
       {/* Comment body */}
       <Box display={displayBody}>
         <Box className="comment" maxW={textMaxWidth}>
-          <ReactMarkdown linkTarget="_blank">{data.body}</ReactMarkdown>
+          <ReactMarkdown linkTarget="_blank">{body}</ReactMarkdown>
         </Box>
         <HStack>
-          <NextLink
-            href={`${router.asPath}/${data.id}`}
-            passHref
-            legacyBehavior
-          >
+          <NextLink href={`${router.asPath}/${id}`} passHref legacyBehavior>
             <Link color="gray.500" fontSize={["xs", "xs", "sm"]}>
               permalink
             </Link>
           </NextLink>
           {/* Show/Hide Child Comments */}
-          {getTotalChildComments(item) > 0 && data.depth < 3 && (
+          {getTotalChildComments(item) > 0 && depth < 3 && (
             <Link
               onClick={toggleReplies}
               color="gray.500"
@@ -211,15 +224,11 @@ function Comment({ item, showChildren, linkId }: IProps) {
                       : ""
                   }`
                 : "hide "}
-              {data?.replies?.length === 1 ? "child comment" : "child comments"}
+              {replies?.length === 1 ? "child comment" : "child comments"}
             </Link>
           )}
-          {data.depth >= 3 && data.replies && (
-            <NextLink
-              href={`${router.asPath}/${data.id}`}
-              passHref
-              legacyBehavior
-            >
+          {depth >= 3 && replies && (
+            <NextLink href={`${router.asPath}/${id}`} passHref legacyBehavior>
               <Link
                 color="teal.500"
                 fontSize={["xs", "xs", "sm"]}
@@ -231,8 +240,8 @@ function Comment({ item, showChildren, linkId }: IProps) {
           )}
         </HStack>
         {showReplies &&
-          data.depth < 3 &&
-          data.replies &&
+          depth < 3 &&
+          replies &&
           children.map(renderChildComment)}
         {showReplies && moreComments && moreComments.map(renderChildComment)}
       </Box>

@@ -8,15 +8,15 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import NextLink from "next/link";
 import { NextRouter, useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
-import { useInfiniteQuery } from "react-query";
 import CommentsTree from "src/components/Post/CommentsTree/CommentsTree";
-import { loadPostDetailsAndComments } from "src/components/Post/getPostData";
 import PostHeader from "src/components/Post/PostHeader";
+import { loadPostDetailsAndComments } from "src/components/Post/getPostData";
 import { SortType } from "src/types/sortTypes";
 
 const sortTypes = [
@@ -47,7 +47,7 @@ function SingleCommentThreadPage() {
 
   console.log(queryParams);
 
-  const { isLoading, error, data } = useInfiniteQuery(
+  const { isLoading, error, data, refetch, isRefetching } = useInfiniteQuery(
     ["postDetails", permalink, sort, queryParams.commentId],
     () =>
       loadPostDetailsAndComments(
@@ -89,6 +89,8 @@ function SingleCommentThreadPage() {
             postDetails={postInfo}
             showChildComments={showChildComments}
             toggleAllChildComments={toggleAllChildComments}
+            refreshComments={refetch}
+            isLoading={isRefetching}
           />
         )}
         <Spinner my="10px" />
@@ -117,6 +119,8 @@ function SingleCommentThreadPage() {
         postDetails={postInfo}
         showChildComments={showChildComments}
         toggleAllChildComments={toggleAllChildComments}
+        refreshComments={refetch}
+        isLoading={isRefetching}
       />
       <Flex
         my={2}

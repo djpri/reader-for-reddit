@@ -54,7 +54,7 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
     </Center>
   );
 
-  const RichTextFlair = ({ flairInfo }: { flairInfo: unknown }) => {
+  const RichTextFlair = ({ flairInfo }: { flairInfo: any }) => {
     return (
       <Center
         fontSize="xs"
