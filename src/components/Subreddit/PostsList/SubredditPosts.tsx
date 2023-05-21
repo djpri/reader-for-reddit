@@ -46,7 +46,7 @@ function Posts({
   fetchNextPage,
   isFetchingNextPage,
 }: IProps) {
-  const { filteredPosts } = usePostsFilter(pages);
+  const { filteredPosts, numPostsFiltered } = usePostsFilter(pages);
   const router: NextRouter = useRouter();
   const { sort, t } = router.query;
   const [isSavedSubreddit, setIsSavedSubreddit] = useState(false);
@@ -141,6 +141,12 @@ function Posts({
 
       {(sort === "top" || sort === "controversial") && (
         <TimeOptions t={t as string} />
+      )}
+
+      {numPostsFiltered > 0 && (
+        <Text mb="10px" fontSize="sm">
+          * {numPostsFiltered} posts filtered
+        </Text>
       )}
 
       {filteredPosts?.length > 0 &&
