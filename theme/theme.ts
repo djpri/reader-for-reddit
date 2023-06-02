@@ -77,7 +77,7 @@ const themeConfig = {
     },
     body: {
       fontSize: { base: "0.9rem", md: "0.9rem" },
-      letterSpacing: "0.015em",
+      letterSpacing: "0.025em",
     },
     caps: {
       textTransform: "uppercase",

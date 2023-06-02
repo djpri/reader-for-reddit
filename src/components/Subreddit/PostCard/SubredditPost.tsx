@@ -6,6 +6,7 @@ import { PostData } from "../types";
 import Content from "./Content";
 import Thumbnail from "./Thumbnail";
 import TitleAuthorAndComments from "./TitleAuthorAndComments";
+import Color from "color";
 
 interface IProps {
   postData: PostData | null;
@@ -21,19 +22,24 @@ function Post({ postData, selectedId, setSelectedId }: IProps) {
   const [showVideo, setShowVideo] = useState(false);
   const [showGallery, setShowGallery] = useState(false);
   const [showEmbeddedContent, setShowEmbeddedContent] = useState(false);
-  const boxColor = useColorModeValue("#e1e1e147", "gray.800");
   const nsfwBorderColor = useColorModeValue("red.500", "red.700");
-  const selectedColor = useColorModeValue("green.600", "green.200");
   const gridTemplate = "minMax(2.5rem, 1fr) minMax(3rem, 1fr) 25fr";
+  
+  const boxColor = useColorModeValue("#e1e1e147", "gray.800");
+  const selectedBoxColor = useColorModeValue(Color("#e1e1e147").darken(0.15).toString(), "gray.700");
 
   const borderColor = () => {
     if (over_18) {
       return nsfwBorderColor;
     }
-    if (selectedId === id) {
-      return selectedColor;
-    }
     return "whiteAlpha.200";
+  };
+
+  const bgColor = () => {
+    if (selectedId === id) {
+      return selectedBoxColor;
+    }
+    return boxColor;
   };
 
   return (
@@ -43,7 +49,7 @@ function Post({ postData, selectedId, setSelectedId }: IProps) {
       mb={3}
       py={1}
       px={1}
-      bgColor={boxColor}
+      bgColor={bgColor()}
       borderColor={borderColor()}
       borderWidth={"2px"}
       borderRadius="md"

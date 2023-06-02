@@ -5,6 +5,7 @@ interface Settings {
   postKeywordsFilter: string[];
   commentKeywordsFilter: string[];
   showNSFW: boolean;
+  display: "wide" | "narrow"
 }
 
 interface AppSliceState {
@@ -18,6 +19,7 @@ const initialState: AppSliceState = {
     postKeywordsFilter: [],
     commentKeywordsFilter: [],
     showNSFW: true,
+    display: "wide",
   }
 };
 
@@ -52,6 +54,9 @@ export const appSlice = createSlice({
       newSet.add(action.payload);
       state.savedSubreddits = Array.from(newSet);
     },
+    setDisplaySetting: (state, action: PayloadAction<"wide" | "narrow">) => {
+      state.settings.display = action.payload;
+    },
     removeSavedSubreddit: (state, action: PayloadAction<string>) => {
       const newSet = new Set(state.savedSubreddits);
       const isDeleted = newSet.delete(action.payload);
@@ -78,6 +83,7 @@ export const {
   removeCommentKeywordsFilter,
   addNewSavedSubreddit,
   removeSavedSubreddit,
+  setDisplaySetting,
   toggleNSFW,
   setNewSettings,
 } = appSlice.actions;

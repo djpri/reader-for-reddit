@@ -200,7 +200,7 @@ function Comment({ item, showChildren, linkId }: IProps) {
       </HStack>
       {/* Comment body */}
       <Box display={displayBody}>
-        <Box className="comment" maxW={textMaxWidth}>
+        <Box className="comment" maxW={textMaxWidth} fontSize={"0.95rem"}>
           <ReactMarkdown linkTarget="_blank">{body}</ReactMarkdown>
         </Box>
         <HStack>

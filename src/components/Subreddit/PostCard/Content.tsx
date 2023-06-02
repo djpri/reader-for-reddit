@@ -49,7 +49,7 @@ function Content({
       >
         <div />
         <div />
-        <Box className="comment" overflowX="auto" fontSize="1rem" maxW={textMaxWidth}>
+        <Box className="comment" overflowX="auto" fontSize="0.95rem" maxW={textMaxWidth}>
           <hr />
           {ReactHtmlParser(sanitizedSelfText, {
             transform(node: {

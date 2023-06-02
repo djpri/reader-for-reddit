@@ -11,6 +11,7 @@ import {
   useColorModeValue,
   Wrap,
 } from "@chakra-ui/react";
+import Color from "color";
 import moment from "moment";
 import NextLink from "next/link";
 import { PostData } from "../types";
@@ -26,32 +27,37 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
     stickied,
     domain,
     link_flair_text,
-    link_flair_text_color,
     link_flair_background_color,
     link_flair_richtext,
     link_flair_type,
   } = postData;
   const linkFlairColor = useColorModeValue("gray.200", "gray.500");
+  const bgColor = useColorModeValue(
+    link_flair_background_color ? Color(link_flair_background_color)?.alpha(0.75).lighten(0.4).string() : "gray.200",
+    link_flair_background_color ? Color(link_flair_background_color)?.alpha(0.65).lighten(0.2).desaturate(0.2).string() : "gray.500"
+  );
   const textColor = useColorModeValue("#008136", "#34a764");
+  const flairTextColor = useColorModeValue("black", "white");
 
   const Author = () => (
     <Box fontSize="sm">
       <Text color="gray" as="span" className="post-time-submitted">
         submitted {moment(created * 1000).fromNow()} by
       </Text>{" "}
-      <Text as="span" className="post-author">{author}</Text>
+      <Text as="span" className="post-author">
+        {author}
+      </Text>
     </Box>
   );
 
   const Flair = () => (
     <Badge
       fontSize="xs"
-      bgColor={link_flair_background_color}
-      color={link_flair_text_color}
+      bgColor={bgColor}
+      color={flairTextColor}
       colorScheme="green"
       fontWeight="600"
-      variant={"subtle"}
-      opacity={0.95}
+      // opacity={0.25}
       rounded="sm"
       px={1}
       className="post-flair"
@@ -81,7 +87,7 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
   };
 
   const Title = () => (
-    <NextLink href={url} passHref legacyBehavior target="_blank" rel="noopener" >
+    <NextLink href={url} passHref legacyBehavior target="_blank" rel="noopener">
       <Link>
         <Heading
           px={0}
