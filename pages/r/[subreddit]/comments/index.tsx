@@ -1,8 +1,9 @@
-import { Container, Spinner } from "@chakra-ui/react";
+import { Button, Container, Spinner } from "@chakra-ui/react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { NextRouter, useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { useEffect, useState } from "react";
+import { AiFillCaretLeft } from "react-icons/ai";
 import CommentsTree from "src/components/Post/CommentsTree/CommentsTree";
 import PostHeader from "src/components/Post/PostHeader";
 import { loadPostDetailsAndComments } from "src/components/Post/getPostData";
@@ -94,6 +95,7 @@ function SubmissionPage() {
 
   return (
     <Container maxW="90vw" mt="10" mb="20">
+      <Button leftIcon={<AiFillCaretLeft/>} onClick={() => router.back()} size="sm" mb={4}>BACK</Button>
       <PostHeader
         sortType={sort}
         setSort={setSort}

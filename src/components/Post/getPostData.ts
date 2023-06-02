@@ -33,8 +33,6 @@ export const getMoreChildrenComments = async (
       ? comments.join(",")
       : comments.slice(0, 100).join(",");
   try {
-    console.log(comments.join(","));
-    console.log(link_id);
     const data = await RedditAPI.get("api/morechildren", {
       params: {
         link_id: link_id,

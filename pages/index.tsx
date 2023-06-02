@@ -8,8 +8,9 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useEffect, useState } from "react";
 import { AiFillStar } from "react-icons/ai";
+import { selectSavedSubreddits } from "src/redux/slices/appSlice";
+import { useAppSelector } from "src/redux/store";
 
 const popularSubs = [
   "announcements",
@@ -30,19 +31,8 @@ const popularSubs = [
 ];
 
 export default function Home() {
-  const [savedSubreddits, setSavedSubreddits] = useState([]);
-
-  useEffect(() => {
-    const getSubsFromLocalStorage = () => {
-      if (localStorage?.getItem("savedSubreddits") !== null) {
-        return JSON.parse(localStorage.getItem("savedSubreddits"));
-      } else {
-        return [];
-      }
-    };
-    setSavedSubreddits(getSubsFromLocalStorage);
-  }, []);
-
+  const savedSubreddits = useAppSelector(selectSavedSubreddits);
+  
   const SubLink = ({ sub }: { sub: string }) => {
     return (
       <NextLink href={`/r/${sub}`} passHref legacyBehavior className="home-subreddit-link">

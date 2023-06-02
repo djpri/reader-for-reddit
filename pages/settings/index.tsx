@@ -25,7 +25,7 @@ import { useAppDispatch, useAppSelector } from "src/redux/store";
 
 function Settings() {
   const dispatch = useAppDispatch();
-  const { commentKeywordsFilter, postKeywordsFilter, showNSFW } =
+  const { postKeywordsFilter, showNSFW } =
     useAppSelector(selectSettings);
 
   const KeyWordInput = ({
@@ -94,11 +94,12 @@ function Settings() {
           NSFW
         </Heading>
         <FormControl display="flex" alignItems="center" my={2}>
-          <FormLabel htmlFor="email-alerts" mb="0">
+          <FormLabel htmlFor="toggle-nsfw" mb="0">
             Show NSFW content
           </FormLabel>
           <Switch
-            id="email-alerts"
+            colorScheme={showNSFW ? "red" : "blue"}
+            id="toggle-nsfw"
             isChecked={showNSFW}
             onChange={() => {
               dispatch(toggleNSFW());
@@ -106,7 +107,7 @@ function Settings() {
           />
         </FormControl>
         <hr/>
-        <VStack alignItems="flex-start" my={4}>
+        {/* <VStack alignItems="flex-start" my={4}>
           <Heading as="h2" fontSize="xl">
             Comment keyword filters
           </Heading>
@@ -121,7 +122,7 @@ function Settings() {
           ))}
           <AddNewKeywordInput type="comment" />
         </VStack>
-        <hr/>
+        <hr/> */}
         <VStack alignItems="flex-start" my={4}>
           <Heading as="h2" fontSize="xl">
             Subreddit keyword filters

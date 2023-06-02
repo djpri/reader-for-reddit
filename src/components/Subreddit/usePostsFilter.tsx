@@ -19,7 +19,6 @@ function usePostsFilter(pages: any) {
         postsArray.push(child);
       });
     });
-    console.log(postsArray);
     return postsArray;
   }, [pages]);
 
@@ -30,14 +29,11 @@ function usePostsFilter(pages: any) {
       if (!showNSFW && post.data.over_18) return false;
 
       const postTitle = post.data.title.toLowerCase();
-      console.log(postTitle)
-      console.log(postKeywords)
       const postContainsKeywords = postKeywords.some((keyword) =>
         postTitle.includes(keyword.toLowerCase())
       );
     
       if (postContainsKeywords) {
-        console.log("post contains keywords")
         return false;
       }
       return true

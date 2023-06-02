@@ -11,7 +11,6 @@ const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
 function Subreddit() {
   const router = useRouter();
   const { subreddit, sort, t } = router.query;
-  console.log(router.query);
   const [sortType, setSortType] = useState<SubredditSortType>("hot");
 
   const {

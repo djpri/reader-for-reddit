@@ -17,7 +17,6 @@ export const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['layout', 'links'], // persist only the "someReducer" state
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

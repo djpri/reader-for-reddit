@@ -10,7 +10,7 @@ interface IProps {
 
 function CommentsTree({ comments, showChildComments, linkId }: IProps) {
   const showChildren = useMemo(() => showChildComments, [showChildComments]);
-  
+
   const renderParentComment = (item: any) => {
     return (
       <Comment

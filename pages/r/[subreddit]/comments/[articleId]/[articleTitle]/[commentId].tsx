@@ -45,8 +45,6 @@ function SingleCommentThreadPage() {
     }
   }, [queryParams]);
 
-  console.log(queryParams);
-
   const { isLoading, error, data, refetch, isRefetching } = useInfiniteQuery(
     ["postDetails", permalink, sort, queryParams.commentId],
     () =>

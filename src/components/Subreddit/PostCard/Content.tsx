@@ -79,7 +79,6 @@ function Content({
         "allowFullScreen",
       ],
     });
-    console.log(sanitizedContent);
     return (
       <Grid
         px={1}
@@ -106,7 +105,6 @@ function Content({
   }
 
   if (showGallery) {
-    console.log(media_metadata);
     return (
       <Grid
         w="100%"

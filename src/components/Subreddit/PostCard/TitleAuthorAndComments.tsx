@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import {
+  Badge,
   Box,
   Center,
   chakra,
@@ -25,6 +26,8 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
     stickied,
     domain,
     link_flair_text,
+    link_flair_text_color,
+    link_flair_background_color,
     link_flair_richtext,
     link_flair_type,
   } = postData;
@@ -41,17 +44,20 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
   );
 
   const Flair = () => (
-    <Center
+    <Badge
       fontSize="xs"
-      bgColor={linkFlairColor}
+      bgColor={link_flair_background_color}
+      color={link_flair_text_color}
+      colorScheme="green"
       fontWeight="600"
+      variant={"subtle"}
       opacity={0.95}
-      // rounded="md"
-      px={2}
+      rounded="sm"
+      px={1}
       className="post-flair"
     >
       {link_flair_text}
-    </Center>
+    </Badge>
   );
 
   const RichTextFlair = ({ flairInfo }: { flairInfo: any }) => {

@@ -9,13 +9,14 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { NextRouter, useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import {
-  addSubToLocalStorage,
-  isSavedInStorage,
-  removeSubFromLocalStorage,
-} from "src/localStorage";
+  addNewSavedSubreddit,
+  removeSavedSubreddit,
+  selectSavedSubreddits,
+} from "src/redux/slices/appSlice";
+import { useAppDispatch, useAppSelector } from "src/redux/store";
 import Post from "../PostCard/SubredditPost";
 import { PostData } from "../types";
 import usePostsFilter from "../usePostsFilter";
@@ -49,13 +50,12 @@ function Posts({
   const { filteredPosts, numPostsFiltered } = usePostsFilter(pages);
   const router: NextRouter = useRouter();
   const { sort, t } = router.query;
-  const [isSavedSubreddit, setIsSavedSubreddit] = useState(false);
   const iconColor = useColorModeValue("#737504", "#c4c722");
   const [selectedId, setSelectedId] = useState("");
 
-  useEffect(() => {
-    setIsSavedSubreddit(isSavedInStorage(subreddit as string));
-  }, [subreddit]);
+  const savedSubreddits = useAppSelector(selectSavedSubreddits);
+
+  const dispatch = useAppDispatch();
 
   if (error) return <p>Something went wrong loading posts.</p>;
 
@@ -111,7 +111,7 @@ function Posts({
           <Heading as="h1" fontSize="2xl">
             {subreddit && `/r/${subreddit}`}
           </Heading>
-          {isSavedSubreddit ? (
+          {savedSubreddits.find(sub => sub === subreddit) ? (
             <IconButton
               boxShadow="rgb(0 0 0 / 6%) 0px 1px 2px, rgb(0 0 0 / 28%) 0px 2px 2px"
               size="xs"
@@ -119,8 +119,7 @@ function Posts({
               aria-label={"add-subreddit"}
               color="white"
               onClick={() => {
-                setIsSavedSubreddit(false);
-                removeSubFromLocalStorage(subreddit as string);
+                dispatch(removeSavedSubreddit(subreddit as string));
               }}
             />
           ) : (
@@ -130,8 +129,7 @@ function Posts({
               aria-label={"add-subreddit"}
               color="white"
               onClick={() => {
-                setIsSavedSubreddit(true);
-                addSubToLocalStorage(subreddit as string);
+                dispatch(addNewSavedSubreddit(subreddit as string));
               }}
             />
           )}

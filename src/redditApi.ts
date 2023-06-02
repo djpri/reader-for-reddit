@@ -34,8 +34,6 @@ RedditAPI.interceptors.request.use(
 // if successful don't inlcude headers or config, just return the data
 RedditAPI.interceptors.response.use(
   function (response: AxiosResponse) {
-    console.log(`SUCCESS! REQUESTS MADE: ${requestsMade}`);
-    console.log(response);
     return response.data;
   },
   async function (error: AxiosError) {

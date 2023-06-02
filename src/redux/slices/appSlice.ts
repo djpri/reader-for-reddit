@@ -48,12 +48,16 @@ export const appSlice = createSlice({
       state.settings.commentKeywordsFilter = [];
     },
     addNewSavedSubreddit: (state, action: PayloadAction<string>) => {
-      state.savedSubreddits = [...state.savedSubreddits, action.payload];
+      const newSet = new Set(state.savedSubreddits);
+      newSet.add(action.payload);
+      state.savedSubreddits = Array.from(newSet);
     },
-    removeSavedSubreddit: (state, action: PayloadAction<number>) => {
-      const updatedSavedSubreddits = [...state.savedSubreddits];
-      updatedSavedSubreddits.splice(action.payload, 1);
-      state.savedSubreddits = updatedSavedSubreddits;
+    removeSavedSubreddit: (state, action: PayloadAction<string>) => {
+      const newSet = new Set(state.savedSubreddits);
+      const isDeleted = newSet.delete(action.payload);
+      if (isDeleted) {
+        state.savedSubreddits = Array.from(newSet);
+      }
     },
     toggleNSFW: (state) => {
       state.settings.showNSFW = !state.settings.showNSFW;
