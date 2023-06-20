@@ -68,7 +68,7 @@ function Posts({
           alignItems="center"
           gap="5"
         >
-          <Heading as="h1" fontSize="2xl" mb="20px">
+          <Heading as="h1" fontSize="xl" mb="20px">
             {`/r/${subreddit}`}
           </Heading>
         </Flex>
@@ -108,7 +108,7 @@ function Posts({
         flexWrap="wrap"
       >
         <HStack>
-          <Heading as="h1" fontSize="2xl">
+          <Heading as="h1" fontSize="xl">
             {subreddit && `/r/${subreddit}`}
           </Heading>
           {savedSubreddits.find(sub => sub === subreddit) ? (
@@ -143,7 +143,7 @@ function Posts({
 
       {numPostsFiltered > 0 && (
         <Text mb="10px" fontSize="sm">
-          * {numPostsFiltered} posts filtered
+          * {numPostsFiltered} post{numPostsFiltered !== 1 && "s"} filtered
         </Text>
       )}
 

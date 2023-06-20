@@ -52,7 +52,7 @@ function Comment({ item, showChildren, linkId }: IProps) {
   const moderatorColor = useColorModeValue("green.200", "green.500");
   const opColor = useColorModeValue("blue.100", "blue.600");
   const boxColor = useColorModeValue(
-    depth % 2 === 0 ? "gray.100" : "white",
+    depth % 2 === 0 ? "#f0f4f5" : "white",
     depth % 2 === 0 ? "gray.800" : "gray.900"
   );
 
@@ -104,7 +104,7 @@ function Comment({ item, showChildren, linkId }: IProps) {
           onClick={() => getMoreChildren(item.data.children)}
           pointerEvents={moreCommentsLoading ? "none" : "auto"}
         >
-          load {`${item.data.count}`} more comments
+          {`load ${item.data.count} more comment${item.data.count !== 1 && "s"}`}
         </Link>
       );
     return (

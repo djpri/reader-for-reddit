@@ -56,7 +56,7 @@ export default function Home() {
         <SubLink sub="Popular" />
         <SubLink sub="All" />
       </Wrap>
-      <Heading as="h1" fontSize="2xl" mb={5}>
+      <Heading as="h1" fontSize="xl" mb={5}>
         Popular Subreddits
       </Heading>
       <Wrap spacing={5} my={2} py={2}>
@@ -64,7 +64,7 @@ export default function Home() {
           <SubLink key={sub} sub={sub} />
         ))}
       </Wrap>
-      <Heading as="h1" fontSize="2xl" mb={5}>
+      <Heading as="h1" fontSize="xl" mb={5}>
         My Subreddits
       </Heading>
 

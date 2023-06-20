@@ -33,8 +33,8 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
   } = postData;
   const linkFlairColor = useColorModeValue("gray.200", "gray.500");
   const bgColor = useColorModeValue(
-    link_flair_background_color ? Color(link_flair_background_color)?.alpha(0.75).lighten(0.4).string() : "gray.200",
-    link_flair_background_color ? Color(link_flair_background_color)?.alpha(0.65).lighten(0.2).desaturate(0.2).string() : "gray.500"
+    link_flair_background_color ? Color(link_flair_background_color)?.alpha(0.35).lighten(0.8).desaturate(0.2).string() : "gray.200",
+    link_flair_background_color ? Color(link_flair_background_color)?.alpha(0.55).lighten(0.2).desaturate(0.2).string() : "gray.500"
   );
   const textColor = useColorModeValue("#008136", "#34a764");
   const flairTextColor = useColorModeValue("black", "white");
@@ -59,6 +59,8 @@ function TitleAuthorAndComments({ postData }: { postData: PostData }) {
       fontWeight="600"
       // opacity={0.25}
       rounded="sm"
+      borderColor={"gray.500"}
+      borderWidth={"1px"}
       px={1}
       className="post-flair"
     >

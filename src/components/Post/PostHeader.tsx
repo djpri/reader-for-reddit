@@ -53,7 +53,7 @@ function PostHeader({
 }: IProps) {
   const { num_comments, title, selftext, subreddit, url, created, author } =
     postDetails;
-  const bgColor = useColorModeValue("gray.100", "gray.800");
+  const bgColor = useColorModeValue("#f0f4f5", "gray.800");
   const sortColor = useColorModeValue("blue.400", "blue.300");
 
   const SortMenu = () => (
@@ -91,7 +91,7 @@ function PostHeader({
         <Link>no subreddit</Link>
       )}
 
-      <Heading as="h4" size="md" mb="5">
+      <Heading as="h4" fontSize="lg" mb="5">
         <NextLink href={url} passHref legacyBehavior>
           <Link target="_blank">{title}</Link>
         </NextLink>
@@ -141,8 +141,8 @@ function PostHeader({
           userSelect="none"
         >
           {showChildComments
-            ? "hide all child comments"
-            : "show all child comments"}
+            ? `hide child comment${num_comments !== 1 && "s"}`
+            : `show child comment${num_comments !== 1 && "s"}`}
         </Link>
       </HStack>
       <HStack>

@@ -53,7 +53,7 @@ function NavBar() {
             {isDesktop && (
               <NextLink href="/" passHref legacyBehavior>
                 <Link _hover={{ textDecoration: "none" }}>
-                  <Text fontSize="lg" ml="3" fontWeight="bold">
+                  <Text fontSize="md" ml="3" fontWeight="bold" letterSpacing="0.07em">
                     /r/eader for reddit
                   </Text>
                 </Link>
