@@ -115,12 +115,7 @@ function PostHeader({
           maxW={textMaxWidth}
           fontSize="0.95rem"
         >
-          <ReactMarkdown
-          // transformLinkUri={(href) => (
-          //   <a style={{ color: "yellow" }}>baba link {href}</a>
-          // )}
-            
-          >
+          <ReactMarkdown>
             {selftext}
           </ReactMarkdown>
         </Box>

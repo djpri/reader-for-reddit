@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Box, Grid } from "@chakra-ui/react";
 import * as DOMPurify from "dompurify";
-import ReactHtmlParser from "react-html-parser";
+import ReactMarkdown from "react-markdown";
 import DragToResizeImage from "src/components/Images/DragToResizeImage";
 import ReactHlsPlayer from "src/components/ReactHlsPlayer";
 import { textMaxWidth } from "src/constants";
@@ -49,19 +49,14 @@ function Content({
       >
         <div />
         <div />
-        <Box className="comment" overflowX="auto" fontSize="0.95rem" maxW={textMaxWidth}>
+        <Box
+          className="comment"
+          overflowX="auto"
+          fontSize="0.95rem"
+          maxW={textMaxWidth}
+        >
           <hr />
-          {ReactHtmlParser(sanitizedSelfText, {
-            transform(node: {
-              type: string;
-              name: string;
-              attribs: { target: string };
-            }) {
-              if (node.type === "tag" && node.name === "a") {
-                node.attribs.target = "_blank";
-              }
-            },
-          })}
+          <ReactMarkdown>{sanitizedSelfText}</ReactMarkdown>
         </Box>
       </Grid>
     );
@@ -98,7 +93,7 @@ function Content({
           maxW="100%"
           overflowY="auto"
         >
-          {ReactHtmlParser(sanitizedContent)}
+          <ReactMarkdown>{sanitizedContent}</ReactMarkdown>
         </Box>
       </Grid>
     );
