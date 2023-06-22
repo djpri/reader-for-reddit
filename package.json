@@ -23,6 +23,7 @@
     "dompurify": "^2.4.0",
     "framer-motion": "^10.12.16",
     "hls.js": "^1.2.1",
+    "html-react-parser": "^4.0.0",
     "moment": "^2.29.1",
     "next": "^13.4.6",
     "nprogress": "^0.2.0",

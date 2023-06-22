@@ -12,10 +12,11 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { VscCollapseAll } from "react-icons/vsc";
-import ReactMarkdown from "react-markdown";
 import { textMaxWidth } from "src/constants";
 import { formatScore } from "src/helpers";
 import { getMoreChildrenComments } from "../getPostData";
+import parse from 'html-react-parser';
+
 
 type CommentType = {
   kind: string;
@@ -201,7 +202,7 @@ function Comment({ item, showChildren, linkId }: IProps) {
       {/* Comment body */}
       <Box display={displayBody}>
         <Box className="comment" maxW={textMaxWidth} fontSize={"0.95rem"}>
-          <ReactMarkdown linkTarget="_blank">{body}</ReactMarkdown>
+          {parse(body)}
         </Box>
         <HStack>
           <NextLink href={`${router.asPath}/${id}`} passHref legacyBehavior>

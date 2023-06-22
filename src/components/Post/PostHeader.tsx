@@ -16,11 +16,12 @@ import moment from "moment";
 import NextLink from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import { HiChevronDown } from "react-icons/hi";
-import ReactMarkdown from "react-markdown";
 import { textMaxWidth } from "src/constants";
 import { SortType } from "src/types/sortTypes";
 import DragToResizeImage from "../Images/DragToResizeImage";
 import { IoMdRefreshCircle } from "react-icons/io";
+import parse from 'html-react-parser';
+
 
 const sortNames = {
   confidence: "Best",
@@ -115,9 +116,7 @@ function PostHeader({
           maxW={textMaxWidth}
           fontSize="0.95rem"
         >
-          <ReactMarkdown>
-            {selftext}
-          </ReactMarkdown>
+          {parse(selftext)}
         </Box>
       )}
 

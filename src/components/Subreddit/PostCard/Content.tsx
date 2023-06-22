@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import { Box, Grid } from "@chakra-ui/react";
 import * as DOMPurify from "dompurify";
-import ReactMarkdown from "react-markdown";
 import DragToResizeImage from "src/components/Images/DragToResizeImage";
 import ReactHlsPlayer from "src/components/ReactHlsPlayer";
 import { textMaxWidth } from "src/constants";
 import { PostData } from "../types";
 import ImageGallery from "./ImageGallery";
+import parse from 'html-react-parser';
 
 interface IProps {
   showSelfText: boolean;
@@ -56,7 +56,7 @@ function Content({
           maxW={textMaxWidth}
         >
           <hr />
-          <ReactMarkdown>{sanitizedSelfText}</ReactMarkdown>
+          {parse(sanitizedSelfText)}
         </Box>
       </Grid>
     );
@@ -92,8 +92,9 @@ function Content({
           maxH={domain !== "twitter.com" && "50vh"}
           maxW="100%"
           overflowY="auto"
+          className="comment"
         >
-          <ReactMarkdown>{sanitizedContent}</ReactMarkdown>
+          {parse(sanitizedContent)}
         </Box>
       </Grid>
     );

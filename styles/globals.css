@@ -17,37 +17,36 @@ a {
   box-sizing: border-box;
 }
 
-/* React Markdown styling for submissions and comments */
-
-
-
-.comment {
+/* Markdown styling for submissions and comments */
+.md {
   width: 100%;
   max-width: 100%;
   line-height: 1.45;
   font-size: inherit;
+  font-weight: 400;
+  margin: 0.5rem 0;
 }
 
-.comment p {
+.md p {
   margin: 10px 0;
   font-weight: 400;
 }
 
-.comment h1,
-.comment h2,
-.comment h3 {
+.md h1,
+.md h2,
+.md h3 {
   margin: 10px 0px;
   font-weight: bold;
 }
 
-.comment ul,
-.comment ol {
+.md ul,
+.md ol {
   margin-top: 10px;
   margin-bottom: 10px;
   padding-left: 30px;
 }
 
-.comment pre {
+.md pre {
   overflow-x: auto;
   max-width: 95%;
   border: 1px solid gray;
@@ -55,7 +54,7 @@ a {
   border-radius: 2px;
 }
 
-.comment code {
+.md code {
   font-family: monospace;
   font-weight: 600;
 }
