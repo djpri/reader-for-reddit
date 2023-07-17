@@ -7,6 +7,7 @@ import { AiFillCaretLeft } from "react-icons/ai";
 import CommentsTree from "src/components/Post/CommentsTree/CommentsTree";
 import PostHeader from "src/components/Post/PostHeader";
 import { loadPostDetailsAndComments } from "src/components/Post/getPostData";
+import BaseContainer from "src/components/base/BaseContainer";
 import { SortType } from "src/types/sortTypes";
 
 const sortTypes = [
@@ -94,7 +95,7 @@ function SubmissionPage() {
     );
 
   return (
-    <Container maxW="90vw" mt="10" mb="20">
+    <BaseContainer>
       <Button leftIcon={<AiFillCaretLeft/>} onClick={() => router.back()} size="sm" mb={4}>BACK</Button>
       <PostHeader
         sortType={sort}
@@ -110,7 +111,7 @@ function SubmissionPage() {
         showChildComments={showChildComments}
         linkId={postInfo.name}
       />
-    </Container>
+    </BaseContainer>
   );
 }
 

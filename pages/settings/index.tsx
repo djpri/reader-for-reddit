@@ -6,13 +6,18 @@ import {
   FormLabel,
   HStack,
   Heading,
+  IconButton,
   Input,
   Switch,
   Text,
   VStack,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
+import { FaMoon, FaSun } from "react-icons/fa";
+import BaseContainer from "src/components/base/BaseContainer";
 import {
   removeCommentKeywordsFilter,
   removePostKeywordsFilter,
@@ -24,9 +29,11 @@ import {
 import { useAppDispatch, useAppSelector } from "src/redux/store";
 
 function Settings() {
+  const { colorMode, toggleColorMode } = useColorMode();
+  const color = useColorModeValue("black", "white");
+
   const dispatch = useAppDispatch();
-  const { postKeywordsFilter, showNSFW } =
-    useAppSelector(selectSettings);
+  const { postKeywordsFilter, showNSFW } = useAppSelector(selectSettings);
 
   const KeyWordInput = ({
     defaultValue,
@@ -85,11 +92,38 @@ function Settings() {
   };
 
   return (
-    <Container maxW="90vw">
+    <BaseContainer>
       <Heading as="h1" fontSize="2xl" my={8}>
         Settings
       </Heading>
       <Box>
+        <Heading as="h2" fontSize="xl">
+          Theme
+        </Heading>
+        <HStack spacing={2} my={2}>
+          <Text>
+            Current theme:{" "}
+            <Text as="span" textTransform="capitalize">
+              {colorMode}
+            </Text>
+          </Text>
+          <IconButton
+            aria-label="Toggle color mode"
+            onClick={toggleColorMode}
+            color={color}
+            size="sm"
+            rounded="sm"
+            // boxShadow="rgb(0 0 0 / 8%) 0 1px 0"
+            boxShadow="rgb(10 0 30 / 30%) 0px 1px 2px, rgb(0 0 0 / 18%) 0px 1px 1px"
+            icon={
+              colorMode === "dark" ? (
+                <FaSun size="1rem" color="white" />
+              ) : (
+                <FaMoon size="1rem" />
+              )
+            }
+          />
+        </HStack>
         <Heading as="h2" fontSize="xl">
           NSFW
         </Heading>
@@ -106,7 +140,7 @@ function Settings() {
             }}
           />
         </FormControl>
-        <hr/>
+        <hr />
         {/* <VStack alignItems="flex-start" my={4}>
           <Heading as="h2" fontSize="xl">
             Comment keyword filters
@@ -142,7 +176,7 @@ function Settings() {
           <AddNewKeywordInput type="post" />
         </VStack>
       </Box>
-    </Container>
+    </BaseContainer>
   );
 }
 

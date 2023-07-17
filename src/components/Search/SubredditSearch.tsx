@@ -14,6 +14,7 @@ import { NextRouter, useRouter } from "next/router";
 import { KeyboardEvent as ReactKeyboardEvent, useEffect, useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import useSubredditSearch from "./useSubredditSearch";
+import useMediaQueries from "src/hooks/useMediaQuery";
 
 function SubredditSearch() {
   const { handleSearch, setSearch, search, setIsTyping, isLoading, searchResults } =
@@ -24,6 +25,9 @@ function SubredditSearch() {
   const bgColor = useColorModeValue("gray.50", "gray.800");
   const searchColor = useColorModeValue("black", "white");
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const { isMobile } = useMediaQueries();
+
+  const searchPlaceholder = isMobile ? "Search" : "Search Subreddits";
 
   useOutsideClick({
     ref: inputRef,
@@ -84,7 +88,7 @@ function SubredditSearch() {
     <VStack
       justifySelf="center"
       w="100%"
-      maxW="550px"
+      maxW={["50vw", null, null, "30vw"]}
       spacing={2}
       position="relative"
       ref={inputRef}
@@ -96,7 +100,7 @@ function SubredditSearch() {
           rounded="sm"
           focusBorderColor='#a4a9ab'
           bgColor={bgColor}
-          placeholder="Search subreddits"
+          placeholder={searchPlaceholder}
           onKeyUp={(e) => {
             if (e.key === "Enter") {
               handleSearch();
@@ -106,7 +110,7 @@ function SubredditSearch() {
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
-        <InputRightElement w="4rem">
+        <InputRightElement >
           <IconButton
             m="0"
             isLoading={isLoading}

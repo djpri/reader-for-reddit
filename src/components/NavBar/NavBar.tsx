@@ -9,13 +9,14 @@ import {
   Text,
   useColorMode,
   useColorModeValue,
-  useMediaQuery,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { AiFillSetting } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { SiReddit } from "react-icons/si";
 import SubredditSearch from "../Search/SubredditSearch";
+import useMediaQueries from "src/hooks/useMediaQuery";
+import BaseContainer from "../base/BaseContainer";
 
 // TODO: Add settings page link when page is created
 
@@ -24,7 +25,7 @@ function NavBar() {
   const color = useColorModeValue("black", "white");
   const bgColor = useColorModeValue("white", "hsl(220 38% 8% / 1)");
   // const buttonBgColor = useColorModeValue("gray.50", "gray.700");
-  const [isDesktop] = useMediaQuery("(min-width: 1024px)");
+  const { isDesktop } = useMediaQueries();
 
   return (
     <Box
@@ -41,7 +42,7 @@ function NavBar() {
       mb="50px"
       opacity={1}
     >
-      <Container maxW="90vw">
+      <BaseContainer>
         <Grid as="nav" templateColumns="1fr 2fr 1fr" w="100%" pt={2} pb={2}>
           <Flex align="center" justifySelf="start">
             {/* <LeftDrawer /> */}
@@ -71,7 +72,7 @@ function NavBar() {
                 rounded="sm"
               />
             </Link>
-            <IconButton
+            {isDesktop && <IconButton
               aria-label="Toggle color mode"
               onClick={toggleColorMode}
               color={color}
@@ -86,10 +87,10 @@ function NavBar() {
                   <FaMoon size="1rem" />
                 )
               }
-            />
+            />}
           </HStack>
         </Grid>
-      </Container>
+      </BaseContainer>
     </Box>
   );
 }

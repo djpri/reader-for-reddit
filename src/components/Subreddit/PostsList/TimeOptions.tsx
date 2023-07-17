@@ -39,7 +39,7 @@ const TimeOptions = ({ t }: { t: string }) => {
   };
 
   return (
-    <HStack my="20px">
+    <HStack my="20px" wrap={"wrap"}>
       <Text>Links from:</Text>
       <Option
         href={`${pathNameWithoutQuery()}?t=hour`}

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Posts from "src/components/Subreddit/PostsList/SubredditPosts";
 import { loadSubredditPosts } from "src/components/Subreddit/getSubredditData";
 import { SubredditSortType } from "src/components/Subreddit/types";
+import BaseContainer from "src/components/base/BaseContainer";
 
 const subredditSortTypes = ["hot", "new", "top", "controversial", "rising"];
 
@@ -40,7 +41,7 @@ function Subreddit() {
   }, [error, isLoading, posts]);
 
   return (
-    <Container maxWidth="90vw">
+    <BaseContainer>
       <Posts
         subreddit={subreddit}
         pages={posts?.pages}
@@ -49,7 +50,7 @@ function Subreddit() {
         fetchNextPage={fetchNextPage}
         isFetchingNextPage={isFetchingNextPage}
       />
-    </Container>
+    </BaseContainer>
   );
 }
 

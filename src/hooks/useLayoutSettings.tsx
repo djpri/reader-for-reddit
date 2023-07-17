@@ -6,6 +6,7 @@ function useLayoutSettings() {
 
   const layoutSettings = {
     textMaxWidth: ["100%", null, null, "60vw", "45vw"],
+    pageMaxWidth: ["100%", null, null, "90vw"],
     containerMaxWidth: settings.display === "wide" ? "90vw" : "60vw"
   }
 

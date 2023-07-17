@@ -4,6 +4,7 @@ import { NextRouter, useRouter } from "next/router";
 import { useEffect } from "react";
 import { loadSubredditPosts } from "src/components/Subreddit/getSubredditData";
 import Posts from "../../../src/components/Subreddit/PostsList/SubredditPosts";
+import BaseContainer from "src/components/base/BaseContainer";
 
 function Subreddit() {
   const router: NextRouter = useRouter();
@@ -40,7 +41,7 @@ function Subreddit() {
   }, [error, isLoading, posts]);
 
   return (
-    <Container maxWidth="90vw">
+    <BaseContainer>
       <Posts
         subreddit={subreddit}
         pages={posts?.pages}
@@ -49,7 +50,7 @@ function Subreddit() {
         fetchNextPage={fetchNextPage}
         isFetchingNextPage={isFetchingNextPage}
       />
-    </Container>
+    </BaseContainer>
   );
 }
 
