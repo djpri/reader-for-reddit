@@ -105,7 +105,7 @@ function Comment({ item, showChildren, linkId }: IProps) {
           onClick={() => getMoreChildren(item.data.children)}
           pointerEvents={moreCommentsLoading ? "none" : "auto"}
         >
-          {`load ${item.data.count} more comment${item.data.count !== 1 && "s"}`}
+          {`load ${item.data.count} more comment${item.data.count !== 1 ? "s" : ""}`}
         </Link>
       );
     return (
