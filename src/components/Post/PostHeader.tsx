@@ -12,16 +12,16 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import * as DOMPurify from "dompurify";
+import parse from "html-react-parser";
 import moment from "moment";
 import NextLink from "next/link";
 import { Dispatch, SetStateAction } from "react";
 import { HiChevronDown } from "react-icons/hi";
+import { IoMdRefreshCircle } from "react-icons/io";
 import { textMaxWidth } from "src/constants";
 import { SortType } from "src/types/sortTypes";
 import DragToResizeImage from "../Images/DragToResizeImage";
-import { IoMdRefreshCircle } from "react-icons/io";
-import parse from 'html-react-parser';
-
 
 const sortNames = {
   confidence: "Best",
@@ -50,10 +50,17 @@ function PostHeader({
   sortType,
   setSort,
   refreshComments,
-  isLoading
+  isLoading,
 }: IProps) {
-  const { num_comments, title, selftext, subreddit, url, created, author } =
-    postDetails;
+  const {
+    num_comments,
+    title,
+    selftext_html,
+    subreddit,
+    url,
+    created,
+    author,
+  } = postDetails;
   const bgColor = useColorModeValue("#f0f4f5", "gray.800");
   const sortColor = useColorModeValue("blue.400", "blue.300");
 
@@ -103,9 +110,9 @@ function PostHeader({
         <DragToResizeImage url={url} alt={`${url.substring(0, 10)}...`} />
       )}
 
-      {selftext && (
+      {selftext_html && (
         <Box
-          className="comment"
+          className="comment postHeader"
           bgColor={bgColor}
           border="1px"
           borderColor="whiteAlpha.400"
@@ -116,12 +123,12 @@ function PostHeader({
           maxW={textMaxWidth}
           fontSize="0.95rem"
         >
-          {parse(selftext)}
+          {parse(DOMPurify.sanitize(selftext_html) || selftext_html)}
         </Box>
       )}
 
       <Box fontSize="sm" my={2}>
-        <Text color="gray" as="span" >
+        <Text color="gray" as="span">
           submitted {moment(created * 1000).fromNow()} by
         </Text>{" "}
         <Text as="span">{author}</Text>
@@ -141,7 +148,14 @@ function PostHeader({
       </HStack>
       <HStack>
         <SortMenu />
-        <Button aria-label="refresh" size="sm" rightIcon={<IoMdRefreshCircle />} onClick={refreshComments}>Refresh comments</Button>
+        <Button
+          aria-label="refresh"
+          size="sm"
+          rightIcon={<IoMdRefreshCircle />}
+          onClick={refreshComments}
+        >
+          Refresh comments
+        </Button>
         {isLoading && <Spinner size="sm" />}
       </HStack>
     </div>
